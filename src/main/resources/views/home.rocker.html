@@ -1,0 +1,18 @@
+@import java.util.Optional
+@args (boolean loggedIn, Optional<String> name)
+
+@views.main.template("Home") -> {
+<h1>Micronaut - Google example</h1>
+
+<h2>username: <span>@name.orElse("Anonymous")</span></h2>
+
+<nav>
+    <ul>
+        @if (loggedIn) {
+            <li><a href="/logout">Logout</a></li>
+    } else {
+        <li><a href="/oauth/login/google">Enter</a></li>
+    }
+    </ul>
+</nav>
+}
