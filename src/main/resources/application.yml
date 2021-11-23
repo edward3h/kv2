@@ -2,20 +2,17 @@ micronaut:
   application:
     name: kv2
   security:
-    authentication: cookie
-    token:
-      jwt:
-        signatures:
-          secret:
-            generator:
-              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
+    authentication: idtoken
     oauth2:
       clients:
-        default:
-          client-id: ${OAUTH_CLIENT_ID}
-          client-secret: ${OAUTH_CLIENT_SECRET}
+        google:
+          client-id: ${OAUTH_CLIENT_ID:test_client_id}
+          client-secret: ${OAUTH_CLIENT_SECRET:test_client_secret}
           openid:
-            issuer: ${OAUTH_ISSUER}
+            issuer: ${OAUTH_ISSUER:test_google_issuer}
+    endpoints:
+      logout:
+        get-allowed: true
 datasources:
   default:
     url: jdbc:mysql://localhost:3306/db
