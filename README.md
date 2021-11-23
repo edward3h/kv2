@@ -38,5 +38,15 @@
 
 ## Feature jdbc-hikari documentation
 
-- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
+- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc
+)
 
+## Feature views-rocker documentation
+
+
+
+- [Micronaut Rocker Views documentation](https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker)
+
+
+
+- [https://github.com/fizzed/rocker](https://github.com/fizzed/rocker)

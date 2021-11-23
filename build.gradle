@@ -1,6 +1,7 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.0"
     id("io.micronaut.application") version "2.0.8"
+    id("nu.studer.rocker") version "3.0.4"
 }
 
 version = "0.1"
@@ -31,6 +32,7 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security-jwt")
     implementation("io.micronaut.security:micronaut-security-oauth2")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("io.micronaut.views:micronaut-views-rocker")
     implementation("javax.annotation:javax.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("mysql:mysql-connector-java")
@@ -50,5 +52,12 @@ java {
     targetCompatibility = JavaVersion.toVersion("17")
 }
 
-
+rocker {
+    configurations {
+        main {
+            templateDir = file("src/main/resources")
+            outputDir = file("src/generated/rocker")
+        }
+    }
+}
 
