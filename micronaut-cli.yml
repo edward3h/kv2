@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: org.ethelred
+testFramework: junit
+sourceLanguage: java
+buildTool: gradle
+features: [annotation-api, app-name, data, data-jdbc, gradle, http-client, java, java-application, jdbc-hikari, junit, liquibase, logback, micronaut-build, mysql, netty-server, readme, security, security-annotations, security-jwt, security-oauth2, shade, testcontainers, yaml]
