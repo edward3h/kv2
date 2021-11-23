@@ -1,4 +1,4 @@
-package org.ethelred;
+package org.ethelred.kv2;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;

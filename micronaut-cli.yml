@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: org.ethelred
+defaultPackage: org.ethelred.kv2
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle

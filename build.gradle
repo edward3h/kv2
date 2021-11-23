@@ -15,7 +15,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("org.ethelred.*")
+        annotations("org.ethelred.kv2.*")
     }
 }
 
@@ -43,7 +43,7 @@ dependencies {
 
 
 application {
-    mainClass.set("org.ethelred.Application")
+    mainClass.set("org.ethelred.kv2.Application")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("17")

@@ -1,4 +1,4 @@
-package org.ethelred;
+package org.ethelred.kv2;
 
 import io.micronaut.runtime.Micronaut;
 
