@@ -2,7 +2,7 @@ micronaut:
   application:
     name: kv2
   security:
-    authentication: idtoken
+    authentication: cookie
     oauth2:
       clients:
         google:
@@ -10,9 +10,25 @@ micronaut:
           client-secret: ${OAUTH_CLIENT_SECRET:test_client_secret}
           openid:
             issuer: ${OAUTH_ISSUER:test_google_issuer}
+        discord:
+          client-id: ${DISCORD_CLIENT_ID:test_discord_id}
+          client-secret: ${DISCORD_CLIENT_SECRET:test_discord_secret}
+          scopes:
+            - identify
+            - guilds
+            - email
+          authorization:
+            url: 'https://discord.com/api/oauth2/authorize'
+          token:
+            url: 'https://discord.com/api/oauth2/token'
+            auth-method: CLIENT_SECRET_POST
+
     endpoints:
       logout:
         get-allowed: true
+  http:
+    client:
+      log-level: TRACE
 datasources:
   default:
     url: jdbc:mysql://localhost:3306/db

@@ -1,17 +1,23 @@
 @import java.util.Optional
-@args (boolean loggedIn, Optional<String> name)
+@import java.util.Map
+@args (boolean loggedIn, Optional<String> name, Map<String, Object> attributes)
 
 @views.main.template("Home") -> {
-<h1>Micronaut - Google example</h1>
+<h1>Micronaut - OAuth example</h1>
 
 <h2>username: <span>@name.orElse("Anonymous")</span></h2>
-
+<ul>
+    @for ((key, value) : attributes) {
+        <li>@key: @value</li>
+    }
+</ul>
 <nav>
     <ul>
         @if (loggedIn) {
             <li><a href="/logout">Logout</a></li>
     } else {
-        <li><a href="/oauth/login/google">Enter</a></li>
+        <li><a href="/oauth/login/google">Login with Google</a></li>
+        <li><a href="/oauth/login/discord">Login with Discord</a></li>
     }
     </ul>
 </nav>

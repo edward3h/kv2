@@ -33,6 +33,8 @@ dependencies {
     implementation("io.micronaut.security:micronaut-security-oauth2")
     // implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("io.micronaut.views:micronaut-views-rocker")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
     implementation("javax.annotation:javax.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("mysql:mysql-connector-java")
