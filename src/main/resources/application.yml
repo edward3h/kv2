@@ -28,7 +28,7 @@ micronaut:
         get-allowed: true
   http:
     client:
-      log-level: TRACE
+      log-level: DEBUG
 datasources:
   default:
     url: jdbc:mysql://localhost:3306/db
