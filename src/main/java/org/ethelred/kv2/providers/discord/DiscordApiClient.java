@@ -7,12 +7,9 @@ import io.micronaut.http.annotation.Header;
 import io.micronaut.http.client.annotation.Client;
 import org.reactivestreams.Publisher;
 
-/**
- *
- * @author edward
- */
- @Header(name = "User-Agent", value="Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)")
- @Client("https://discord.com/api/v9")
+/** @author edward */
+@Header(name = "User-Agent", value = "Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)")
+@Client("https://discord.com/api/v9")
 public interface DiscordApiClient {
 
     @Get("/users/@me")

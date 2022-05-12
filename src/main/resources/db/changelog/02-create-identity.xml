@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="02" author="edward3h">
+        <createTable tableName="identity">
+            <column name="id" type="char(27)">
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="identityPK"/>
+            </column>
+            <column name="provider" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="char(27)">
+                <constraints referencedTableName="user" referencedColumnNames="id" foreignKeyName="identity_user_FK"/>
+            </column>
+            <column name="external_id" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="attributes" type="json"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="current_timestamp"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="current_timestamp on update current_timestamp"/>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value="engine innodb"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

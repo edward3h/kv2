@@ -14,10 +14,7 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/**
- *
- * @author edward
- */
+/** @author edward */
 @Named("discord")
 @Singleton
 public class DiscordAuthenticationMapper implements OauthAuthenticationMapper {
@@ -29,17 +26,23 @@ public class DiscordAuthenticationMapper implements OauthAuthenticationMapper {
     }
 
     @Override
-    public Publisher<AuthenticationResponse> createAuthenticationResponse(TokenResponse tokenResponse, @Nullable State state) {
+    public Publisher<AuthenticationResponse> createAuthenticationResponse(
+            TokenResponse tokenResponse, @Nullable State state) {
         var accessToken = tokenResponse.getAccessToken();
         var auth = DiscordApiClient.authorization(accessToken);
         var userPub = Mono.from(apiClient.getUser(auth));
         var guildsPub = Flux.from(apiClient.getUserGuilds(auth)).collectList();
-        return Mono.zip(userPub, guildsPub,
-            (user, guilds) -> AuthenticationResponse.success(user.username(),
-                Map.of("guilds", guilds.stream().map(DiscordGuild::name).collect(Collectors.toList()),
-                    "email", Objects.requireNonNullElse(user.email(), "Unknown"))
-            )
-        );
+        return Mono.zip(
+                userPub,
+                guildsPub,
+                (user, guilds) -> AuthenticationResponse.success(
+                        user.username(),
+                        Map.of(
+                                OauthAuthenticationMapper.PROVIDER_KEY,
+                                "discord",
+                                "guilds",
+                                guilds.stream().map(DiscordGuild::name).collect(Collectors.toList()),
+                                "email",
+                                Objects.requireNonNullElse(user.email(), "Unknown"))));
     }
-
 }

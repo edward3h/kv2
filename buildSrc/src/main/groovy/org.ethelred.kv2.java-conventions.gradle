@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'com.diffplug.spotless'
+    id "com.github.jakemarsden.git-hooks"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ java {
+     toolchain {
+         languageVersion = JavaLanguageVersion.of(17)
+     }
+ }
+
+gitHooks {
+    hooks = ['pre-commit': 'build']
+}
+
+spotless {
+    format 'misc', {
+        target '*.md', '.gitignore'
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    java {
+        targetExclude 'build/**'
+        importOrder()
+        removeUnusedImports()
+        palantirJavaFormat()
+    }
+    groovyGradle {
+        greclipse()
+    }
+    sql {
+        target '**/*.sql'
+        dbeaver()
+    }
+    format 'xml', {
+        target 'src/**/*/xml'
+        eclipseWtp('xml')
+    }
+}

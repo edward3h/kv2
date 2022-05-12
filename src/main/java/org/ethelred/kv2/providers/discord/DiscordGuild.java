@@ -5,11 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Nullable;
 
- @Introspected
- @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Introspected
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record DiscordGuild(
-    String id, // snowflake
-    String name,
-    @Nullable String icon
-)
-{}
+        String id, // snowflake
+        String name,
+        @Nullable String icon) {}
