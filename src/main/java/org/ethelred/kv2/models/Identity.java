@@ -15,5 +15,9 @@ public record Identity(
         @NonNull String externalId,
         @Nullable String email,
         @TypeDef(type = DataType.JSON) Map<String, Object> attributes,
-        @Nullable Timestamp createdAt,
-        @Nullable Timestamp updatedAt) {}
+        @DateCreated @Nullable Timestamp createdAt,
+        @DateUpdated @Nullable Timestamp updatedAt) {
+    public Identity(String provider, User user, String externalId, String email, Map<String, Object> attributes) {
+        this(provider + "#" + externalId, provider, user, externalId, email, attributes, null, null);
+    }
+}

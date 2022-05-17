@@ -8,7 +8,11 @@
 <h2>username: <span>@name.orElse("Anonymous")</span></h2>
 <ul>
     @for ((key, value) : attributes) {
-        <li>@key: @value</li>
+        @if ("picture".equals(key)) {
+            <li><img src="@value"></li>
+        } else {
+            <li>@key: @value</li>
+        }
     }
 </ul>
 <nav>

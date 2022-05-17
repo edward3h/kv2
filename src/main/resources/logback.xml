@@ -13,12 +13,15 @@
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>kv2.log</file>
+        <append>false</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="io.micronaut.http.client.netty.DefaultHttpClient" level="trace"/>
+    <!-- <logger name="io.micronaut.http.client.netty.DefaultHttpClient" level="trace"/> -->
+<!--    <logger name="io.micronaut.context.condition" level="DEBUG"/>-->
+    <logger name="io.micronaut.security" level="DEBUG"/>
 
     <root level="info">
         <appender-ref ref="STDOUT" />

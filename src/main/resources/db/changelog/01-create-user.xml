@@ -15,6 +15,9 @@
             <column name="display_name" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
+            <column name="picture_url" type="text">
+                <constraints nullable="true"/>
+            </column>
             <column name="created_at" type="timestamp" defaultValueComputed="current_timestamp"/>
             <column name="updated_at" type="timestamp" defaultValueComputed="current_timestamp on update current_timestamp"/>
         </createTable>

@@ -7,9 +7,9 @@ import io.micronaut.security.oauth2.endpoint.token.response.OauthAuthenticationM
 import io.micronaut.security.oauth2.endpoint.token.response.TokenResponse;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
+import org.ethelred.kv2.services.*;
+import org.ethelred.kv2.util.*;
 import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,9 +20,11 @@ import reactor.core.publisher.Mono;
 public class DiscordAuthenticationMapper implements OauthAuthenticationMapper {
 
     private final DiscordApiClient apiClient;
+    private final UserService userService;
 
-    public DiscordAuthenticationMapper(DiscordApiClient apiClient) {
+    public DiscordAuthenticationMapper(DiscordApiClient apiClient, UserService userService) {
         this.apiClient = apiClient;
+        this.userService = userService;
     }
 
     @Override
@@ -35,14 +37,34 @@ public class DiscordAuthenticationMapper implements OauthAuthenticationMapper {
         return Mono.zip(
                 userPub,
                 guildsPub,
-                (user, guilds) -> AuthenticationResponse.success(
-                        user.username(),
-                        Map.of(
+                (user, guilds) -> userService.identityToInternalUser(AuthenticationResponse.success(
+                        user.id(),
+                        AuthAttributesHelper.map(
                                 OauthAuthenticationMapper.PROVIDER_KEY,
                                 "discord",
+                                "user",
+                                user,
                                 "guilds",
                                 guilds.stream().map(DiscordGuild::name).collect(Collectors.toList()),
                                 "email",
-                                Objects.requireNonNullElse(user.email(), "Unknown"))));
+                                user.email(),
+                                "name",
+                                user.username(),
+                                "picture",
+                                getAvatarUrl(user)))));
+    }
+
+    // https://discord.com/developers/docs/reference#image-formatting
+    private String getAvatarUrl(DiscordUser user) {
+        if (user.avatar() == null) {
+            int discriminator;
+            try {
+                discriminator = Integer.parseInt(user.discriminator());
+            } catch (NumberFormatException e) {
+                discriminator = 0;
+            }
+            return "https://cdn.discordapp.com/embed/avatars/%d.png".formatted(discriminator % 5);
+        }
+        return "https://cdn.discordapp.com/avatars/%s/%s.png?size=128".formatted(user.id(), user.avatar());
     }
 }
