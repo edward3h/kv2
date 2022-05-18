@@ -1,7 +1,7 @@
 plugins {
 	id("com.github.johnrengelman.shadow") version "7.1.2"
 	id("io.micronaut.application") version "3.4.0"
-	id("nu.studer.rocker") version "3.0.4"
+	id("gg.jte.gradle") version "2.0.2"
 	id("org.ethelred.kv2.java-conventions")
 }
 
@@ -33,7 +33,8 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-jwt")
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-	implementation("io.micronaut.views:micronaut-views-rocker")
+	implementation("io.micronaut.views:micronaut-views-jte")
+	implementation("gg.jte:jte:2.0.2")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
@@ -54,11 +55,8 @@ application {
 	mainClass.set("org.ethelred.kv2.Application")
 }
 
-rocker {
-	configurations {
-		main {
-			templateDir = file("src/main/resources")
-		}
-	}
+jte {
+	generate()
+	generateNativeImageResources = true
 }
 
