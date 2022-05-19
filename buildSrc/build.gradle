@@ -13,5 +13,5 @@ dependencies {
     implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.6.1'
 
 
-    implementation 'org.testcontainers:mysql:1.17.1'
+    implementation 'org.testcontainers:mysql:1.17.2'
 }
