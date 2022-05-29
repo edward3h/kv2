@@ -32,10 +32,7 @@ public class DefaultUserService implements UserService {
         var user = userRepository
                 .findByIdentity((String) provider, externalId)
                 .orElse(createUser(auth, (String) provider, externalId));
-        return AuthenticationResponse.success(
-                user.id(),
-                // TODO roles
-                user.attributes());
+        return AuthenticationResponse.success(user.id(), user.roles(), user.attributes());
     }
 
     private static final List<String> DISPLAY_NAME_KEYS = List.of("name", "username", "email");
@@ -48,7 +45,7 @@ public class DefaultUserService implements UserService {
                 .findFirst()
                 .orElse("Unknown");
         var user = userRepository.save(
-                new User(null, displayName, (String) auth.getAttributes().get("picture")));
+                new User(null, displayName, (String) auth.getAttributes().get("picture"), UserFlag.ROLE_USER));
         LOGGER.info("User attributes {}", auth.getAttributes());
         identityRepository.save(new Identity(
                 provider, user, externalId, (String) auth.getAttributes().get("email"), auth.getAttributes()));

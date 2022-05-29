@@ -18,6 +18,9 @@
             <column name="picture_url" type="text">
                 <constraints nullable="true"/>
             </column>
+            <column name="flags" type="integer" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
             <column name="created_at" type="timestamp" defaultValueComputed="current_timestamp"/>
             <column name="updated_at" type="timestamp" defaultValueComputed="current_timestamp on update current_timestamp"/>
         </createTable>
