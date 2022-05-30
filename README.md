@@ -1,56 +1,18 @@
-## Micronaut 3.1.4 Documentation
+# Codename: KV2
+<sub>The name will change when I think of a better one.</sub>
 
-- [User Guide](https://docs.micronaut.io/3.1.4/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.1.4/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.1.4/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+This project is a web application to help track your roster in a wargaming campaign.
 
-## Feature reactor documentation
+## Status - pre-Alpha
+As of 2022-05-30, I'm developing directly against the `main` branch.
+Major features have yet to be implemented.
+There is no 'production' deployment.
 
-- [Micronaut Reactor documentation](https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html)
+## Documentation
+Design documents can be found [in the docs folder](https://github.com/edward3h/kv2/tree/main/docs).
 
-## Feature http-client documentation
-
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
-
-## Feature testcontainers documentation
-
-- [https://www.testcontainers.org/](https://www.testcontainers.org/)
-
-## Feature liquibase documentation
-
-- [Micronaut Liquibase Database Migration documentation](https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html)
-
-- [https://www.liquibase.org/](https://www.liquibase.org/)
-
-## Feature security documentation
-
-- [Micronaut Security documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html)
-
-## Feature security-jwt documentation
-
-- [Micronaut Security JWT documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html)
-
-## Feature data-jdbc documentation
-
-- [Micronaut Data JDBC documentation](https://micronaut-projects.github.io/micronaut-data/latest/guide/index.html#jdbc)
-
-## Feature security-oauth2 documentation
-
-- [Micronaut Security OAuth 2.0 documentation](https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#oauth)
-
-## Feature jdbc-hikari documentation
-
-- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc
-)
-
-## Feature views-rocker documentation
-
-
-
-- [Micronaut Rocker Views documentation](https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker)
-
-
-
-- [https://github.com/fizzed/rocker](https://github.com/fizzed/rocker)
+## Getting Started
+### Requirements
+* Java - JDK 17 or later. [SDKMAN](https://sdkman.io/) is the recommended tool for managing JDK version.
+* [GNG](https://github.com/gdubw/gng) is _recommended_ to use the `gw` command instead of `./gradlew`
+* node.js version as in `client.nvmrc`. [nvm](https://github.com/nvm-sh/nvm) is the recommended tool for managing Node version.
