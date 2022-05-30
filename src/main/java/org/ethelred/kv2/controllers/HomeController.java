@@ -1,3 +1,4 @@
+/* (C) Edward Harman and contributors 2022 */
 package org.ethelred.kv2.controllers;
 
 import io.micronaut.core.annotation.*;

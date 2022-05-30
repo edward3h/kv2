@@ -30,6 +30,7 @@ spotless {
         importOrder()
         removeUnusedImports()
         palantirJavaFormat()
+        licenseHeader('/* (C) Edward Harman and contributors $YEAR */').updateYearWithLatest(true)
     }
     groovyGradle {
         greclipse()

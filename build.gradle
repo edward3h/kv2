@@ -1,7 +1,7 @@
 plugins {
 	id("com.github.johnrengelman.shadow") version "7.1.2"
 	id("io.micronaut.application") version "3.4.0"
-	id("gg.jte.gradle") version "2.0.3"
+	id("gg.jte.gradle") version "2.0.4-SNAPSHOT"
 	id("org.ethelred.kv2.java-conventions")
 }
 
@@ -10,6 +10,7 @@ group = "org.ethelred"
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 micronaut {
@@ -34,7 +35,7 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 	implementation("io.micronaut.views:micronaut-views-jte")
-	implementation("gg.jte:jte:2.0.3")
+	implementation("gg.jte:jte:2.0.4-SNAPSHOT")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
@@ -58,6 +59,6 @@ application {
 jte {
 	generate()
 	generateNativeImageResources = true
-	//	binaryStaticContent = true
+	binaryStaticContent = true
 }
 
