@@ -1,7 +1,7 @@
 plugins {
 	id("com.github.johnrengelman.shadow") version "7.1.2"
-	id("io.micronaut.application") version "3.4.0"
-	id("gg.jte.gradle") version "2.0.4-SNAPSHOT"
+	id("io.micronaut.application") version "3.4.1"
+	id("gg.jte.gradle") version "2.1.1"
 	id("org.ethelred.kv2.java-conventions")
 }
 
@@ -35,7 +35,7 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 	implementation("io.micronaut.views:micronaut-views-jte")
-	implementation("gg.jte:jte:2.0.4-SNAPSHOT")
+	implementation("gg.jte:jte:2.1.1")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
@@ -48,7 +48,7 @@ dependencies {
 	testImplementation("org.testcontainers:mysql")
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
-	implementation 'com.github.ksuid:ksuid:1.1.0'
+	implementation 'com.github.ksuid:ksuid:1.1.1'
 }
 
 
