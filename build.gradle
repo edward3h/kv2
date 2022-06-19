@@ -48,7 +48,7 @@ dependencies {
 	testImplementation("org.testcontainers:mysql")
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
-	implementation 'com.github.ksuid:ksuid:1.1.0'
+	implementation 'com.github.ksuid:ksuid:1.1.1'
 }
 
 
