@@ -16,3 +16,4 @@ Design documents can be found [in the docs folder](https://github.com/edward3h/k
 * Java - JDK 17 or later. [SDKMAN](https://sdkman.io/) is the recommended tool for managing JDK version.
 * [GNG](https://github.com/gdubw/gng) is _recommended_ to use the `gw` command instead of `./gradlew`
 * node.js version as in `client.nvmrc`. [nvm](https://github.com/nvm-sh/nvm) is the recommended tool for managing Node version.
+* [pnpm](https://pnpm.io/installation)
