@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh Lpr fFf">
+    <q-header elevated height-hint="64">
       <q-toolbar>
         <q-btn
           flat
@@ -12,10 +12,33 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Codename: KV2
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-space />
+
+        <div class="q-gutter-sm row items-center no-wrap">
+          <q-btn v-if="userStore.loggedIn.value" round dense flat color="grey-8" icon="notifications">
+            <q-badge color="red" text-color="white" floating>
+              2
+            </q-badge>
+            <q-tooltip>Notifications</q-tooltip>
+          </q-btn>
+          <q-btn v-if="userStore.loggedIn.value" round flat>
+            <q-avatar size="26px">
+              <img :src="userStore.avatar.value" :alt="userStore.name.value">
+            </q-avatar>
+            <q-menu auto-close>
+              <q-list>
+                <q-item clickable @click="doLogout">
+                  <q-item-section>Logout</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+            <q-tooltip>Account</q-tooltip>
+          </q-btn>
+          <q-btn round v-else @click="doLogin"><q-icon name="login" /></q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -42,12 +65,18 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer>Footer!</q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
+import { useUserStore } from 'src/stores/user';
+import { useQuasar } from 'quasar';
+import LoginChooseProviderVue from 'src/components/LoginChooseProvider.vue';
+import { useCookies } from '@vueuse/integrations/useCookies';
 
 const linksList = [
   {
@@ -103,13 +132,17 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
-
+    const userStore = useUserStore();
+    const $q = useQuasar();
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      userStore,
+      doLogin: () => $q.dialog({component: LoginChooseProviderVue}),
+      doLogout: () => userStore.logout()
     }
   }
 });

@@ -88,7 +88,8 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      host: '127.0.0.1' // dots make cookies work :shrug:
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
@@ -105,7 +106,13 @@ module.exports = configure(function (/* ctx */) {
           negative: '#C10015',
           info: '#565c05',
           warning: '#a86e11'
-        }},
+        },
+        loadingBar: {
+          position: 'bottom',
+          color: 'accent'
+        },
+        dark: 'auto'
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
@@ -118,7 +125,10 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [],
+      plugins: [
+        'LoadingBar',
+        'Dialog'
+      ],
 
     },
 
