@@ -10,7 +10,7 @@ repositories {
 dependencies {
         implementation 'com.github.jakemarsden:git-hooks-gradle-plugin:0.0.2'
 
-    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.7.2'
+    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.8.0'
 
 
     implementation 'org.testcontainers:mysql:1.17.2'
