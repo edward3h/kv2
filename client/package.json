@@ -17,7 +17,7 @@
     "pinia": "^2.0.14",
     "universal-cookie": "^4.0.4",
     "@quasar/extras": "1.14.1",
-    "quasar": "2.7.3",
+    "quasar": "2.7.4",
     "vue": "3.2.37",
     "vue-router": "4.0.16"
   },
