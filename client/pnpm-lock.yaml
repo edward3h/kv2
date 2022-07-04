@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@quasar/app-vite': 1.0.4
+  '@quasar/app-vite': 1.0.5
   '@quasar/extras': 1.14.1
   '@types/node': 16.11.41
   '@typescript-eslint/eslint-plugin': 5.30.4
@@ -33,7 +33,7 @@ dependencies:
   vue-router: 4.0.16_vue@3.2.37
 
 devDependencies:
-  '@quasar/app-vite': 1.0.4_kok6krn252xbjtv4nfest26kmi
+  '@quasar/app-vite': 1.0.5_kok6krn252xbjtv4nfest26kmi
   '@types/node': 16.11.41
   '@typescript-eslint/eslint-plugin': 5.30.4_aye54oa67ofzrialru76zxwshi
   '@typescript-eslint/parser': 5.30.4_4x5o4skxv6sl53vpwefgt23khm
@@ -121,8 +121,8 @@ packages:
     resolution: {integrity: sha512-nWlGg+aMfQDhGYa5FtBhZwldeo2MtdjHdxmEQvhBXEnxgD5IhIYl0PHvex8SdwyN7qcSoMykMWdjyAX7ZxkpMw==}
     dev: true
 
-  /@quasar/app-vite/1.0.4_kok6krn252xbjtv4nfest26kmi:
-    resolution: {integrity: sha512-2IXB/PJwskHn21xQvWfF6uo9+XfnvuJZ0aDKMG95fHrvj5bwElTj0tswSv9FuM7ufPOyLpoW1/QHoE2ijslSjA==}
+  /@quasar/app-vite/1.0.5_kok6krn252xbjtv4nfest26kmi:
+    resolution: {integrity: sha512-b9u57SQ4zaraDfXZ/pxTzNRPLVVofCs30ujH8tw0K9FWPkcce2A98QOE3eWMN3rmaZb/9xGf7YkbglXMZay5eQ==}
     engines: {node: ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
     peerDependencies:
@@ -152,6 +152,7 @@ packages:
       '@quasar/fastclick': 1.1.5
       '@quasar/vite-plugin': 1.0.10_tnvhmiprfq62hk4ptcmyurlakq
       '@rollup/pluginutils': 4.2.1
+      '@types/chrome': 0.0.191
       '@types/compression': 1.7.2
       '@types/cordova': 0.0.34
       '@types/express': 4.17.13
@@ -172,8 +173,7 @@ packages:
       inquirer: 8.2.4
       isbinaryfile: 4.0.10
       kolorist: 1.5.1
-      lodash.debounce: 4.0.8
-      lodash.template: 4.5.0
+      lodash: 4.17.21
       minimist: 1.2.6
       open: 8.4.0
       ouch: 2.0.1
@@ -233,6 +233,13 @@ packages:
       '@types/node': 16.11.41
     dev: true
 
+  /@types/chrome/0.0.191:
+    resolution: {integrity: sha512-hXYHJJ1Y265xKCw0o2Kz4CnR8aUhOMdyxK1AinET4EDr3fhpEMvOFDwdqz9LUX4syfTVYWb8w7vfC12s112ehg==}
+    dependencies:
+      '@types/filesystem': 0.0.32
+      '@types/har-format': 1.2.8
+    dev: true
+
   /@types/compression/1.7.2:
     resolution: {integrity: sha512-lwEL4M/uAGWngWFLSG87ZDr2kLrbuR8p7X+QZB1OQlT+qkHsCPDVFnHPyXf4Vyl4yDDorNY+mAhosxkCvppatg==}
     dependencies:
@@ -268,6 +275,20 @@ packages:
       '@types/express-serve-static-core': 4.17.28
       '@types/qs': 6.9.7
       '@types/serve-static': 1.13.10
+    dev: true
+
+  /@types/filesystem/0.0.32:
+    resolution: {integrity: sha512-Yuf4jR5YYMR2DVgwuCiP11s0xuVRyPKmz8vo6HBY3CGdeMj8af93CFZX+T82+VD1+UqHOxTq31lO7MI7lepBtQ==}
+    dependencies:
+      '@types/filewriter': 0.0.29
+    dev: true
+
+  /@types/filewriter/0.0.29:
+    resolution: {integrity: sha512-BsPXH/irW0ht0Ji6iw/jJaK8Lj3FJemon2gvEqHKpCdDCeemHa+rI3WBGq5z7cDMZgoLjY40oninGxqk+8NzNQ==}
+    dev: true
+
+  /@types/har-format/1.2.8:
+    resolution: {integrity: sha512-OP6L9VuZNdskgNN3zFQQ54ceYD8OLq5IbqO4VK91ORLfOm7WdT/CiT/pHEBSQEqCInJ2y3O6iCm/zGtPElpgJQ==}
     dev: true
 
   /@types/json-schema/7.0.11:
@@ -2034,14 +2055,6 @@ packages:
       type-check: 0.4.0
     dev: true
 
-  /lodash._reinterpolate/3.0.0:
-    resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
-    dev: true
-
-  /lodash.debounce/4.0.8:
-    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
-    dev: true
-
   /lodash.defaults/4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
     dev: true
@@ -2060,19 +2073,6 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-    dev: true
-
-  /lodash.template/4.5.0:
-    resolution: {integrity: sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==}
-    dependencies:
-      lodash._reinterpolate: 3.0.0
-      lodash.templatesettings: 4.2.0
-    dev: true
-
-  /lodash.templatesettings/4.2.0:
-    resolution: {integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==}
-    dependencies:
-      lodash._reinterpolate: 3.0.0
     dev: true
 
   /lodash.truncate/4.4.2:
