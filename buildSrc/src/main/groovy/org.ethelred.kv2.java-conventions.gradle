@@ -43,4 +43,8 @@ spotless {
         target 'src/**/*/xml'
         eclipseWtp('xml')
     }
+    json {
+        target '*.json'
+        simple()
+    }
 }
