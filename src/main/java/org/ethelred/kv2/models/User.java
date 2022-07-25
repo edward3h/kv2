@@ -26,7 +26,8 @@ public record User(
         return (Map<String, Object>) CollectionUtils.mapOf(
                 "displayName", displayName,
                 "picture", pictureUrl,
-                "flags", flags);
+                "flags", flags,
+                "user", this);
     }
 
     public Collection<String> roles() {

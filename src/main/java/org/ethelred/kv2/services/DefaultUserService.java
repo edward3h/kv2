@@ -1,6 +1,8 @@
 /* (C) Edward Harman and contributors 2022 */
 package org.ethelred.kv2.services;
 
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.security.authentication.*;
 import io.micronaut.security.oauth2.endpoint.token.response.*;
 import jakarta.inject.*;
@@ -51,5 +53,13 @@ public class DefaultUserService implements UserService {
         identityRepository.save(new Identity(
                 provider, user, externalId, (String) auth.getAttributes().get("email"), auth.getAttributes()));
         return user;
+    }
+
+    @Override
+    public User userFromAuthentication(Authentication auth) {
+        if (auth == null || !auth.getAttributes().containsKey("user")) {
+            throw new HttpStatusException(HttpStatus.FORBIDDEN, "No user in request");
+        }
+        return (User) auth.getAttributes().get("user");
     }
 }
