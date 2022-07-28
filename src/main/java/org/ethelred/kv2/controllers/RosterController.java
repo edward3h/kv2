@@ -20,7 +20,7 @@ import org.ethelred.kv2.models.SimpleRoster;
 import org.ethelred.kv2.models.Visibility;
 import org.ethelred.kv2.services.UserService;
 
-@Controller("/api/rosters")
+@Controller("/abc/rosters")
 @Secured({"ROLE_USER"})
 public record RosterController(SimpleRosterRepository rosterRepository, UserService userService) {
 

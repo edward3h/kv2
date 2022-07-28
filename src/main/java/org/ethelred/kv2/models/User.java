@@ -8,6 +8,7 @@ import io.micronaut.data.model.DataType;
 import java.sql.Timestamp;
 import java.util.*;
 import org.ethelred.kv2.services.*;
+import org.ethelred.kv2.util.AuthAttributesHelper;
 
 @MappedEntity
 public record User(
@@ -22,8 +23,7 @@ public record User(
     }
 
     public Map<String, Object> attributes() {
-        //noinspection unchecked
-        return (Map<String, Object>) CollectionUtils.mapOf(
+        return AuthAttributesHelper.map(
                 "displayName", displayName,
                 "picture", pictureUrl,
                 "flags", flags,
