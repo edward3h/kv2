@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet id="03" author="edward3h">
+        <createTable tableName="simple_roster">
+            <column name="id" type="char(27)">
+                <constraints nullable="false"
+                             unique="true"
+                             primaryKey="true"
+                             primaryKeyName="simple_rosterPK"/>
+            </column>
+            <column name="title" type="text"/>
+            <column name="body" type="text"/>
+            <column name="owner_id" type="char(27)">
+                <constraints nullable="false" referencedTableName="user" referencedColumnNames="id" foreignKeyName="simple_roster_user_FK"/>
+            </column>
+            <column name="visibility" type="varchar(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="current_timestamp"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="current_timestamp on update current_timestamp"/>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value="engine innodb"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>
