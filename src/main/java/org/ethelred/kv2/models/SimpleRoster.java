@@ -5,11 +5,13 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.annotation.DateCreated;
 import io.micronaut.data.annotation.DateUpdated;
 import io.micronaut.data.annotation.Id;
+import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.data.annotation.Relation;
 import java.sql.Timestamp;
 import java.util.Comparator;
 import org.ethelred.kv2.services.GeneratedId;
 
+@MappedEntity
 public record SimpleRoster(
         @GeneratedId @Id String id,
         String title,

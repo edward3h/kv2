@@ -13,6 +13,8 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import java.util.List;
 import org.ethelred.kv2.models.DocumentStub;
+import org.ethelred.kv2.providers.TestDataLoader;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
@@ -20,6 +22,14 @@ public class RosterControllerTest {
     @Inject
     @Client("/")
     HttpClient client;
+
+    @Inject
+    TestDataLoader dataLoader;
+
+    @BeforeEach
+    public void loadTestTables() {
+        dataLoader.load("data/user.csv", "data/identity.csv", "data/simple_roster.csv");
+    }
 
     @Test
     public void listForbidden() {
@@ -33,5 +43,12 @@ public class RosterControllerTest {
         var request = HttpRequest.GET("/abc/rosters").basicAuth("empty", "empty");
         var result = client.toBlocking().retrieve(request, Argument.of(List.class, Argument.of(DocumentStub.class)));
         assertEquals(List.of(), result);
+    }
+
+    @Test
+    public void listFirst() {
+        var request = HttpRequest.GET("/abc/rosters").basicAuth("first", "whatever");
+        var result = client.toBlocking().retrieve(request, Argument.of(List.class, Argument.of(DocumentStub.class)));
+        assertEquals(List.of(new DocumentStub("123", "Test Roster 1")), result);
     }
 }
