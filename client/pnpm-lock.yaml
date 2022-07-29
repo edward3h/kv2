@@ -6,7 +6,7 @@ specifiers:
   '@types/node': 16.11.45
   '@typescript-eslint/eslint-plugin': 5.31.0
   '@typescript-eslint/parser': 5.31.0
-  '@vueuse/core': ^8.7.5
+  '@vueuse/core': 9.0.2
   '@vueuse/integrations': ^8.7.5
   autoprefixer: 10.4.7
   eslint: 8.19.0
@@ -23,7 +23,7 @@ specifiers:
 
 dependencies:
   '@quasar/extras': 1.15.0
-  '@vueuse/core': 8.7.5_vue@3.2.37
+  '@vueuse/core': 9.0.2_vue@3.2.37
   '@vueuse/integrations': 8.7.5_ep45lr76pckedwbmfifkxripri
   jwt-decode: 3.1.2
   pinia: 2.0.14_j6bzmzd4ujpabbp5objtwxyjp4
@@ -322,6 +322,10 @@ packages:
     resolution: {integrity: sha512-5d2RhCard1nQUC3aHcq/gHzWYO6K0WJmAbjO7mQJgCQKtZpgXxv1rOM6O/dBDhDYYVutk1sciOgNSe+5YyfM8A==}
     dev: false
 
+  /@types/web-bluetooth/0.0.15:
+    resolution: {integrity: sha512-w7hEHXnPMEZ+4nGKl/KDRVpxkwYxYExuHOYXyzIzCDzEZ9ZCGMAewulr9IqJu2LR4N37fcnb1XVeuZ09qgOxhA==}
+    dev: false
+
   /@typescript-eslint/eslint-plugin/5.31.0_bao7xq2p45jpdplvjvt3gxqp3m:
     resolution: {integrity: sha512-VKW4JPHzG5yhYQrQ1AzXgVgX8ZAJEvCz0QI6mLRX4tf7rnFfh5D8SKm0Pq6w5PyNfAWJk6sv313+nEt3ohWMBQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -553,6 +557,18 @@ packages:
       vue-demi: 0.13.1_vue@3.2.37
     dev: false
 
+  /@vueuse/core/9.0.2_vue@3.2.37:
+    resolution: {integrity: sha512-kOIqaQPSs7OSByWg1ulEKRUJbsq3FmbJiUr0RhEKpt3O1Uhl4DrDj85DUbQBABVYgPvSaY6AE/fP3/FOcRIOoQ==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.15
+      '@vueuse/metadata': 9.0.2
+      '@vueuse/shared': 9.0.2_vue@3.2.37
+      vue-demi: 0.13.1_vue@3.2.37
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/integrations/8.7.5_ep45lr76pckedwbmfifkxripri:
     resolution: {integrity: sha512-1vCOriEXhthpU9zczTqtG4a+YJFgkyUbK/Cc91Ey0VOdL6saMNjLsrGX7cae6troFyDCbF61eL6Y8epsNc3TXw==}
     peerDependencies:
@@ -602,6 +618,10 @@ packages:
     resolution: {integrity: sha512-emJZKRQSaEnVqmlu39NpNp8iaW+bPC2kWykWoWOZMSlO/0QVEmO/rt8A5VhOEJTKLX3vwTevqbiRy9WJRwVOQg==}
     dev: false
 
+  /@vueuse/metadata/9.0.2:
+    resolution: {integrity: sha512-TRh+TNUYXiodatSAxd0xZc7sh4RfktVVgNFIN7TCQXKyancbCAcWfHvKfgdlX8LcqSBxKoHVa90n0XdUbboTkw==}
+    dev: false
+
   /@vueuse/shared/8.7.5_vue@3.2.37:
     resolution: {integrity: sha512-THXPvMBFmg6Gf6AwRn/EdTh2mhqwjGsB2Yfp374LNQSQVKRHtnJ0I42bsZTn7nuEliBxqUrGQm/lN6qUHmhJLw==}
     peerDependencies:
@@ -615,6 +635,15 @@ packages:
     dependencies:
       vue: 3.2.37
       vue-demi: 0.13.1_vue@3.2.37
+    dev: false
+
+  /@vueuse/shared/9.0.2_vue@3.2.37:
+    resolution: {integrity: sha512-KwBDefK2ljLESpt0ffe2w8EGUCb3IaMfTzeytB/uHHjHOGOEIHLHHyn8W2C48uGQEvoe5iwaW4Bfp8cRUM6IFA==}
+    dependencies:
+      vue-demi: 0.13.1_vue@3.2.37
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
     dev: false
 
   /accepts/1.3.8:
