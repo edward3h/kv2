@@ -36,4 +36,10 @@ public record SimpleRoster(
                 .map(s -> s.replaceAll("^#+\\s*", ""))
                 .orElse("My Roster");
     }
+
+    public View view() {
+        return new View(id, title, body, owner.view());
+    }
+
+    public record View(String id, String title, String body, User.View owner) {}
 }

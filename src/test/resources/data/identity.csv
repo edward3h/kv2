@@ -1,2 +1,3 @@
 id,provider,user_id,external_id,email,attributes
 test#abc,test,abc,first,first@example.com,{}
+test#def,test,def,second,second@example.com,{}

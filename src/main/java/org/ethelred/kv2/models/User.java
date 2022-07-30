@@ -33,4 +33,10 @@ public record User(
     public Collection<String> roles() {
         return flags.stream().filter(UserFlag::isRole).map(Enum::name).toList();
     }
+
+    public View view() {
+        return new View(id, displayName);
+    }
+
+    public record View(String id, String displayName) {}
 }

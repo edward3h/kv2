@@ -13,6 +13,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 import java.util.List;
 import org.ethelred.kv2.models.DocumentStub;
+import org.ethelred.kv2.models.SimpleRoster;
 import org.ethelred.kv2.providers.TestDataLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,5 +51,64 @@ public class RosterControllerTest {
         var request = HttpRequest.GET("/abc/rosters").basicAuth("first", "whatever");
         var result = client.toBlocking().retrieve(request, Argument.of(List.class, Argument.of(DocumentStub.class)));
         assertEquals(List.of(new DocumentStub("123", "Test Roster 1")), result);
+    }
+
+    @Test
+    public void getPublicSignedIn() {
+        var request = HttpRequest.GET("/abc/rosters/123").basicAuth("first", "whatever");
+        var result = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.class));
+        assertEquals("Body goes here", result.body());
+    }
+
+    @Test
+    public void getPublicAnonymous() {
+        var request = HttpRequest.GET("/abc/rosters/123");
+        var result = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.class));
+        assertEquals("Body goes here", result.body());
+    }
+
+    @Test
+    public void getPrivateSignedIn() {
+        var request = HttpRequest.GET("/abc/rosters/345").basicAuth("second", "whatever");
+        var result = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.class));
+        assertEquals("Body goes here", result.body());
+    }
+
+    @Test
+    public void getPrivateAnonymous() {
+        var exception = assertThrows(HttpClientResponseException.class, () -> {
+            var request = HttpRequest.GET("/abc/rosters/345");
+            var result = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.class));
+        });
+        assertEquals("Forbidden", exception.getMessage());
+    }
+
+    @Test
+    public void createRosterWithTitle() {
+        var body =
+                """
+                # My First Roster
+
+                Big Detachment
+                 Blah
+                  Blah
+                """;
+        var request = HttpRequest.POST("/abc/rosters", body).basicAuth("first", "hello");
+        var response = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.View.class));
+        assertEquals("My First Roster", response.title());
+        assertEquals("ABC", response.owner().displayName());
+    }
+
+    @Test
+    public void createRosterNoTitle() {
+        var body = """
+                Big Detachment
+                 Blah
+                  Blah
+                """;
+        var request = HttpRequest.POST("/abc/rosters", body).basicAuth("first", "hello");
+        var response = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.View.class));
+        assertEquals("My Roster", response.title());
+        assertEquals("ABC", response.owner().displayName());
     }
 }

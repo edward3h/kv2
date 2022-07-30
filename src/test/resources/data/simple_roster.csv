@@ -1,2 +1,4 @@
 id,title,body,owner_id,visibility
 123,Test Roster 1,Body goes here,abc,PUBLIC
+234,Test Roster 2,Body goes here,def,PUBLIC
+345,Test Roster 3,Body goes here,def,PRIVATE

@@ -32,25 +32,25 @@ public record RosterController(SimpleRosterRepository rosterRepository, UserServ
 
     @Get("/{id}")
     @Secured(SecurityRule.IS_ANONYMOUS)
-    public SimpleRoster getRoster(@Nullable Authentication auth, @PathVariable String id) {
+    public SimpleRoster.View getRoster(@Nullable Authentication auth, @PathVariable String id) {
         var roster = rosterRepository
                 .findById(id)
                 .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
         if (roster.visibility() == Visibility.PUBLIC) {
-            return roster;
+            return roster.view();
         }
         // group visibility TODO
         var user = userService.userFromAuthentication(auth);
         if (Objects.equals(user, roster.owner())) {
-            return roster;
+            return roster.view();
         }
         throw new HttpStatusException(HttpStatus.FORBIDDEN, "Private roster");
     }
 
     @Post
-    public SimpleRoster createRoster(@Nullable Authentication auth, @Body String rosterBody) {
+    public SimpleRoster.View createRoster(@Nullable Authentication auth, @Body String rosterBody) {
         var owner = userService.userFromAuthentication(auth);
         var roster = new SimpleRoster(owner, rosterBody, Visibility.PRIVATE);
-        return rosterRepository.save(roster);
+        return rosterRepository.save(roster).view();
     }
 }
