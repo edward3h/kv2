@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
@@ -36,7 +37,7 @@ public class RosterControllerTest {
     public void listForbidden() {
         var exception = assertThrows(
                 HttpClientResponseException.class, () -> client.toBlocking().retrieve("/abc/rosters"));
-        assertEquals("Unauthorized", exception.getMessage());
+        assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatus());
     }
 
     @Test
@@ -80,7 +81,7 @@ public class RosterControllerTest {
             var request = HttpRequest.GET("/abc/rosters/345");
             var result = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.class));
         });
-        assertEquals("Forbidden", exception.getMessage());
+        assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
     }
 
     @Test
@@ -110,5 +111,39 @@ public class RosterControllerTest {
         var response = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.View.class));
         assertEquals("My Roster", response.title());
         assertEquals("ABC", response.owner().displayName());
+    }
+
+    @Test
+    public void makeRosterPublic() {
+        var body = """
+                {"visibility": "PUBLIC"}
+                """;
+        var request = HttpRequest.PATCH("/abc/rosters/345", body).basicAuth("second", "whatever");
+        client.toBlocking().retrieve(request);
+        request = HttpRequest.GET("/abc/rosters/345");
+        var result = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.class));
+        assertEquals("Body goes here", result.body());
+    }
+
+    @Test
+    public void badPatch() {
+        var body = """
+                {"missing": "PUBLIC"}
+                """;
+        var request = HttpRequest.PATCH("/abc/rosters/345", body).basicAuth("second", "whatever");
+        var exception = assertThrows(
+                HttpClientResponseException.class, () -> client.toBlocking().retrieve(request));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void badPatch2() {
+        var body = """
+                {"visibility": "POOP"}
+                """;
+        var request = HttpRequest.PATCH("/abc/rosters/345", body).basicAuth("second", "whatever");
+        var exception = assertThrows(
+                HttpClientResponseException.class, () -> client.toBlocking().retrieve(request));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }
