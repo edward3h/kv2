@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@quasar/app-vite': 1.0.5
   '@quasar/extras': 1.15.0
-  '@types/node': 16.11.46
+  '@types/node': 16.11.47
   '@typescript-eslint/eslint-plugin': 5.31.0
   '@typescript-eslint/parser': 5.31.0
   '@vueuse/core': ^8.7.5
@@ -34,7 +34,7 @@ dependencies:
 
 devDependencies:
   '@quasar/app-vite': 1.0.5_cqrhcycf3jfzskhab4xgrgmjye
-  '@types/node': 16.11.46
+  '@types/node': 16.11.47
   '@typescript-eslint/eslint-plugin': 5.31.0_d5zwcxr4bwkhmuo464cb3a2puu
   '@typescript-eslint/parser': 5.31.0_he2ccbldppg44uulnyq4rwocfa
   autoprefixer: 10.4.8_postcss@8.4.14
@@ -230,7 +230,7 @@ packages:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 16.11.46
+      '@types/node': 16.11.47
     dev: true
 
   /@types/chrome/0.0.191:
@@ -249,7 +249,7 @@ packages:
   /@types/connect/3.4.35:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
-      '@types/node': 16.11.46
+      '@types/node': 16.11.47
     dev: true
 
   /@types/cookie/0.3.3:
@@ -263,7 +263,7 @@ packages:
   /@types/express-serve-static-core/4.17.28:
     resolution: {integrity: sha512-P1BJAEAW3E2DJUlkgq4tOL3RyMunoWXqbSCygWo5ZIWTjUgN1YnaXWW4VWl/oc8vs/XoYibEGBKP0uZyF4AHig==}
     dependencies:
-      '@types/node': 16.11.46
+      '@types/node': 16.11.47
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
     dev: true
@@ -299,8 +299,8 @@ packages:
     resolution: {integrity: sha512-YATxVxgRqNH6nHEIsvg6k2Boc1JHI9ZbH5iWFFv/MTkchz3b1ieGDa5T0a9RznNdI0KhVbdbWSN+KWWrQZRxTw==}
     dev: true
 
-  /@types/node/16.11.46:
-    resolution: {integrity: sha512-x+sfpb2dMrhCQPL4NAGs64Z9hh0t72aP0dg+PuZidmPr/0Gj5ELQTjD/t46dq3DF/8ZvSHOaIyDIbAsdPshyVQ==}
+  /@types/node/16.11.47:
+    resolution: {integrity: sha512-fpP+jk2zJ4VW66+wAMFoBJlx1bxmBKx4DUFf68UHgdGCOuyUTDlLWqsaNPJh7xhNDykyJ9eIzAygilP/4WoN8g==}
     dev: true
 
   /@types/qs/6.9.7:
@@ -315,7 +315,7 @@ packages:
     resolution: {integrity: sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ==}
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 16.11.46
+      '@types/node': 16.11.47
     dev: true
 
   /@types/web-bluetooth/0.0.14:
