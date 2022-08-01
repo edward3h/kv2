@@ -1,6 +1,7 @@
 /* (C) Edward Harman and contributors 2022 */
 package org.ethelred.kv2.services;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.security.authentication.*;
@@ -34,7 +35,7 @@ public class DefaultUserService implements UserService {
         var externalId = auth.getName();
         var user = userRepository
                 .findByIdentity((String) provider, externalId)
-                .orElse(createUser(auth, (String) provider, externalId));
+                .orElseGet(() -> createUser(auth, (String) provider, externalId));
         return AuthenticationResponse.success(user.id(), user.roles(), user.attributes());
     }
 
@@ -56,6 +57,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
+    @NonNull
     public User userFromAuthentication(Authentication auth) {
         if (auth == null || !auth.getAttributes().containsKey("user")) {
             throw new HttpStatusException(HttpStatus.FORBIDDEN, "No user in request");

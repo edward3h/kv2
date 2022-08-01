@@ -3,6 +3,7 @@ plugins {
 	id("io.micronaut.application") version "3.5.1"
 	id("gg.jte.gradle") version "2.1.2"
 	id("org.ethelred.kv2.java-conventions")
+	id "co.uzzu.dotenv.gradle" version "2.0.0"
 }
 
 version = "0.1"
@@ -54,6 +55,10 @@ dependencies {
 
 application {
 	mainClass.set("org.ethelred.kv2.Application")
+}
+
+tasks.named('run') {
+	environment(env.allVariables)
 }
 
 jte {

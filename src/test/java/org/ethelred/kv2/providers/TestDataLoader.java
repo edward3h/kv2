@@ -72,7 +72,7 @@ public class TestDataLoader {
 
     private void _delete(Connection conn, String tablename) throws SQLException {
         try (var s = conn.createStatement()) {
-            s.execute("DELETE FROM " + tablename); // awesome injection right there
+            s.execute("DELETE FROM %s".formatted(tablename)); // awesome injection right there
         }
     }
 

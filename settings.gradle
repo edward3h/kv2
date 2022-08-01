@@ -5,3 +5,5 @@ pluginManagement {
 	}
 }
 rootProject.name="kv2"
+
+include 'client'

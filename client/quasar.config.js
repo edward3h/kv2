@@ -76,7 +76,9 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+       extendViteConf (viteConf) {
+        viteConf.build.manifest = true;
+       },
       // viteVuePluginOptions: {},
 
 
@@ -89,7 +91,19 @@ module.exports = configure(function (/* ctx */) {
     devServer: {
       // https: true
       open: true, // opens browser window automatically
-      host: '127.0.0.1' // dots make cookies work :shrug:
+      host: '127.0.0.1', // dots make cookies work :shrug:
+      proxy: {
+        '/abc': {
+          target: 'http://127.0.0.1:8080',
+        },
+        '/oauth': {
+          target: 'http://127.0.0.1:8080',
+          autoRewrite: true
+        },
+        '/logout': {
+          target: 'http://127.0.0.1:8080'
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

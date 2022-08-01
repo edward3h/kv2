@@ -2,12 +2,17 @@
 package org.ethelred.kv2.models;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.core.util.*;
-import io.micronaut.data.annotation.*;
+import io.micronaut.data.annotation.DateCreated;
+import io.micronaut.data.annotation.DateUpdated;
+import io.micronaut.data.annotation.Id;
+import io.micronaut.data.annotation.MappedEntity;
+import io.micronaut.data.annotation.TypeDef;
 import io.micronaut.data.model.DataType;
 import java.sql.Timestamp;
-import java.util.*;
-import org.ethelred.kv2.services.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import org.ethelred.kv2.services.GeneratedId;
 import org.ethelred.kv2.util.AuthAttributesHelper;
 
 @MappedEntity
@@ -18,6 +23,7 @@ public record User(
         @TypeDef(type = DataType.INTEGER, converter = UserFlagSetConverter.class) Set<UserFlag> flags,
         @DateCreated @Nullable Timestamp createdAt,
         @DateUpdated @Nullable Timestamp updatedAt) {
+
     public User(String id, String displayName, String pictureUrl, UserFlag... flags) {
         this(id, displayName, pictureUrl, Set.of(flags), null, null);
     }
