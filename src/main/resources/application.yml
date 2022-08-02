@@ -3,6 +3,10 @@ micronaut:
     name: kv2
   security:
     authentication: cookie
+    token:
+      jwt:
+        cookie:
+          cookie-http-only: false
     oauth2:
       clients:
         google:
