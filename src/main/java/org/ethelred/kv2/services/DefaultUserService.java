@@ -2,6 +2,7 @@
 package org.ethelred.kv2.services;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.security.authentication.*;
@@ -58,10 +59,16 @@ public class DefaultUserService implements UserService {
 
     @Override
     @NonNull
-    public User userFromAuthentication(Authentication auth) {
-        if (auth == null || !auth.getAttributes().containsKey("user")) {
+    public User userFromAuthentication(@Nullable Authentication auth) {
+        if (auth == null) {
             throw new HttpStatusException(HttpStatus.FORBIDDEN, "No user in request");
         }
-        return (User) auth.getAttributes().get("user");
+        LOGGER.debug("Auth: {}", auth);
+        return userRepository.findById(auth.getName()).orElseThrow(AuthenticationException::new);
+    }
+
+    @Override
+    public Optional<User> findById(String id) {
+        return userRepository.findById(id);
     }
 }

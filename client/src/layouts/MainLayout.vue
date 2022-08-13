@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Codename: KV2
+          Simple Roster Editor
         </q-toolbar-title>
 
         <q-space />

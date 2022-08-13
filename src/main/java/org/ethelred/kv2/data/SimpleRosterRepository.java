@@ -12,12 +12,11 @@ import java.util.Optional;
 import javax.validation.constraints.NotNull;
 import org.ethelred.kv2.models.DocumentStub;
 import org.ethelred.kv2.models.SimpleRoster;
-import org.ethelred.kv2.models.User;
 
 @JdbcRepository(dialect = Dialect.MYSQL)
 public interface SimpleRosterRepository extends CrudRepository<SimpleRoster, String> {
-    @Query("select id, title from simple_roster where owner_id = :owner")
-    List<DocumentStub> findByOwner(User owner);
+    @Query("select id, title from simple_roster where owner_id = :ownerId")
+    List<DocumentStub> findByOwner(String ownerId);
 
     @Override
     @NonNull

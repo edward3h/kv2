@@ -22,7 +22,8 @@ public record User(
         @Nullable String pictureUrl,
         @TypeDef(type = DataType.INTEGER, converter = UserFlagSetConverter.class) Set<UserFlag> flags,
         @DateCreated @Nullable Timestamp createdAt,
-        @DateUpdated @Nullable Timestamp updatedAt) {
+        @DateUpdated @Nullable Timestamp updatedAt)
+        implements Owner {
 
     public User(String id, String displayName, String pictureUrl, UserFlag... flags) {
         this(id, displayName, pictureUrl, Set.of(flags), null, null);
@@ -32,8 +33,7 @@ public record User(
         return AuthAttributesHelper.map(
                 "displayName", displayName,
                 "picture", pictureUrl,
-                "flags", flags,
-                "user", this);
+                "flags", flags);
     }
 
     public Collection<String> roles() {

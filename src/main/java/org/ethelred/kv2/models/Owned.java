@@ -6,17 +6,16 @@ import io.micronaut.core.annotation.Nullable;
 
 public interface Owned {
     @NonNull
-    User owner();
+    String ownerId();
 
     @NonNull
     Visibility visibility();
 
-    default boolean isOwnedBy(@NonNull User user) {
-        return user.id().equals(owner().id());
+    default boolean isOwnedBy(@NonNull Owner owner) {
+        return ownerId().equals(owner.id());
     }
 
-    default boolean isVisibleTo(@Nullable User user) {
-        // TODO group
-        return visibility() == Visibility.PUBLIC || (user != null && isOwnedBy(user));
+    default boolean isVisibleTo(@Nullable Owner owner) {
+        return visibility() == Visibility.PUBLIC || (owner != null && isOwnedBy(owner));
     }
 }

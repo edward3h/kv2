@@ -7,6 +7,12 @@ micronaut:
       jwt:
         cookie:
           cookie-http-only: false
+        signatures:
+          secret:
+            generator:
+              secret: ${JWT_SECRET:MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=}
+              base64: true
+              jws-algorithm: HS256
     oauth2:
       clients:
         google:

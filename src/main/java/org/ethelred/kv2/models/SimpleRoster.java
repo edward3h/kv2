@@ -41,5 +41,10 @@ public record SimpleRoster(
         return new View(id, title, body, owner.view());
     }
 
+    @Override
+    public String ownerId() {
+        return owner.id();
+    }
+
     public record View(String id, String title, String body, User.View owner) {}
 }

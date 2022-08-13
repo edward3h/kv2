@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Map;
 import org.ethelred.kv2.data.SimpleRosterRepository;
 import org.ethelred.kv2.models.DocumentStub;
+import org.ethelred.kv2.models.Owner;
 import org.ethelred.kv2.models.SimpleRoster;
-import org.ethelred.kv2.models.User;
 import org.ethelred.kv2.models.Visibility;
 import org.ethelred.kv2.services.UserService;
 import org.ethelred.kv2.util.PatchHelper;
@@ -31,13 +31,13 @@ public record RosterController(
     private static final Logger LOGGER = LoggerFactory.getLogger(RosterController.class);
 
     @Get
-    public List<DocumentStub> userRosters(@Nullable User user) {
-        return rosterRepository.findByOwner(user);
+    public List<DocumentStub> userRosters(@Nullable Owner user) {
+        return rosterRepository.findByOwner(user.id());
     }
 
     @Get("/{id}")
     @Secured(SecurityRule.IS_ANONYMOUS)
-    public SimpleRoster.View getRoster(@Nullable User user, @PathVariable String id) {
+    public SimpleRoster.View getRoster(@Nullable Owner user, @PathVariable String id) {
         var roster = rosterRepository
                 .findById(id)
                 .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
@@ -48,14 +48,21 @@ public record RosterController(
     }
 
     @Post
-    public SimpleRoster.View createRoster(@Nullable User owner, @Body String rosterBody) {
-        var roster = new SimpleRoster(owner, rosterBody, Visibility.PRIVATE);
+    public SimpleRoster.View createRoster(@Nullable Owner owner, @Body String rosterBody) {
+        if (owner == null) {
+            throw new HttpStatusException(HttpStatus.UNAUTHORIZED, "wat");
+        }
+        var user = userService.findById(owner.id());
+        if (user.isEmpty()) {
+            throw new HttpStatusException(HttpStatus.NOT_FOUND, "also wat");
+        }
+        var roster = new SimpleRoster(user.get(), rosterBody, Visibility.PRIVATE);
         return rosterRepository.save(roster).view();
     }
 
     @Patch("/{id}")
     public SimpleRoster.View updateRosterFields(
-            @Nullable User owner, @PathVariable String id, @Body Map<String, Object> updates) {
+            @Nullable Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
         var oldRoster = rosterRepository
                 .findById(id)
                 .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
