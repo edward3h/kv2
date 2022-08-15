@@ -11,11 +11,11 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@vueuse/core": "^8.7.5",
-    "@vueuse/integrations": "^8.7.5",
-    "jwt-decode": "^3.1.2",
-    "pinia": "^2.0.14",
-    "universal-cookie": "^4.0.4",
+    "@vueuse/core": "8.9.4",
+    "@vueuse/integrations": "8.9.4",
+    "jwt-decode": "3.1.2",
+    "pinia": "2.0.18",
+    "universal-cookie": "4.0.4",
     "quasar": "2.7.7",
     "@quasar/extras": "1.15.1",
     "vue": "3.2.37",
