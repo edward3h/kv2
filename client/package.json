@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@vueuse/core": "8.9.5",
-    "@vueuse/integrations": "8.9.5",
+    "@vueuse/integrations": "8.9.4",
     "jwt-decode": "3.1.2",
     "pinia": "2.0.18",
     "universal-cookie": "4.0.4",
