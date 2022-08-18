@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@vueuse/core": "8.9.5",
+    "@vueuse/core": "8.9.4",
     "@vueuse/integrations": "8.9.5",
     "jwt-decode": "3.1.2",
     "pinia": "2.0.18",
