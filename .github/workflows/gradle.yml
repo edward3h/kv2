@@ -30,6 +30,6 @@ jobs:
         components: 'native-image'
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@f39ea084f9ee46ead40276b0e56acb31b6a5c342
+      uses: gradle/gradle-build-action@6e56b596011ccbae3d762062c3b7df2de25f367b
       with:
         arguments: build
