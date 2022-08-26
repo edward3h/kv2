@@ -25,7 +25,7 @@ specifiers:
   universal-cookie: 4.0.4
   vue: 3.2.37
   vue-codemirror: 6.0.2
-  vue-router: 4.1.4
+  vue-router: 4.1.5
 
 dependencies:
   '@quasar/extras': 1.15.1
@@ -37,11 +37,11 @@ dependencies:
   universal-cookie: 4.0.4
   vue: 3.2.37
   vue-codemirror: 6.0.2_w3v55mexrpfzyztsvxxm2lvyqu
-  vue-router: 4.1.4_vue@3.2.37
+  vue-router: 4.1.5_vue@3.2.37
 
 devDependencies:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.0.6_4ewidxwo5u4adwb3oaxeuth434
+  '@quasar/app-vite': 1.0.6_sqzqudbf6iqh56nw2aynzt5wny
   '@types/jest': 28.1.8
   '@types/node': 16.11.56
   '@typescript-eslint/eslint-plugin': 5.35.1_4kgehhvxgrxdvptdn2db7re534
@@ -804,7 +804,7 @@ packages:
     resolution: {integrity: sha512-nWlGg+aMfQDhGYa5FtBhZwldeo2MtdjHdxmEQvhBXEnxgD5IhIYl0PHvex8SdwyN7qcSoMykMWdjyAX7ZxkpMw==}
     dev: true
 
-  /@quasar/app-vite/1.0.6_4ewidxwo5u4adwb3oaxeuth434:
+  /@quasar/app-vite/1.0.6_sqzqudbf6iqh56nw2aynzt5wny:
     resolution: {integrity: sha512-7rQQREeOQ3YaVq2i9QL4LrxJWGKcOeM3XuT7+6+tPSGqV7jCQkR70wcakUTAthSsegjFp/seqPHoGNXzGfoZ0Q==}
     engines: {node: ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
@@ -871,7 +871,7 @@ packages:
       table: 6.8.0
       vite: 2.9.13_sass@1.32.12
       vue: 3.2.37
-      vue-router: 4.1.4_vue@3.2.37
+      vue-router: 4.1.5_vue@3.2.37
       webpack-merge: 5.8.0
     transitivePeerDependencies:
       - less
@@ -4972,8 +4972,8 @@ packages:
       - supports-color
     dev: true
 
-  /vue-router/4.1.4_vue@3.2.37:
-    resolution: {integrity: sha512-UgYen33gOtwT3cOG1+yRen+Brk9py8CSlC9LEa3UjvKZ4EAoSo8NjZPDeDnmNerfazorHIJG1NC7qdi1SuQJnQ==}
+  /vue-router/4.1.5_vue@3.2.37:
+    resolution: {integrity: sha512-IsvoF5D2GQ/EGTs/Th4NQms9gd2NSqV+yylxIyp/OYp8xOwxmU8Kj/74E9DTSYAyH5LX7idVUngN3JSj1X4xcQ==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
