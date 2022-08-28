@@ -3,6 +3,7 @@ package org.ethelred.kv2.controllers;
 
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -14,21 +15,32 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.ethelred.kv2.data.SimpleRosterRepository;
 import org.ethelred.kv2.models.DocumentStub;
 import org.ethelred.kv2.models.Owner;
 import org.ethelred.kv2.models.SimpleRoster;
 import org.ethelred.kv2.models.Visibility;
 import org.ethelred.kv2.services.UserService;
+import org.ethelred.kv2.util.Debug;
 import org.ethelred.kv2.util.PatchHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller("/abc/rosters")
 @Secured({"ROLE_USER"})
-public record RosterController(
-        SimpleRosterRepository rosterRepository, UserService userService, PatchHelper patchHelper) {
+@Debug
+public class RosterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RosterController.class);
+    private final SimpleRosterRepository rosterRepository;
+    private final UserService userService;
+    private final PatchHelper patchHelper;
+
+    public RosterController(SimpleRosterRepository rosterRepository, UserService userService, PatchHelper patchHelper) {
+        this.rosterRepository = rosterRepository;
+        this.userService = userService;
+        this.patchHelper = patchHelper;
+    }
 
     @Get
     public List<DocumentStub> userRosters(@Nullable Owner user) {
@@ -48,7 +60,7 @@ public record RosterController(
     }
 
     @Post
-    public SimpleRoster.View createRoster(@Nullable Owner owner, @Body String rosterBody) {
+    public SimpleRoster.View createRoster(@Nullable Owner owner, @Body @Nullable String rosterBody) {
         if (owner == null) {
             throw new HttpStatusException(HttpStatus.UNAUTHORIZED, "wat");
         }
@@ -56,13 +68,14 @@ public record RosterController(
         if (user.isEmpty()) {
             throw new HttpStatusException(HttpStatus.NOT_FOUND, "also wat");
         }
-        var roster = new SimpleRoster(user.get(), rosterBody, Visibility.PRIVATE);
+        var roster = new SimpleRoster(user.get(), Objects.requireNonNullElse(rosterBody, ""), Visibility.PRIVATE);
         return rosterRepository.save(roster).view();
     }
 
-    @Patch("/{id}")
+    @Patch(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
     public SimpleRoster.View updateRosterFields(
             @Nullable Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
+        LOGGER.debug("updateRosterFields {}", updates);
         var oldRoster = rosterRepository
                 .findById(id)
                 .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
@@ -72,5 +85,40 @@ public record RosterController(
         }
         var newRoster = patchHelper.apply(oldRoster, updates);
         return rosterRepository.update(newRoster).view();
+    }
+
+    public SimpleRosterRepository rosterRepository() {
+        return rosterRepository;
+    }
+
+    public UserService userService() {
+        return userService;
+    }
+
+    public PatchHelper patchHelper() {
+        return patchHelper;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
+        var that = (RosterController) obj;
+        return Objects.equals(this.rosterRepository, that.rosterRepository)
+                && Objects.equals(this.userService, that.userService)
+                && Objects.equals(this.patchHelper, that.patchHelper);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rosterRepository, userService, patchHelper);
+    }
+
+    @Override
+    public String toString() {
+        return "RosterController[" + "rosterRepository="
+                + rosterRepository + ", " + "userService="
+                + userService + ", " + "patchHelper="
+                + patchHelper + ']';
     }
 }

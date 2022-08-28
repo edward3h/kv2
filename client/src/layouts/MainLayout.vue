@@ -18,12 +18,6 @@
         <q-space />
 
         <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn v-if="userStore.loggedIn.value" round dense flat color="grey-8" icon="notifications">
-            <q-badge color="red" text-color="white" floating>
-              2
-            </q-badge>
-            <q-tooltip>Notifications</q-tooltip>
-          </q-btn>
           <q-btn v-if="userStore.loggedIn.value" round flat>
             <q-avatar size="26px">
               <img :src="userStore.avatar.value" :alt="userStore.name.value">
@@ -51,7 +45,7 @@
         <q-item-label
           header
         >
-          Essential Links
+          Links
         </q-item-label>
 
         <EssentialLink
@@ -66,7 +60,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer>Footer!</q-footer>
+    <q-footer class="text-center">Simple Roster Editor by Ordo Acerbus</q-footer>
   </q-layout>
 </template>
 
@@ -80,46 +74,10 @@ import { useCookies } from '@vueuse/integrations/useCookies';
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Help',
+    caption: 'Help',
+    icon: 'help',
+    link: '#'
   }
 ];
 

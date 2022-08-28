@@ -11,9 +11,11 @@ import jakarta.inject.*;
 import java.util.*;
 import org.ethelred.kv2.data.*;
 import org.ethelred.kv2.models.*;
+import org.ethelred.kv2.util.Debug;
 import org.slf4j.*;
 
 @Singleton
+@Debug
 public class DefaultUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
     private final IdentityRepository identityRepository;

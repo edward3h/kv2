@@ -2,6 +2,7 @@ plugins {
   id "com.github.node-gradle.node" version "3.4.0"
 }
 
-task run(type: PnpmTask) {
-  args = ["quasar", "dev"]
-}
+// TODO run in parallel?
+//task run(type: PnpmTask) {
+//  args = ["quasar", "dev"]
+//}

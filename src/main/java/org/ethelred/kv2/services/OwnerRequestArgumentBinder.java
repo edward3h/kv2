@@ -10,8 +10,10 @@ import io.micronaut.security.filters.SecurityFilter;
 import jakarta.inject.Singleton;
 import java.util.Optional;
 import org.ethelred.kv2.models.Owner;
+import org.ethelred.kv2.util.Debug;
 
 @Singleton
+@Debug
 public class OwnerRequestArgumentBinder implements TypedRequestArgumentBinder<Owner> {
     private static final Argument<Owner> TYPE = Argument.of(Owner.class);
 

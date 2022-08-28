@@ -5,8 +5,16 @@ micronaut:
 datasources:
   default:
     # auto-run testcontainer mysql
-    url: jdbc:tc:mysql:8:///kv2
-    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+#    url: jdbc:tc:mysql:8:///kv2
+#    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:mysql://localhost:3306/db
+    driverClassName: com.mysql.cj.jdbc.Driver
     username: kv2
     password: '12345'
     dialect: MYSQL
+    initializationFailTimeout: 10000
+endpoints:
+  all:
+    sensitive: false
+  stop:
+    enabled: true

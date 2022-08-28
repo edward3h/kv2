@@ -96,6 +96,9 @@ module.exports = configure(function (/* ctx */) {
         '/abc': {
           target: 'http://127.0.0.1:8080',
         },
+        '/lmno': {
+          target: 'http://127.0.0.1:8080',
+        },
         '/oauth': {
           target: 'http://127.0.0.1:8080',
           autoRewrite: true

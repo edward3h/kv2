@@ -12,7 +12,8 @@ const { isFetching, error, data } = useFetch(url)
 const router = useRouter();
 
 const newRoster = async () => {
-  const { data } = await useFetch(url).post().json()
+  const { data } = await useFetch(url).post('').json()
+  console.log(data.value)
   router.push(`/rosters/${data.value.id}`)
 }
 

@@ -44,8 +44,12 @@ datasources:
     password: '12345'
     schema-generate: None
     dialect: MYSQL
+    initializationFailTimeout: 60000
 liquibase:
   enabled: true
   datasources:
     default:
       change-log: 'classpath:db/liquibase-changelog.xml'
+endpoints:
+  all:
+    path: /lmno/

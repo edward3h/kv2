@@ -29,6 +29,7 @@ dependencies {
 	annotationProcessor("io.micronaut.security:micronaut-security-annotations")
 	implementation("io.micronaut:micronaut-http-client")
 	implementation("io.micronaut:micronaut-runtime")
+	implementation("io.micronaut:micronaut-management")
 	implementation("io.micronaut.data:micronaut-data-jdbc")
 	implementation("io.micronaut.liquibase:micronaut-liquibase")
 	implementation("io.micronaut.security:micronaut-security")
@@ -59,6 +60,8 @@ application {
 
 tasks.named('run') {
 	environment(env.allVariables)
+	dependsOn startMysqlContainer
+	finalizedBy stopMysqlContainer
 }
 
 jte {
@@ -67,3 +70,35 @@ jte {
 	binaryStaticContent = true
 }
 
+ext.containerName = 'kv2_dev_mysql'
+import com.bmuschko.gradle.docker.tasks.container.*
+import com.github.dockerjava.api.exception.ConflictException
+
+task createMysqlContainer(type: DockerCreateContainer) {
+	targetImageId 'mysql:8'
+	containerName = project.containerName
+	hostConfig.portBindings = ['3306:3306']
+	envVars = [MYSQL_ROOT_PASSWORD:'super-secret', MYSQL_DATABASE:'db', MYSQL_USER:'kv2', MYSQL_PASSWORD:'12345']
+	onError {
+		if (it instanceof ConflictException) {
+			logger.warn("create container failed, assuming it already exists")
+		} else {
+			throw it
+		}
+	}
+}
+
+task startMysqlContainer(type: DockerStartContainer) {
+	dependsOn createMysqlContainer
+	targetContainerId project.containerName
+	onError {
+		logger.warn("start container failed, assuming it is running", it)
+	}
+}
+
+task stopMysqlContainer(type: DockerStopContainer) {
+	targetContainerId project.containerName
+	onError {
+		logger.warn("stop container failed, assuming it did not exist", it)
+	}
+}
