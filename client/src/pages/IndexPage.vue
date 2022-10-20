@@ -1,7 +1,7 @@
 <template>
   <q-page class="row items-center justify-evenly">
-    <roster-list v-if="userStore.loggedIn.value"/>
-    <welcome v-else/>
+    <roster-list class="col" v-if="userStore.loggedIn.value"/>
+    <welcome class="col" v-else/>
   </q-page>
 </template>
 

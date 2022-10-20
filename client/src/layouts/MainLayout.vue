@@ -47,12 +47,9 @@
         >
           Links
         </q-item-label>
+        <sidebar-link v-if="userStore.loggedIn.value" title="My Rosters" to="/" icon="list"/>
+        <sidebar-link title="Help" caption="Help" icon="help" to="/help"/>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
       </q-list>
     </q-drawer>
 
@@ -66,34 +63,23 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
 import { useUserStore } from 'src/stores/user';
 import { useQuasar } from 'quasar';
 import LoginChooseProviderVue from 'src/components/LoginChooseProvider.vue';
-import { useCookies } from '@vueuse/integrations/useCookies';
-
-const linksList = [
-  {
-    title: 'Help',
-    caption: 'Help',
-    icon: 'help',
-    link: '#'
-  }
-];
+import SidebarLink from 'components/SidebarLink.vue'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
-  },
+    SidebarLink
+},
 
   setup () {
     const leftDrawerOpen = ref(false)
     const userStore = useUserStore();
     const $q = useQuasar();
     return {
-      essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value

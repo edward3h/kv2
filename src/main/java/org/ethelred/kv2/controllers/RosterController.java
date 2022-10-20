@@ -1,12 +1,12 @@
 /* (C) Edward Harman and contributors 2022 */
 package org.ethelred.kv2.controllers;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Patch;
 import io.micronaut.http.annotation.PathVariable;
@@ -64,9 +64,20 @@ public record RosterController(
         return rosterRepository.save(roster).view();
     }
 
+    @Delete("/{id}")
+    public void deleteRoster(Owner owner, @PathVariable String id) {
+        var oldRoster = rosterRepository
+                .findById(id)
+                .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
+        if (!oldRoster.isOwnedBy(owner)) {
+            throw new HttpStatusException(HttpStatus.FORBIDDEN, "Not owner of this roster");
+        }
+        rosterRepository.deleteById(id);
+    }
+
     @Patch(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
     public SimpleRoster.View updateRosterFields(
-            @NonNull Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
+            Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
         LOGGER.debug("updateRosterFields {}", updates);
         var oldRoster = rosterRepository
                 .findById(id)
