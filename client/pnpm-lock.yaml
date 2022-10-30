@@ -11,6 +11,7 @@ specifiers:
   '@vueuse/core': 9.1.1
   '@vueuse/integrations': 9.3.1
   autoprefixer: 10.4.8
+  codemirror: ^6.0.1
   eslint: 8.23.0
   eslint-config-prettier: 8.5.0
   eslint-plugin-vue: 9.4.0
@@ -31,6 +32,7 @@ dependencies:
   '@quasar/extras': 1.15.1
   '@vueuse/core': 9.1.1_vue@3.2.37
   '@vueuse/integrations': 9.3.1_ep45lr76pckedwbmfifkxripri
+  codemirror: 6.0.1_@lezer+common@1.0.0
   jwt-decode: 3.1.2
   pinia: 2.0.21_bw4xur2vyhvhfd4whxbr7emp4u
   quasar: 2.7.7
