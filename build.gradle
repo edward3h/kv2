@@ -1,9 +1,11 @@
 plugins {
 	id("com.github.johnrengelman.shadow") version "7.1.2"
-	id("io.micronaut.application") version "3.5.1"
+	id("io.micronaut.application") version "3.6.2"
 	id("gg.jte.gradle") version "2.1.2"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
+	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
+	id 'io.micronaut.test-resources' version '3.6.2'
 }
 
 version = "0.1"
@@ -43,8 +45,6 @@ dependencies {
 	implementation("javax.annotation:javax.annotation-api")
 	runtimeOnly("ch.qos.logback:logback-classic")
 	runtimeOnly("mysql:mysql-connector-java")
-	runtimeOnly("org.testcontainers:jdbc")
-	runtimeOnly("org.testcontainers:mysql")
 
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mysql")
@@ -58,11 +58,9 @@ application {
 	mainClass.set("org.ethelred.kv2.Application")
 }
 
-tasks.named('run') {
-	environment(env.allVariables)
-	dependsOn startMysqlContainer
-	finalizedBy stopMysqlContainer
-}
+//tasks.named('run') {
+//	environment(env.allVariables)
+//}
 
 jte {
 	generate()
@@ -70,35 +68,10 @@ jte {
 	binaryStaticContent = true
 }
 
-ext.containerName = 'kv2_dev_mysql'
-import com.bmuschko.gradle.docker.tasks.container.*
-import com.github.dockerjava.api.exception.ConflictException
-
-task createMysqlContainer(type: DockerCreateContainer) {
-	targetImageId 'mysql:8'
-	containerName = project.containerName
-	hostConfig.portBindings = ['3306:3306']
-	envVars = [MYSQL_ROOT_PASSWORD:'super-secret', MYSQL_DATABASE:'db', MYSQL_USER:'kv2', MYSQL_PASSWORD:'12345']
-	onError {
-		if (it instanceof ConflictException) {
-			logger.warn("create container failed, assuming it already exists")
-		} else {
-			throw it
-		}
+shellcheck {
+	sourceFiles = fileTree(projectDir) {
+		include("*.sh")
 	}
 }
 
-task startMysqlContainer(type: DockerStartContainer) {
-	dependsOn createMysqlContainer
-	targetContainerId project.containerName
-	onError {
-		logger.warn("start container failed, assuming it is running", it)
-	}
-}
-
-task stopMysqlContainer(type: DockerStopContainer) {
-	targetContainerId project.containerName
-	onError {
-		logger.warn("stop container failed, assuming it did not exist", it)
-	}
-}
+check.dependsOn(":shellcheck")

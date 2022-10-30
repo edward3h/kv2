@@ -38,13 +38,13 @@ micronaut:
         get-allowed: true
 datasources:
   default:
-    url: jdbc:mysql://localhost:3306/db
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: kv2
-    password: '12345'
-    schema-generate: None
+#    url: jdbc:mysql://localhost:3306/db
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    username: kv2
+#    password: '12345'
+#    schema-generate: None
     dialect: MYSQL
-    initializationFailTimeout: 60000
+#    initializationFailTimeout: 60000
 liquibase:
   enabled: true
   datasources:
