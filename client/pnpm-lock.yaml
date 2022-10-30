@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@jest/globals': 28.1.3
   '@quasar/app-vite': 1.0.6
-  '@quasar/extras': 1.15.1
+  '@quasar/extras': 1.15.5
   '@types/jest': 28.1.8
   '@types/node': 16.11.56
   '@typescript-eslint/eslint-plugin': 5.40.1
@@ -29,7 +29,7 @@ specifiers:
   vue-router: 4.1.5
 
 dependencies:
-  '@quasar/extras': 1.15.1
+  '@quasar/extras': 1.15.5
   '@vueuse/core': 9.1.1_vue@3.2.37
   '@vueuse/integrations': 9.3.1_ep45lr76pckedwbmfifkxripri
   codemirror: 6.0.1_@lezer+common@1.0.0
@@ -887,8 +887,8 @@ packages:
       - supports-color
     dev: true
 
-  /@quasar/extras/1.15.1:
-    resolution: {integrity: sha512-c8nL5ccja+2xlQrcyraxdzcnn297rDzjH0LcyeqShcsRA5+6Yr6wQD9BEzpFgNTZvpP51sZlQHfV07nUd9OxDA==}
+  /@quasar/extras/1.15.5:
+    resolution: {integrity: sha512-JzKKx5/eKAip3X3bZUEJOOWT9NudqjF01gcce6rtyviko49OU4r+ekyJU3QQIKF8ZqnjZ+DpsVpMWBBZnO6hSQ==}
     dev: false
 
   /@quasar/fastclick/1.1.5:
