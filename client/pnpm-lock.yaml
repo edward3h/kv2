@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.0.6
+  '@quasar/app-vite': 1.1.3
   '@quasar/extras': 1.15.5
   '@types/jest': 28.1.8
   '@types/node': 16.18.3
@@ -43,7 +43,7 @@ dependencies:
 
 devDependencies:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.0.6_s7w7duxrhlqlmlgvlsh24sx2ve
+  '@quasar/app-vite': 1.1.3_s7w7duxrhlqlmlgvlsh24sx2ve
   '@types/jest': 28.1.8
   '@types/node': 16.18.3
   '@typescript-eslint/eslint-plugin': 5.40.1_uinlsezghkabfyfazhpqi2kp6m
@@ -811,8 +811,8 @@ packages:
     resolution: {integrity: sha512-nWlGg+aMfQDhGYa5FtBhZwldeo2MtdjHdxmEQvhBXEnxgD5IhIYl0PHvex8SdwyN7qcSoMykMWdjyAX7ZxkpMw==}
     dev: true
 
-  /@quasar/app-vite/1.0.6_s7w7duxrhlqlmlgvlsh24sx2ve:
-    resolution: {integrity: sha512-7rQQREeOQ3YaVq2i9QL4LrxJWGKcOeM3XuT7+6+tPSGqV7jCQkR70wcakUTAthSsegjFp/seqPHoGNXzGfoZ0Q==}
+  /@quasar/app-vite/1.1.3_s7w7duxrhlqlmlgvlsh24sx2ve:
+    resolution: {integrity: sha512-YX6lVkjRFNDbYcORiMtNlDz3jlSf7ldF4zGZk8zaW/Q1CfjaLqpSqCmBP4eta6QXz7To0IdabROYKa55D6IDgA==}
     engines: {node: ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
     peerDependencies:
@@ -820,7 +820,7 @@ packages:
       electron-packager: ^15.0.0
       eslint: ^8.11.0
       pinia: ^2.0.0
-      quasar: ^2.6.0
+      quasar: ^2.8.0
       vue: ^3.2.29
       vue-router: ^4.0.12
       vuex: ^4.0.0
@@ -840,7 +840,7 @@ packages:
         optional: true
     dependencies:
       '@quasar/fastclick': 1.1.5
-      '@quasar/vite-plugin': 1.1.1_ymhdi56l6cecjldm54cu7iljbi
+      '@quasar/vite-plugin': 1.2.3_om6zfzewrk57grrxfttcevhm5u
       '@rollup/pluginutils': 4.2.1
       '@types/chrome': 0.0.191
       '@types/compression': 1.7.2
@@ -868,7 +868,6 @@ packages:
       open: 8.4.0
       ouch: 2.0.1
       pinia: 2.0.23_l7r24p6nevbtlimqmqcwa3ouhu
-      postcss: 8.4.14
       quasar: 2.7.7
       register-service-worker: 1.7.2
       rollup-plugin-visualizer: 5.6.0_rollup@2.75.1
@@ -895,14 +894,16 @@ packages:
     resolution: {integrity: sha512-p3JKgTjRlJ1YQXbqTw3Bsa4j0mQdt5dq+WfYvyb7MgKGdephHCKdR/kxA5PCTAmJanGJuDKqRdyGYX/hYN4KGw==}
     dev: true
 
-  /@quasar/vite-plugin/1.1.1_ymhdi56l6cecjldm54cu7iljbi:
-    resolution: {integrity: sha512-qTFXSprubTEdKxoWqmkQi8rwSRf6l5IvGD2svUFZzt3jz9brr2nBsRsUbhN4byryUwGdJ4HoN3vpoFi13A5uTQ==}
+  /@quasar/vite-plugin/1.2.3_om6zfzewrk57grrxfttcevhm5u:
+    resolution: {integrity: sha512-ErSyY3cHz40GBIQUmqSI8OzzshJM5pLq33Yq3NEtYdWYh1NuIc4C766xkatUdxvhX9sLNnQQZax2ysJ5u7kUJA==}
     engines: {node: '>=12'}
     peerDependencies:
-      quasar: ^2.0.0
+      '@vitejs/plugin-vue': ^2.0.0 || ^3.0.0
+      quasar: ^2.8.0
       vite: ^2.0.0 || ^3.0.0
       vue: ^3.0.0
     dependencies:
+      '@vitejs/plugin-vue': 2.3.3_vite@2.9.13+vue@3.2.41
       quasar: 2.7.7
       vite: 2.9.13
       vue: 3.2.41
