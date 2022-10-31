@@ -21,7 +21,7 @@
     "universal-cookie": "4.0.4",
     "vue": "3.2.41",
     "vue-codemirror": "6.1.1",
-    "vue-router": "4.1.5"
+    "vue-router": "4.1.6"
   },
   "devDependencies": {
     "@jest/globals": "28.1.3",
