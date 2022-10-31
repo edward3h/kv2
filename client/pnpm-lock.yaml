@@ -14,7 +14,7 @@ specifiers:
   codemirror: ^6.0.1
   eslint: 8.26.0
   eslint-config-prettier: 8.5.0
-  eslint-plugin-vue: 9.4.0
+  eslint-plugin-vue: 9.7.0
   jest: 28.1.3
   jwt-decode: 3.1.2
   pinia: 2.0.23
@@ -51,7 +51,7 @@ devDependencies:
   autoprefixer: 10.4.13_postcss@8.4.14
   eslint: 8.26.0
   eslint-config-prettier: 8.5.0_eslint@8.26.0
-  eslint-plugin-vue: 9.4.0_eslint@8.26.0
+  eslint-plugin-vue: 9.7.0_eslint@8.26.0
   jest: 28.1.3_dnlfjp7n5lpfgnj4digwzn5fhe
   prettier: 2.7.1
   ts-jest: 28.0.8_tu3gp47vyvxbtgyvt5oqsgdw7q
@@ -2424,8 +2424,8 @@ packages:
       eslint: 8.26.0
     dev: true
 
-  /eslint-plugin-vue/9.4.0_eslint@8.26.0:
-    resolution: {integrity: sha512-Nzz2QIJ8FG+rtJaqT/7/ru5ie2XgT9KCudkbN0y3uFYhQ41nuHEaboLAiqwMcK006hZPQv/rVMRhUIwEGhIvfQ==}
+  /eslint-plugin-vue/9.7.0_eslint@8.26.0:
+    resolution: {integrity: sha512-DrOO3WZCZEwcLsnd3ohFwqCoipGRSTKTBTnLwdhqAbYZtzWl0o7D+D8ZhlmiZvABKTEl8AFsqH1GHGdybyoQmw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
@@ -2524,15 +2524,6 @@ packages:
       text-table: 0.2.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /espree/9.3.3:
-    resolution: {integrity: sha512-ORs1Rt/uQTqUKjDdGCyrtYxbazf5umATSf/K4qxjmZHORR6HJk+2s/2Pqe+Kk49HHINC/xNIrGfgh8sZcll0ng==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    dependencies:
-      acorn: 8.8.0
-      acorn-jsx: 5.3.2_acorn@8.8.0
-      eslint-visitor-keys: 3.3.0
     dev: true
 
   /espree/9.4.0:
@@ -4978,7 +4969,7 @@ packages:
       eslint: 8.26.0
       eslint-scope: 7.1.1
       eslint-visitor-keys: 3.3.0
-      espree: 9.3.3
+      espree: 9.4.0
       esquery: 1.4.0
       lodash: 4.17.21
       semver: 7.3.7
