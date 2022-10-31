@@ -67,6 +67,7 @@ import { useUserStore } from 'src/stores/user';
 import { useQuasar } from 'quasar';
 import LoginChooseProviderVue from 'src/components/LoginChooseProvider.vue';
 import SidebarLink from 'components/SidebarLink.vue'
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -79,6 +80,8 @@ export default defineComponent({
     const leftDrawerOpen = ref(false)
     const userStore = useUserStore();
     const $q = useQuasar();
+    const router = useRouter();
+
     return {
       leftDrawerOpen,
       toggleLeftDrawer () {
@@ -86,7 +89,10 @@ export default defineComponent({
       },
       userStore,
       doLogin: () => $q.dialog({component: LoginChooseProviderVue}),
-      doLogout: () => userStore.logout()
+      doLogout: () => {
+        userStore.logout()
+        router.push('/')
+      }
     }
   }
 });
