@@ -79,12 +79,14 @@ module.exports = configure(function (/* ctx */) {
        extendViteConf (viteConf) {
         viteConf.build.manifest = true;
        },
-      // viteVuePluginOptions: {},
+      viteVuePluginOptions: {
+        include: [/\.vue$/, /\.md$/]
+      },
 
 
-      // vitePlugins: [
-      //   [ 'package-name', { ..options.. } ]
-      // ]
+      vitePlugins: [
+        [ 'vite-plugin-vue-markdown', { } ]
+      ]
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer

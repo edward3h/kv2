@@ -48,7 +48,10 @@
           Links
         </q-item-label>
         <sidebar-link v-if="userStore.loggedIn.value" title="My Rosters" to="/" icon="list"/>
-        <sidebar-link title="Help" caption="Help" icon="help" to="/help"/>
+        <sidebar-link title="Help" icon="help" to="/help"/>
+        <sidebar-link title="Privacy Policy" icon="privacy_tip" to="/privacy"/>
+        <sidebar-link title="Terms & Conditions" icon="summarize" to="/terms"/>
+
 
       </q-list>
     </q-drawer>
