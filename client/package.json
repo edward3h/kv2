@@ -19,7 +19,7 @@
     "pinia": "2.0.23",
     "quasar": "2.10.1",
     "universal-cookie": "4.0.4",
-    "vue": "3.2.43",
+    "vue": "3.2.44",
     "vue-codemirror": "6.1.1",
     "vue-router": "4.1.6"
   },
