@@ -5,6 +5,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
@@ -52,6 +53,7 @@ public record RosterController(
     }
 
     @Post
+    @Consumes({MediaType.TEXT_PLAIN})
     public SimpleRoster.View createRoster(@Nullable Owner owner, @Body @Nullable String rosterBody) {
         if (owner == null) {
             throw new HttpStatusException(HttpStatus.UNAUTHORIZED, "wat");

@@ -1,6 +1,6 @@
 <template>
   <div v-html="styleBlock"></div>
-  <roster-level :level="roster.root" prefix=""></roster-level>
+  <roster-level :level="roster.root" prefix="" :odd="false"></roster-level>
   <div>Total: {{roster.root.total()}}</div>
 </template>
 

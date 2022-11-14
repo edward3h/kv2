@@ -98,20 +98,18 @@ const build = (lineInfos: NestedLineInfo[]): Level => {
   const depthMap = new Map()
   indents.forEach((value, index) => depthMap.set(value, index))
   const root = {text:'', children:[], total}
-  let depth = 0
   const parents: Level[] = [root]
   let last:Level = root
   lineInfos.forEach(li => {
     const liDepth = depthMap.get(li.indent)
     const liLevel = levelFromLineInfo(li)
-    if (liDepth < depth) {
+    while (liDepth < (parents.length - 1)) {
       parents.pop()
     }
-    if (liDepth > depth) {
+    if (liDepth >  (parents.length - 1)) {
       parents.push(last)
     }
     parents.at(-1)?.children.push(liLevel)
-    depth = liDepth
     last = liLevel
   })
 

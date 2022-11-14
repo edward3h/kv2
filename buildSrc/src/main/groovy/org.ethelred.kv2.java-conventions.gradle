@@ -35,10 +35,6 @@ spotless {
     groovyGradle {
         greclipse()
     }
-    sql {
-        target '**/*.sql'
-        dbeaver()
-    }
     format 'xml', {
         target 'src/**/*/xml'
         eclipseWtp('xml')

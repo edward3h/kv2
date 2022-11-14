@@ -48,6 +48,27 @@ Detachment
     })
   })
 
+  test('nesting 3', () => {
+    const roster = parse(`
+Gang
+
+Vehicles
+ Road Thug [25]
+  Mauler [100]
+   Twin-linked Bolters [65]
+
+ Road Thug [25]
+  Heavy Vehicle [175]
+   Wheeled
+   Transport Bed [15]
+   Nitro Burners [15]
+   Heavy Stubber (Crew, Front/Right) [130]
+    `)
+    expect(roster.root.children).toHaveLength(2)
+    const vehicles = roster.root.children[1]
+    expect(vehicles.children).toHaveLength(2)
+  })
+
   test('math 1', () => {
     const roster = parse(`
 Detachment

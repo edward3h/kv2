@@ -22,7 +22,9 @@ const { isFetching, error, data, execute: fetchList } = useFetch(url).get().json
 const router = useRouter();
 
 const newRoster = async () => {
-  const { data } = await useFetch(url).post('').json()
+  const { data } = await useFetch(url).post(`# New Roster
+
+  Type your roster entries here.`).json()
   console.log(data.value)
   router.push(`/rosters/${data.value.id}`)
 }

@@ -18,7 +18,7 @@
         <q-space />
 
         <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn v-if="userStore.loggedIn.value" round flat>
+          <q-btn v-if="userStore.loggedIn.value">
             <q-avatar size="26px">
               <img :src="userStore.avatar.value" :alt="userStore.name.value">
             </q-avatar>
@@ -31,7 +31,7 @@
             </q-menu>
             <q-tooltip>Account</q-tooltip>
           </q-btn>
-          <q-btn round v-else @click="doLogin"><q-icon name="login" /></q-btn>
+          <q-btn v-else @click="doLogin" icon-right="login" label="Login"></q-btn>
         </div>
       </q-toolbar>
     </q-header>

@@ -63,6 +63,7 @@ public class DefaultUserService implements UserService {
     @NonNull
     public User userFromAuthentication(@Nullable Authentication auth) {
         if (auth == null) {
+            LOGGER.error("No user in request?");
             throw new HttpStatusException(HttpStatus.FORBIDDEN, "No user in request");
         }
         LOGGER.debug("Auth: {}", auth);

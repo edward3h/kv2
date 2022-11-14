@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpStatus;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
@@ -94,10 +95,13 @@ public class RosterControllerTest {
                  Blah
                   Blah
                 """;
-        var request = HttpRequest.POST("/abc/rosters", body).basicAuth("first", "hello");
+        var request = HttpRequest.POST("/abc/rosters", body)
+                .contentType(MediaType.TEXT_PLAIN)
+                .basicAuth("first", "hello");
         var response = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.View.class));
         assertEquals("My First Roster", response.title());
         assertEquals("ABC", response.owner().displayName());
+        assertEquals(body, response.body());
     }
 
     @Test
@@ -107,7 +111,9 @@ public class RosterControllerTest {
                  Blah
                   Blah
                 """;
-        var request = HttpRequest.POST("/abc/rosters", body).basicAuth("first", "hello");
+        var request = HttpRequest.POST("/abc/rosters", body)
+                .contentType(MediaType.TEXT_PLAIN)
+                .basicAuth("first", "hello");
         var response = client.toBlocking().retrieve(request, Argument.of(SimpleRoster.View.class));
         assertEquals("My Roster", response.title());
         assertEquals("ABC", response.owner().displayName());

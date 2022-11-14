@@ -18,3 +18,9 @@ endpoints:
     sensitive: false
   stop:
     enabled: true
+test-resources:
+  containers:
+    mysql:
+      rw-fs-bind:
+        - "data": /var/lib/mysql
+        
