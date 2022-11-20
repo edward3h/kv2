@@ -11,7 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@quasar/extras": "1.15.5",
+    "@quasar/extras": "1.15.6",
     "@vueuse/core": "9.5.0",
     "@vueuse/integrations": "9.5.0",
     "codemirror": "^6.0.1",
