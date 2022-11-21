@@ -17,7 +17,7 @@ specifiers:
   eslint-plugin-vue: 9.7.0
   jest: 28.1.3
   jwt-decode: 3.1.2
-  pinia: 2.0.24
+  pinia: 2.0.25
   prettier: 2.7.1
   quasar: 2.10.2
   ts-jest: 28.0.8
@@ -35,7 +35,7 @@ dependencies:
   '@vueuse/integrations': 9.5.0_6sdmyk5mbpjqcuqaisxupv3y4y
   codemirror: 6.0.1_@lezer+common@1.0.0
   jwt-decode: 3.1.2
-  pinia: 2.0.24_mgnvym7yiazkylwwogi5r767ue
+  pinia: 2.0.25_mgnvym7yiazkylwwogi5r767ue
   quasar: 2.10.2
   universal-cookie: 4.0.4
   vue: 3.2.45
@@ -44,7 +44,7 @@ dependencies:
 
 devDependencies:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.1.3_apykytvgpapgynjgbjxhqnidmm
+  '@quasar/app-vite': 1.1.3_6ez2bpboi6w6wxmsfnwy2biede
   '@types/jest': 28.1.8
   '@types/node': 16.18.3
   '@typescript-eslint/eslint-plugin': 5.44.0_fnsv2sbzcckq65bwfk7a5xwslu
@@ -833,7 +833,7 @@ packages:
     resolution: {integrity: sha512-nWlGg+aMfQDhGYa5FtBhZwldeo2MtdjHdxmEQvhBXEnxgD5IhIYl0PHvex8SdwyN7qcSoMykMWdjyAX7ZxkpMw==}
     dev: true
 
-  /@quasar/app-vite/1.1.3_apykytvgpapgynjgbjxhqnidmm:
+  /@quasar/app-vite/1.1.3_6ez2bpboi6w6wxmsfnwy2biede:
     resolution: {integrity: sha512-YX6lVkjRFNDbYcORiMtNlDz3jlSf7ldF4zGZk8zaW/Q1CfjaLqpSqCmBP4eta6QXz7To0IdabROYKa55D6IDgA==}
     engines: {node: ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
@@ -889,7 +889,7 @@ packages:
       minimist: 1.2.6
       open: 8.4.0
       ouch: 2.0.1
-      pinia: 2.0.24_mgnvym7yiazkylwwogi5r767ue
+      pinia: 2.0.25_mgnvym7yiazkylwwogi5r767ue
       quasar: 2.10.2
       register-service-worker: 1.7.2
       rollup-plugin-visualizer: 5.6.0_rollup@2.75.1
@@ -4201,8 +4201,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /pinia/2.0.24_mgnvym7yiazkylwwogi5r767ue:
-    resolution: {integrity: sha512-DDLd4Iphyc+6PYYYbx7jkb6WP9gecgu9bz9huyB5rb7CdJI3DhzYiZI+/Ih8MLewRrP9DSpslF/BgSNrJtZU7A==}
+  /pinia/2.0.25_mgnvym7yiazkylwwogi5r767ue:
+    resolution: {integrity: sha512-3reAkjJ6bW2D5hZKRMS0c9rUbHVlsVyZd037xO0PJr2AuF/09RRSBnFLlJgmHF4Jx6dEoW/jZBOHTushY7IMlw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
