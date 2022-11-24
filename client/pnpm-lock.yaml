@@ -14,7 +14,7 @@ specifiers:
   codemirror: ^6.0.1
   eslint: 8.28.0
   eslint-config-prettier: 8.5.0
-  eslint-plugin-vue: 9.7.0
+  eslint-plugin-vue: 9.8.0
   jest: 28.1.3
   jwt-decode: 3.1.2
   pinia: 2.0.26
@@ -52,7 +52,7 @@ devDependencies:
   autoprefixer: 10.4.13_postcss@8.4.14
   eslint: 8.28.0
   eslint-config-prettier: 8.5.0_eslint@8.28.0
-  eslint-plugin-vue: 9.7.0_eslint@8.28.0
+  eslint-plugin-vue: 9.8.0_eslint@8.28.0
   jest: 28.1.3_dnlfjp7n5lpfgnj4digwzn5fhe
   prettier: 2.8.0
   ts-jest: 28.0.8_ksqgnoa7mdahbeamfro4s5z2ii
@@ -2474,8 +2474,8 @@ packages:
       eslint: 8.28.0
     dev: true
 
-  /eslint-plugin-vue/9.7.0_eslint@8.28.0:
-    resolution: {integrity: sha512-DrOO3WZCZEwcLsnd3ohFwqCoipGRSTKTBTnLwdhqAbYZtzWl0o7D+D8ZhlmiZvABKTEl8AFsqH1GHGdybyoQmw==}
+  /eslint-plugin-vue/9.8.0_eslint@8.28.0:
+    resolution: {integrity: sha512-E/AXwcTzunyzM83C2QqDHxepMzvI2y6x+mmeYHbVDQlKFqmKYvRrhaVixEeeG27uI44p9oKDFiyCRw4XxgtfHA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
