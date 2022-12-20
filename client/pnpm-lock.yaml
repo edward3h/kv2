@@ -8,7 +8,7 @@ specifiers:
   '@types/node': 16.18.10
   '@typescript-eslint/eslint-plugin': 5.47.0
   '@typescript-eslint/parser': 5.47.0
-  '@vueuse/core': 9.7.0
+  '@vueuse/core': 9.8.2
   '@vueuse/integrations': 9.7.0
   autoprefixer: 10.4.13
   codemirror: ^6.0.1
@@ -31,7 +31,7 @@ specifiers:
 
 dependencies:
   '@quasar/extras': 1.15.8
-  '@vueuse/core': 9.7.0_vue@3.2.45
+  '@vueuse/core': 9.8.2_vue@3.2.45
   '@vueuse/integrations': 9.7.0_6sdmyk5mbpjqcuqaisxupv3y4y
   codemirror: 6.0.1_@lezer+common@1.0.0
   jwt-decode: 3.1.2
@@ -1390,6 +1390,18 @@ packages:
       - vue
     dev: false
 
+  /@vueuse/core/9.8.2_vue@3.2.45:
+    resolution: {integrity: sha512-aWiCmcYIpPt7xjuqYiceODEMHchDYthrJ4AqI+FXPZrR23PZOqdiktbUVyQl2kGlR3H4i9UJ/uimQrwhz9UouQ==}
+    dependencies:
+      '@types/web-bluetooth': 0.0.16
+      '@vueuse/metadata': 9.8.2
+      '@vueuse/shared': 9.8.2_vue@3.2.45
+      vue-demi: 0.13.1_vue@3.2.45
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
   /@vueuse/integrations/9.7.0_6sdmyk5mbpjqcuqaisxupv3y4y:
     resolution: {integrity: sha512-YWJIV+9gMQi2dGMw+x+Ocizs2/N/weQbPr71WdR6RguCvEctNbiwQt5FcKbS9KvCY7+7hdoqYF+vCL+cIXRkEg==}
     peerDependencies:
@@ -1442,8 +1454,21 @@ packages:
     resolution: {integrity: sha512-M7WsAgw28FNtTH0bzsGuHEtJOPJqPpyeHS6PHq+8UesLgNjZ9waMAntiUrgUQlxt09M4i2lH7y9sRi0jkfeXGA==}
     dev: false
 
+  /@vueuse/metadata/9.8.2:
+    resolution: {integrity: sha512-N4E/BKS+9VsUeD4WLVRU1J2kCOLh+iikBcMtipFcTyL204132vDYHs27zLAVabJYGnhC0dIVGdhg9pbOZiY2TQ==}
+    dev: false
+
   /@vueuse/shared/9.7.0_vue@3.2.45:
     resolution: {integrity: sha512-pwmt1y3TJ2s5KqWmkv9ZKEV59GwuZQZk8XLiU+hGswz0jej318ozbea9E4A/A50ksyM26swSFr7sZ9llNPsZHg==}
+    dependencies:
+      vue-demi: 0.13.1_vue@3.2.45
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
+
+  /@vueuse/shared/9.8.2_vue@3.2.45:
+    resolution: {integrity: sha512-ACjrPQzowd5dnabNJt9EoGVobco9/ENiA5qP53vjiuxndlJYuc/UegwhXC7KdQbPX4F45a50+45K3g1wNqOzmA==}
     dependencies:
       vue-demi: 0.13.1_vue@3.2.45
     transitivePeerDependencies:
