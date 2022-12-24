@@ -9,7 +9,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 5.47.0
   '@typescript-eslint/parser': 5.47.0
   '@vueuse/core': 9.9.0
-  '@vueuse/integrations': 9.8.2
+  '@vueuse/integrations': 9.9.0
   autoprefixer: 10.4.13
   codemirror: ^6.0.1
   eslint: 8.30.0
@@ -32,7 +32,7 @@ specifiers:
 dependencies:
   '@quasar/extras': 1.15.8
   '@vueuse/core': 9.9.0_vue@3.2.45
-  '@vueuse/integrations': 9.8.2_6sdmyk5mbpjqcuqaisxupv3y4y
+  '@vueuse/integrations': 9.9.0_6sdmyk5mbpjqcuqaisxupv3y4y
   codemirror: 6.0.1_@lezer+common@1.0.0
   jwt-decode: 3.1.2
   pinia: 2.0.28_prq2uz4lho2pwp6irk4cfkrxwu
@@ -1378,18 +1378,6 @@ packages:
   /@vue/shared/3.2.45:
     resolution: {integrity: sha512-Ewzq5Yhimg7pSztDV+RH1UDKBzmtqieXQlpTVm2AwraoRL/Rks96mvd8Vgi7Lj+h+TH8dv7mXD3FRZR3TUvbSg==}
 
-  /@vueuse/core/9.8.2_vue@3.2.45:
-    resolution: {integrity: sha512-aWiCmcYIpPt7xjuqYiceODEMHchDYthrJ4AqI+FXPZrR23PZOqdiktbUVyQl2kGlR3H4i9UJ/uimQrwhz9UouQ==}
-    dependencies:
-      '@types/web-bluetooth': 0.0.16
-      '@vueuse/metadata': 9.8.2
-      '@vueuse/shared': 9.8.2_vue@3.2.45
-      vue-demi: 0.13.1_vue@3.2.45
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
-    dev: false
-
   /@vueuse/core/9.9.0_vue@3.2.45:
     resolution: {integrity: sha512-JdDb7TrE0imZnwBhMF4+0PCJqGD3AxzH8S2sfk54P0rqvklK+EAtAR/mPb1HwV/JPujQFQJhghQ190Yq03YpVw==}
     dependencies:
@@ -1402,8 +1390,8 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/integrations/9.8.2_6sdmyk5mbpjqcuqaisxupv3y4y:
-    resolution: {integrity: sha512-8nIMfD5HezootbTt5Un6AkiK9CL657YxI1ZFtcQa5CggKhYjyoLiJn68HaQ80GeE4LJ++F51qksENKoTukIWQA==}
+  /@vueuse/integrations/9.9.0_6sdmyk5mbpjqcuqaisxupv3y4y:
+    resolution: {integrity: sha512-/wr3jrMlzbPNd38dO85NOT4j7vga9+eQewEZFXHJAFEvKnRxBy/Ytp1pt4Sz8dVOLLYMBHfSaVAra91ftfIh0w==}
     peerDependencies:
       async-validator: '*'
       axios: '*'
@@ -1440,8 +1428,8 @@ packages:
       universal-cookie:
         optional: true
     dependencies:
-      '@vueuse/core': 9.8.2_vue@3.2.45
-      '@vueuse/shared': 9.8.2_vue@3.2.45
+      '@vueuse/core': 9.9.0_vue@3.2.45
+      '@vueuse/shared': 9.9.0_vue@3.2.45
       jwt-decode: 3.1.2
       universal-cookie: 4.0.4
       vue-demi: 0.13.1_vue@3.2.45
@@ -1450,21 +1438,8 @@ packages:
       - vue
     dev: false
 
-  /@vueuse/metadata/9.8.2:
-    resolution: {integrity: sha512-N4E/BKS+9VsUeD4WLVRU1J2kCOLh+iikBcMtipFcTyL204132vDYHs27zLAVabJYGnhC0dIVGdhg9pbOZiY2TQ==}
-    dev: false
-
   /@vueuse/metadata/9.9.0:
     resolution: {integrity: sha512-pgxsUJv/d7IjKpLeB6TthggEsaBwM3ffc5jPrr5TmxAm/fup0mGR5VTzrdA/PSx85tpb+CIvP92D+55qBNc8ag==}
-    dev: false
-
-  /@vueuse/shared/9.8.2_vue@3.2.45:
-    resolution: {integrity: sha512-ACjrPQzowd5dnabNJt9EoGVobco9/ENiA5qP53vjiuxndlJYuc/UegwhXC7KdQbPX4F45a50+45K3g1wNqOzmA==}
-    dependencies:
-      vue-demi: 0.13.1_vue@3.2.45
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - vue
     dev: false
 
   /@vueuse/shared/9.9.0_vue@3.2.45:
