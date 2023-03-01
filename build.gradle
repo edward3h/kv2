@@ -1,11 +1,11 @@
 plugins {
 	id("com.github.johnrengelman.shadow") version "7.1.2"
-	id("io.micronaut.application") version "3.6.4"
-	id("gg.jte.gradle") version "2.2.3"
+	id("io.micronaut.application") version "3.6.7"
+	id("gg.jte.gradle") version "2.2.4"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
-	id 'io.micronaut.test-resources' version '3.6.4'
+	id 'io.micronaut.test-resources' version '3.6.7'
 }
 
 version = "0.1"
@@ -39,7 +39,7 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 	implementation("io.micronaut.views:micronaut-views-jte")
-	implementation("gg.jte:jte:2.2.3")
+	implementation("gg.jte:jte:2.2.4")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
