@@ -1,11 +1,12 @@
 plugins {
-	id("com.github.johnrengelman.shadow") version "7.1.2"
-	id("io.micronaut.application") version "3.6.7"
-	id("gg.jte.gradle") version "2.2.4"
+	id 'java'
+	id("com.github.johnrengelman.shadow") version "8.1.0"
+	id("io.micronaut.application") version "3.7.3"
+	id("gg.jte.gradle") version "2.3.0"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
-	id 'io.micronaut.test-resources' version '3.6.7'
+	id 'io.micronaut.test-resources' version '3.7.3'
 }
 
 version = "0.1"
@@ -70,6 +71,11 @@ jte {
 	generate()
 	generateNativeImageResources = true
 	binaryStaticContent = true
+}
+
+// workaround for https://docs.gradle.org/8.0.1/userguide/validation_problems.html#implicit_dependency
+tasks.named('inspectRuntimeClasspath') {
+	dependsOn('generateJte')
 }
 
 /*
