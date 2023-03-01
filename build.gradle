@@ -12,12 +12,12 @@ version = "0.1"
 group = "org.ethelred"
 
 repositories {
-	mavenCentral()
 	mavenLocal()
+	mavenCentral()
 }
 
 micronaut {
-	runtime("netty")
+	//		runtime("netty")
 	testRuntime("junit5")
 	processing {
 		incremental(true)
@@ -51,6 +51,10 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.1'
+
+	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.2-SNAPSHOT')
+	runtimeOnly('org.ethelred.cgi:standalone:0.2-SNAPSHOT')
+
 }
 
 

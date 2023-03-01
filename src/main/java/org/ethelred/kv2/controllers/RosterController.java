@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2022 */
+/* (C) Edward Harman and contributors 2022-2023 */
 package org.ethelred.kv2.controllers;
 
 import io.micronaut.core.annotation.Nullable;
@@ -49,6 +49,7 @@ public record RosterController(
         if (roster.isVisibleTo(user)) {
             return roster.view();
         }
+        LOGGER.debug("Private roster {} user {}", roster, user);
         throw new HttpStatusException(HttpStatus.FORBIDDEN, "Private roster");
     }
 

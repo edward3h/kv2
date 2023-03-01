@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2022 */
+/* (C) Edward Harman and contributors 2022-2023 */
 package org.ethelred.kv2.providers.discord;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

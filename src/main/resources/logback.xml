@@ -22,7 +22,7 @@
     <!-- <logger name="io.micronaut.http.client.netty.DefaultHttpClient" level="trace"/> -->
 <!--    <logger name="io.micronaut.context.condition" level="DEBUG"/>-->
     <logger name="io.micronaut.security" level="DEBUG"/>
-    <logger name="org.ethelred.kv2" level="DEBUG"/>
+    <logger name="org.ethelred" level="DEBUG"/>
     <logger name="io.micronaut.web.router" level="DEBUG"/>
     <logger name="io.micronaut.http.server" level="DEBUG"/>
 
