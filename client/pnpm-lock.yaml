@@ -19,7 +19,7 @@ specifiers:
   jwt-decode: 3.1.2
   pinia: 2.0.33
   prettier: 2.8.4
-  quasar: 2.11.7
+  quasar: 2.11.8
   ts-jest: 28.0.8
   ts-node: 10.9.1
   typescript: 4.9.5
@@ -36,7 +36,7 @@ dependencies:
   codemirror: 6.0.1_@lezer+common@1.0.0
   jwt-decode: 3.1.2
   pinia: 2.0.33_hmuptsblhheur2tugfgucj7gc4
-  quasar: 2.11.7
+  quasar: 2.11.8
   universal-cookie: 4.0.4
   vue: 3.2.47
   vue-codemirror: 6.1.1_bxcxcy6q5ryy5ccenljp75aexa
@@ -44,7 +44,7 @@ dependencies:
 
 devDependencies:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.2.1_xpubftlhprzxm7w4dkh75penia
+  '@quasar/app-vite': 1.2.1_6nmzpsijcnrnfw7wmig7irtwem
   '@types/jest': 28.1.8
   '@types/node': 16.18.16
   '@typescript-eslint/eslint-plugin': 5.55.0_342y7v4tc7ytrrysmit6jo4wri
@@ -853,7 +853,7 @@ packages:
     resolution: {integrity: sha512-nWlGg+aMfQDhGYa5FtBhZwldeo2MtdjHdxmEQvhBXEnxgD5IhIYl0PHvex8SdwyN7qcSoMykMWdjyAX7ZxkpMw==}
     dev: true
 
-  /@quasar/app-vite/1.2.1_xpubftlhprzxm7w4dkh75penia:
+  /@quasar/app-vite/1.2.1_6nmzpsijcnrnfw7wmig7irtwem:
     resolution: {integrity: sha512-iKvpucrnt5pQuuQxqkLLWuI7Wm9Xx9fcBK1miMHWBgdcbHOXhc/OrlxeLvRwxm7GMd91cp3nhslo5j3a+zMCOg==}
     engines: {node: ^24 || ^22 || ^20 || ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
@@ -882,7 +882,7 @@ packages:
         optional: true
     dependencies:
       '@quasar/fastclick': 1.1.5
-      '@quasar/vite-plugin': 1.3.0_dlcahl7sg6suodzhxklwbnpdwm
+      '@quasar/vite-plugin': 1.3.0_byhfyp665bl5wfavgwubtdrote
       '@rollup/pluginutils': 4.2.1
       '@types/chrome': 0.0.208
       '@types/compression': 1.7.2
@@ -910,7 +910,7 @@ packages:
       open: 8.4.0
       ouch: 2.0.1
       pinia: 2.0.33_hmuptsblhheur2tugfgucj7gc4
-      quasar: 2.11.7
+      quasar: 2.11.8
       register-service-worker: 1.7.2
       rollup-plugin-visualizer: 5.6.0_rollup@2.75.1
       sass: 1.32.12
@@ -936,7 +936,7 @@ packages:
     resolution: {integrity: sha512-p3JKgTjRlJ1YQXbqTw3Bsa4j0mQdt5dq+WfYvyb7MgKGdephHCKdR/kxA5PCTAmJanGJuDKqRdyGYX/hYN4KGw==}
     dev: true
 
-  /@quasar/vite-plugin/1.3.0_dlcahl7sg6suodzhxklwbnpdwm:
+  /@quasar/vite-plugin/1.3.0_byhfyp665bl5wfavgwubtdrote:
     resolution: {integrity: sha512-wd7b/QrKu/WB53l+vxo6GLbkoEwh5FFKLtLl3fM8TXrDDRB1qsKKkRa/vwTU4dpuyBaOZDjycmYuAsOlTdNp8w==}
     engines: {node: '>=12'}
     peerDependencies:
@@ -946,7 +946,7 @@ packages:
       vue: ^3.0.0
     dependencies:
       '@vitejs/plugin-vue': 2.3.3_vite@2.9.13+vue@3.2.47
-      quasar: 2.11.7
+      quasar: 2.11.8
       vite: 2.9.13_sass@1.32.12
       vue: 3.2.47
     dev: true
@@ -4342,8 +4342,8 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /quasar/2.11.7:
-    resolution: {integrity: sha512-OzDwYfoSwZbwqfNWz9Bfn1mhGE8YMxpTLhPvVkQU87ePF6qFj4aWttcTUifXITKldOAZziN1Mmv8VLQyITHwiw==}
+  /quasar/2.11.8:
+    resolution: {integrity: sha512-JhwTnwNQ7YNTEq3SdhIOK0R32hEw/43gDiomYFDjVVXNF6WQdjlzgQr1N9AWGpXFzKRlJeIyhcskxZClj15EVg==}
     engines: {node: '>= 10.18.1', npm: '>= 6.13.4', yarn: '>= 1.21.1'}
 
   /queue-microtask/1.2.3:
