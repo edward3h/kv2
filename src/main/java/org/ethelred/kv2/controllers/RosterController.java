@@ -15,6 +15,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +37,13 @@ public record RosterController(
     private static final Logger LOGGER = LoggerFactory.getLogger(RosterController.class);
 
     @Get
-    public List<DocumentStub> userRosters(@Nullable Owner user) {
+    public List<DocumentStub> userRosters(@Parameter(hidden = true) @Nullable Owner user) {
         return rosterRepository.findByOwner(user.id());
     }
 
     @Get("/{id}")
     @Secured(SecurityRule.IS_ANONYMOUS)
-    public SimpleRoster.View getRoster(@Nullable Owner user, @PathVariable String id) {
+    public SimpleRoster.View getRoster(@Parameter(hidden = true) @Nullable Owner user, @PathVariable String id) {
         var roster = rosterRepository
                 .findById(id)
                 .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
@@ -55,7 +56,8 @@ public record RosterController(
 
     @Post
     @Consumes({MediaType.TEXT_PLAIN})
-    public SimpleRoster.View createRoster(@Nullable Owner owner, @Body @Nullable String rosterBody) {
+    public SimpleRoster.View createRoster(
+            @Parameter(hidden = true) @Nullable Owner owner, @Body @Nullable String rosterBody) {
         if (owner == null) {
             throw new HttpStatusException(HttpStatus.UNAUTHORIZED, "wat");
         }
@@ -68,7 +70,7 @@ public record RosterController(
     }
 
     @Delete("/{id}")
-    public void deleteRoster(Owner owner, @PathVariable String id) {
+    public void deleteRoster(@Parameter(hidden = true) Owner owner, @PathVariable String id) {
         var oldRoster = rosterRepository
                 .findById(id)
                 .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
@@ -80,7 +82,7 @@ public record RosterController(
 
     @Patch(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
     public SimpleRoster.View updateRosterFields(
-            Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
+            @Parameter(hidden = true) Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
         LOGGER.debug("updateRosterFields {}", updates);
         var oldRoster = rosterRepository
                 .findById(id)

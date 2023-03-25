@@ -8,7 +8,9 @@ import io.micronaut.security.annotation.*;
 import io.micronaut.security.authentication.*;
 import io.micronaut.security.rules.*;
 import io.micronaut.views.*;
+import java.security.Principal;
 import java.util.*;
+import org.ethelred.kv2.viewmodels.HomeContext;
 
 /** @author edward */
 @Controller
@@ -19,9 +21,21 @@ public class HomeController {
     @View("home")
     public HttpResponse<?> index(@Nullable Authentication auth) {
         var o = Optional.ofNullable(auth);
-        return HttpResponse.ok(Map.of(
-                "loggedIn", o.isPresent(),
-                "name", o.map(a -> a.getAttributes().get("displayName")),
-                "attributes", o.map(Authentication::getAttributes).orElse(Map.of())));
+        return HttpResponse.ok(Map.of("context", new HomeContext() {
+            @Override
+            public String title() {
+                return "Home";
+            }
+
+            @Override
+            public boolean loggedIn() {
+                return o.isPresent();
+            }
+
+            @Override
+            public String username() {
+                return o.map(Principal::getName).orElse("Anonymous");
+            }
+        }));
     }
 }

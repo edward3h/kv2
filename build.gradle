@@ -18,7 +18,7 @@ repositories {
 }
 
 micronaut {
-	//		runtime("netty")
+	runtime("netty")
 	testRuntime("junit5")
 	processing {
 		incremental(true)
@@ -30,6 +30,7 @@ dependencies {
 	annotationProcessor("io.micronaut:micronaut-http-validation")
 	annotationProcessor("io.micronaut.data:micronaut-data-processor")
 	annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+	annotationProcessor("io.micronaut.openapi:micronaut-openapi")
 	implementation("io.micronaut:micronaut-http-client")
 	implementation("io.micronaut:micronaut-runtime")
 	implementation("io.micronaut:micronaut-management")
@@ -44,6 +45,7 @@ dependencies {
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
+	implementation("io.swagger.core.v3:swagger-annotations")
 	runtimeOnly("ch.qos.logback:logback-classic")
 	runtimeOnly("mysql:mysql-connector-java")
 
@@ -53,8 +55,8 @@ dependencies {
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.2'
 
-	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.2')
-	runtimeOnly('org.ethelred.cgi:standalone:0.2')
+	//	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.2')
+	//	runtimeOnly('org.ethelred.cgi:standalone:0.2')
 
 }
 
