@@ -1,9 +1,7 @@
 /* (C) Edward Harman and contributors 2023 */
 package org.ethelred.roster;
 
-import org.teavm.jso.JSObject;
-
-public interface Level extends JSObject {
+public interface Level {
     Level[] getChildren();
 
     String getText();
@@ -17,4 +15,6 @@ public interface Level extends JSObject {
     int getMultiplier();
 
     int getTotal();
+
+    boolean isRoot();
 }

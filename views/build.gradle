@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id("gg.jte.gradle") version "2.3.0"
+	id("org.ethelred.kv2.java-conventions")
+	id "com.github.node-gradle.node" version "3.5.1"
+}
+
+version = "0.1"
+group = "org.ethelred"
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation("gg.jte:jte:2.3.0")
+
+	implementation(project(":rosterParser"))
+	implementation("io.micronaut:micronaut-core:${micronautVersion}") // used for nullability annotations
+
+}
+
+jte {
+	generate()
+	generateNativeImageResources = true
+	// TODO binaryStaticContent = true
+	// TODO packageName = 'org.ethelred.kv2.template'
+}
+
+tasks.register("generateCss", PnpmTask) {
+	inputs.files("package.json", "tailwind.config.js")
+	inputs.files(fileTree("src/main/jte"), fileTree("src/main/css"))
+	outputs.file("${buildDir}/resources/main/assets/style.css")
+	dependsOn("pnpmInstall")
+	args = "exec tailwindcss -i src/main/css/input.css -o build/resources/main/assets/style.css".split(/\s+/) as List
+}
+
+tasks.register("generateCssWatch", PnpmTask) {
+	dependsOn("pnpmInstall")
+	args = "exec tailwindcss -i src/main/css/input.css -o build/resources/main/assets/style.css --watch".split(/\s+/) as List
+}
+
+tasks.named("jar") {
+	dependsOn("generateCss")
+}

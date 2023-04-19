@@ -2,6 +2,20 @@ micronaut:
   http:
     client:
       log-level: DEBUG
+  views:
+    jte:
+      dynamic: true
+      dynamic-source-path: views/src/main/jte
+  router:
+    static-resources:
+      assets:
+        paths:
+          - file:views/build/resources/main/assets
+        mapping: "/assets/**"
+      favicon:
+        paths:
+          - file:views/build/resources/main/assets/favicon.ico
+        mapping: "/favicon.ico"
 #datasources:
 #  default:
 #    # auto-run testcontainer mysql

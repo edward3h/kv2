@@ -3,6 +3,13 @@ micronaut:
     name: kv2
   security:
     authentication: cookie
+    intercept-url-map:
+      - pattern: /assets/**
+        httpMethod: GET
+        access: [isAnonymous()]
+      - pattern: /favicon.ico
+        httpMethod: GET
+        access: [isAnonymous()]
     token:
       jwt:
         cookie:
@@ -35,7 +42,22 @@ micronaut:
 
     endpoints:
       logout:
+        enabled: true
         get-allowed: true
+  server:
+    netty:
+      access-logger:
+        enabled: true
+  router:
+    static-resources:
+      assets:
+        paths:
+          - classpath:assets
+        mapping: "/assets/**"
+      favicon:
+        paths:
+          - classpath:assets/favicon.ico
+        mapping: "/favicon.ico"
 datasources:
   default:
 #    url: jdbc:mysql://localhost:3306/db

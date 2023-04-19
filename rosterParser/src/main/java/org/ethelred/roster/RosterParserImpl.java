@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RosterParserImpl implements RosterParser {
-    private static final Pattern BLANK = Pattern.compile("^\\s*$");
     private static final Pattern INDENTS = Pattern.compile("^\\s*");
     private static final Pattern POINTS = Pattern.compile("\\s\\[\\s*(\\d+)\\s*]");
     private static final Pattern MULTIPLIER = Pattern.compile("\\s[x*]\\s*(\\d+)");
@@ -53,7 +52,7 @@ public class RosterParserImpl implements RosterParser {
             if (liDepth > (parents.size() - 1)) {
                 parents.push(last);
             }
-            parents.getLast().addChild(liLevel);
+            parents.getFirst().addChild(liLevel);
             last = liLevel;
         }
         return root;
@@ -73,7 +72,7 @@ public class RosterParserImpl implements RosterParser {
     }
 
     private LineInfo parseLineInfo(String s) {
-        if (find(BLANK, s)) {
+        if (s.isBlank()) {
             return EMPTY;
         }
         if (find(STYLE, s)) {

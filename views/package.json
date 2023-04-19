@@ -1,0 +1,15 @@
+{
+    "license": "ISC",
+    "devDependencies": {
+        "@tailwindcss/typography": "^0.5.9",
+        "tailwindcss": "^3.3.1"
+    },
+    "keywords": [],
+    "author": "",
+    "name": "kv2",
+    "description": "",
+    "main": "index.js",
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"},
+    "version": "1.0.0",
+    "dependencies": {"daisyui": "^2.51.5"}
+}

@@ -41,6 +41,7 @@ public class LevelImpl implements Level {
     private boolean annotation;
     private int cost;
     private int multiplier;
+    private boolean root;
 
     LevelImpl(int header, String text) {
         this.header = header;
@@ -54,7 +55,10 @@ public class LevelImpl implements Level {
         this.multiplier = multiplier;
     }
 
-    LevelImpl() {}
+    LevelImpl() {
+        text = "Total";
+        root = true;
+    }
 
     public void addChild(LevelImpl level) {
         children.add(level);
@@ -63,5 +67,33 @@ public class LevelImpl implements Level {
     @Override
     public int getTotal() {
         return cost * multiplier + children.stream().mapToInt(Level::getTotal).sum();
+    }
+
+    @Override
+    public boolean isRoot() {
+        return root;
+    }
+
+    @Override
+    public String toString() {
+        var builder = new StringBuilder("Level{");
+        if (header != null) {
+            builder.append("h").append(header).append(" '").append(text).append("'}");
+            return builder.toString();
+        }
+
+        builder.append("'").append(text).append("'");
+        if (annotation) {
+            builder.append(", A");
+        }
+        if (cost > 0) {
+            builder.append(", ").append(cost * multiplier);
+        }
+        if (!children.isEmpty()) {
+            builder.append(", [").append(children.size()).append("]");
+        }
+        builder.append("}");
+
+        return builder.toString();
     }
 }

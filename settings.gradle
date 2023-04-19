@@ -8,6 +8,6 @@ pluginManagement {
 }
 rootProject.name="kv2"
 
-include 'client'
 include 'rosterParser'
-
+include 'teaClient'
+include 'views'

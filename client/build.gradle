@@ -1,8 +1,0 @@
-plugins {
-  id "com.github.node-gradle.node" version "3.5.1"
-}
-
-// TODO run in parallel?
-//task run(type: PnpmTask) {
-//  args = ["quasar", "dev"]
-//}
