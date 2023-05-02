@@ -40,7 +40,7 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 	implementation("io.micronaut.views:micronaut-views-jte")
-	implementation("gg.jte:jte:2.3.0")
+	implementation("gg.jte:jte:2.3.2")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
