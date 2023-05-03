@@ -24,7 +24,7 @@ specifiers:
   ts-node: 10.9.1
   typescript: 4.9.5
   universal-cookie: 4.0.4
-  vite-plugin-vue-markdown: ^0.22.1
+  vite-plugin-vue-markdown: ^0.23.0
   vue: 3.2.47
   vue-codemirror: 6.1.1
   vue-router: 4.1.6
@@ -58,7 +58,7 @@ devDependencies:
   ts-jest: 28.0.8_ed4gwwptzhiiqtj6mhmgojukea
   ts-node: 10.9.1_iu23poxt2egi7kgpwm3gu6uhry
   typescript: 4.9.5
-  vite-plugin-vue-markdown: 0.22.1_vite@2.9.13
+  vite-plugin-vue-markdown: 0.23.0_rollup@2.75.1+vite@2.9.13
 
 packages:
 
@@ -70,8 +70,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.15
     dev: true
 
-  /@antfu/utils/0.5.2:
-    resolution: {integrity: sha512-CQkeV+oJxUazwjlHD0/3ZD08QWKuGQkhnrKo3e6ly5pd48VUpXbb77q0xMU4+vc2CkJnDS02Eq/M9ugyX20XZA==}
+  /@antfu/utils/0.7.2:
+    resolution: {integrity: sha512-vy9fM3pIxZmX07dL+VX1aZe7ynZ+YyB0jY+jE6r3hOK6GNY2t6W8rzpFC4tgpbXUYABkFQwgJq2XYXlxbXAI0g==}
     dev: true
 
   /@babel/code-frame/7.18.6:
@@ -808,24 +808,24 @@ packages:
       '@lezer/common': 1.0.0
     dev: false
 
-  /@mdit-vue/plugin-component/0.11.1:
-    resolution: {integrity: sha512-fCqyYPwEXFa182/Vz6g8McDi3SCIwm3yHWkWddHx+QNn0gMGFqkhJVcz/wjCIA3oCoWUBWM80aZ09ZuoQiOmvQ==}
+  /@mdit-vue/plugin-component/0.12.0:
+    resolution: {integrity: sha512-LrwV3f0Y6H7b7m/w1Y3bkGuR3HOiBK4QiHHW3HuRMza6MZodDQbj8Baik5/V5GiSg1/ltijS1CymVcycd1EfTw==}
     dependencies:
       '@types/markdown-it': 12.2.3
       markdown-it: 13.0.1
     dev: true
 
-  /@mdit-vue/plugin-frontmatter/0.11.1:
-    resolution: {integrity: sha512-AdZJInjD1pTJXlfhuoBS5ycuIQ3ewBfY0R/XHM3TRDEaDHQJHxouUCpCyijZmpdljTU45lFetIowaKtAi7GBog==}
+  /@mdit-vue/plugin-frontmatter/0.12.0:
+    resolution: {integrity: sha512-26Y3JktjGgNoCVH7NLqi5RcdAauAqxepTt2qXueRcRHtGpiRQV2/M1FveIhCOTCtHSuG5bBOHUxGaV6vRK3Vbw==}
     dependencies:
-      '@mdit-vue/types': 0.11.0
+      '@mdit-vue/types': 0.12.0
       '@types/markdown-it': 12.2.3
       gray-matter: 4.0.3
       markdown-it: 13.0.1
     dev: true
 
-  /@mdit-vue/types/0.11.0:
-    resolution: {integrity: sha512-ygCGP7vFpqS02hpZwEe1uz8cfImWX06+zRs08J+tCZRKb6k+easIaIHFtY9ZSxt7j9L/gAPLDo/5RmOT6z0DPQ==}
+  /@mdit-vue/types/0.12.0:
+    resolution: {integrity: sha512-mrC4y8n88BYvgcgzq9bvTlDgFyi2zuvzmPilRvRc3Uz1iIvq8mDhxJ0rHKFUNzPEScpDvJdIujqiDrulMqiudA==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -959,6 +959,21 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /@rollup/pluginutils/5.0.2_rollup@2.75.1:
+    resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.1
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+      rollup: 2.75.1
+    dev: true
+
   /@sinclair/typebox/0.24.28:
     resolution: {integrity: sha512-dgJd3HLOkLmz4Bw50eZx/zJwtBq65nms3N9VBYu5LTjJ883oBFkTyXRlCB/ZGGwqYpJJHA5zW2Ibhl5ngITfow==}
     dev: true
@@ -1052,6 +1067,10 @@ packages:
 
   /@types/cordova/0.0.34:
     resolution: {integrity: sha512-rkiiTuf/z2wTd4RxFOb+clE7PF4AEJU0hsczbUdkHHBtkUmpWQpEddynNfJYKYtZFJKbq4F+brfekt1kx85IZA==}
+    dev: true
+
+  /@types/estree/1.0.1:
+    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
     dev: true
 
   /@types/express-serve-static-core/4.17.28:
@@ -5037,19 +5056,21 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /vite-plugin-vue-markdown/0.22.1_vite@2.9.13:
-    resolution: {integrity: sha512-zIFaNWGGfDZNW7rGfj7wQ/kBjUB5cTO1w7Dog7tOCVcFRRxJCtUDiIq9i2E0Nf8GGj2JrUw7aFWWNOkoF3Lhdg==}
+  /vite-plugin-vue-markdown/0.23.0_rollup@2.75.1+vite@2.9.13:
+    resolution: {integrity: sha512-/XG8pH0xiPeuU9+IfnWTRM57ETga3ZfxB7/tHEXy7HuCUTwCGTtbnvHMJEa6njJus8n3d8oyZHtzo8wh+bVV2g==}
     peerDependencies:
-      vite: ^2.0.0 || ^3.0.0-0
+      vite: ^2.0.0 || ^3.0.0-0 || ^4.0.0
     dependencies:
-      '@antfu/utils': 0.5.2
-      '@mdit-vue/plugin-component': 0.11.1
-      '@mdit-vue/plugin-frontmatter': 0.11.1
-      '@mdit-vue/types': 0.11.0
-      '@rollup/pluginutils': 4.2.1
+      '@antfu/utils': 0.7.2
+      '@mdit-vue/plugin-component': 0.12.0
+      '@mdit-vue/plugin-frontmatter': 0.12.0
+      '@mdit-vue/types': 0.12.0
+      '@rollup/pluginutils': 5.0.2_rollup@2.75.1
       '@types/markdown-it': 12.2.3
       markdown-it: 13.0.1
       vite: 2.9.13
+    transitivePeerDependencies:
+      - rollup
     dev: true
 
   /vite/2.9.13:
