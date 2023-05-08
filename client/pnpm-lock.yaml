@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.3.0
+  '@quasar/app-vite': 1.4.0
   '@quasar/extras': 1.16.3
   '@types/jest': 28.1.8
   '@types/node': 16.18.27
@@ -44,7 +44,7 @@ dependencies:
 
 devDependencies:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.3.0_2dnc7htqnwi6cjk7onhn36gosi
+  '@quasar/app-vite': 1.4.0_2dnc7htqnwi6cjk7onhn36gosi
   '@types/jest': 28.1.8
   '@types/node': 16.18.27
   '@typescript-eslint/eslint-plugin': 5.59.5_jdo46vuzdvtqioigt7za7mzwma
@@ -849,13 +849,13 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@quasar/app-vite/1.3.0_2dnc7htqnwi6cjk7onhn36gosi:
-    resolution: {integrity: sha512-2ZkFuWzMCJmy8ve8zguYzNX3uALKbKeGQ3jQ6GDnCCNEt6yO8dBeWIqJ/epFv0/1TXYRYFCeGONmdSHDMiy2NA==}
+  /@quasar/app-vite/1.4.0_2dnc7htqnwi6cjk7onhn36gosi:
+    resolution: {integrity: sha512-5f8FKOfYBuax4wTD8Jls+Lgha88kh0vGLvzfIyr2sNIO8cDGPHMYTHZdaeh36sAfhLJU+w0NtUyxNNTI6saw8w==}
     engines: {node: ^24 || ^22 || ^20 || ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
     peerDependencies:
-      electron-builder: ^22.0.0
-      electron-packager: ^15.0.0
+      electron-builder: '>= 22'
+      electron-packager: '>= 15'
       eslint: ^8.11.0
       pinia: ^2.0.0
       quasar: ^2.8.0
