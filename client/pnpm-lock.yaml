@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.4.2
+  '@quasar/app-vite': 1.4.3
   '@quasar/extras': 1.16.3
   '@types/jest': 28.1.8
   '@types/node': 16.18.28
@@ -44,7 +44,7 @@ dependencies:
 
 devDependencies:
   '@jest/globals': 28.1.3
-  '@quasar/app-vite': 1.4.2_xe6qcqfnzh7gksg53codiymipy
+  '@quasar/app-vite': 1.4.3_xe6qcqfnzh7gksg53codiymipy
   '@types/jest': 28.1.8
   '@types/node': 16.18.28
   '@typescript-eslint/eslint-plugin': 5.59.5_jdo46vuzdvtqioigt7za7mzwma
@@ -848,8 +848,8 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@quasar/app-vite/1.4.2_xe6qcqfnzh7gksg53codiymipy:
-    resolution: {integrity: sha512-U7XIlDDtCSwXoDhocHZT3QDGI1drjrtEh4t/b4BOD5E473tpY6L4nTN2GLUOJ93WRvc+OkoPiG834p170iWCxw==}
+  /@quasar/app-vite/1.4.3_xe6qcqfnzh7gksg53codiymipy:
+    resolution: {integrity: sha512-5iMs1sk6fyYTFoRVySwFXWL/PS23UEsdk+YSFejhXnSs5fVDmb2GQMguCHwDl3jPIHjZ7A+XKkb2iWx9pjiPXw==}
     engines: {node: ^24 || ^22 || ^20 || ^18 || ^16 || ^14.19, npm: '>= 6.14.12', yarn: '>= 1.17.3'}
     hasBin: true
     peerDependencies:
