@@ -17,9 +17,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <script src="https://kit.fontawesome.com/d96215f501.js" crossorigin="anonymous"></script>
+    <script src="/assets/editor.js"></script>
 </head>
 
-<body>
+<body onload="main()">
     <nav class="navbar bg-primary text-primary-content">
         <div class="navbar-start">
             <button class="btn btn-square btn-ghost">

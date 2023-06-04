@@ -38,6 +38,9 @@ public record ApiRosterController(
 
     @Get
     public List<DocumentStub> userRosters(@Parameter(hidden = true) @Nullable Owner user) {
+        if (user == null) {
+            return List.of();
+        }
         return rosterRepository.findByOwner(user.id());
     }
 

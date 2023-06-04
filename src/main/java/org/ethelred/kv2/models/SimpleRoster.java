@@ -11,7 +11,6 @@ import io.micronaut.data.annotation.Relation;
 import java.sql.Timestamp;
 import java.util.Comparator;
 import org.ethelred.kv2.services.GeneratedId;
-import org.ethelred.kv2.viewmodels.RosterView;
 
 @MappedEntity
 public record SimpleRoster(
@@ -49,5 +48,5 @@ public record SimpleRoster(
         return owner.id();
     }
 
-    public record View(String id, String title, String body, User.View owner) implements RosterView {}
+    public record View(String id, String title, String body, User.View owner) {}
 }

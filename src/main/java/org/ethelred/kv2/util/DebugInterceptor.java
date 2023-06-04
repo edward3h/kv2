@@ -31,9 +31,9 @@ public class DebugInterceptor implements MethodInterceptor<Object, Object> {
     public Object intercept(MethodInvocationContext<Object, Object> context) {
         var klass = context.getDeclaringType();
         var logger = loggers.computeIfAbsent(klass, LoggerFactory::getLogger);
-        logger.debug("start {}.{}({})", klass.getName(), context.getName(), parameters(context));
+        logger.debug("@Debug entering {}.{}({})", klass.getName(), context.getName(), parameters(context));
         var result = context.proceed();
-        logger.debug("end   {}.{}: {}", klass.getName(), context.getName(), lazy(() -> render(result)));
+        logger.debug("@Debug exiting  {}.{}: {}", klass.getName(), context.getName(), lazy(() -> render(result)));
 
         return result;
     }

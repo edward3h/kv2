@@ -1,16 +1,18 @@
 plugins {
 	id 'java'
 	id("org.ethelred.kv2.java-conventions")
-	id "org.teavm" version "0.8.1"
+	// id "org.teavm" version "0.8.1"
+	id "org.teavm" version "0.9.0-dev-5"
 }
 
 group 'org.ethelred'
 version '0.1'
 
 repositories {
-	//	maven { url = uri("https://teavm.org/maven/repository") }
+	maven { url = uri("https://teavm.org/maven/repository") }
 
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
@@ -18,6 +20,12 @@ dependencies {
 	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 	implementation(teavm.libs.jso)
 	implementation(teavm.libs.jsoApis)
+	implementation(teavm.libs.interop)
+	implementation("org.teavm:teavm-extras-slf4j:0.9.0-dev-5")
+	implementation("org.slf4j:slf4j-api:2.0.6")
+	implementation(project(":rosterParser"))
+	implementation(project(":views"))
+	//	implementation 'org.webjars.npm:codemirror:6.65.7'
 }
 
 test {
@@ -29,7 +37,14 @@ teavm {
 		mainClass.set("org.ethelred.kv2.client.Main")
 	}
 	js {
+		targetFileName.set("editor.js")
 		sourceMap.set(true)
 		//		obfuscated.set(false)
+	}
+}
+
+tasks.jar {
+	from(tasks.generateJavaScript.outputDir) {
+		into("assets")
 	}
 }

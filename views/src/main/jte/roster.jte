@@ -1,16 +1,12 @@
-@import org.ethelred.kv2.viewmodels.RosterContext
-@import org.ethelred.kv2.viewmodels.LayoutContext
+@import org.ethelred.roster.ParsedRoster
 
-@param RosterContext roster
-@param LayoutContext layout
+@param ParsedRoster roster
 
-@template.layout(model = layout, content = @`
-    <style>
-        @for(var style: roster.parsed().getStyles())
-            ${style}
-        @endfor
-    </style>
-    <div class="roster prose">
-    @template.level(level = roster.parsed().getRoot())
-    </div>
-`)
+<style>
+    @for(var style: roster.getStyles())
+        ${style}
+    @endfor
+</style>
+<div class="roster prose">
+@template.level(level = roster.getRoot())
+</div>

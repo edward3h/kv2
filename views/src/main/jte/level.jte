@@ -3,7 +3,7 @@
 @param Level level
 
 @if(level.getHeader() != null)
-    !{var open = "<h%d>".formatted(level.getHeader()); var close = "</h%d>".formatted(level.getHeader());}
+    !{var open = String.format("<h%d>", level.getHeader()); var close = String.format("</h%d>", level.getHeader());}
     $unsafe{open}${level.getText()}$unsafe{close}
 @else
     @if(!level.isRoot())
