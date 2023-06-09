@@ -53,7 +53,7 @@ dependencies {
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.2'
 
-	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.2')
+	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.4')
 	runtimeOnly('org.ethelred.cgi:standalone:0.2')
 
 }
