@@ -19,7 +19,7 @@ repositories {
 }
 
 micronaut {
-	runtime("netty")
+	//		runtime("netty")
 	testRuntime("junit5")
 	processing {
 		incremental(true)
@@ -62,8 +62,10 @@ dependencies {
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
 	//	implementation(project(":teaClient"))
-	//	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.2')
-	//	runtimeOnly('org.ethelred.cgi:standalone:0.2')
+	def ethelred_cgi_version = "0.5-SNAPSHOT"
+	runtimeOnly("org.ethelred.cgi:cgi-micronaut:$ethelred_cgi_version")
+	runtimeOnly("org.ethelred.cgi:standalone:$ethelred_cgi_version")
+	runtimeOnly('io.micronaut.servlet:micronaut-servlet-core')
 }
 
 
@@ -71,9 +73,11 @@ application {
 	mainClass.set("org.ethelred.kv2.Application")
 }
 
-//tasks.named('run') {
-//	environment(env.allVariables)
-//}
+tasks.named('run') {
+	dependsOn(":teaClient:jar") // TODO turn into file dependency
+	//	environment(env.allVariables)
+	environment(CGI_SERVER: "standalone")
+}
 
 /*
  shellcheck is failing to be loaded in github actions, comment until I look into it

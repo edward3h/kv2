@@ -2,7 +2,7 @@
 package org.ethelred.kv2.viewmodels;
 
 import io.micronaut.core.annotation.Nullable;
-import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public interface LayoutContext {
@@ -10,9 +10,7 @@ public interface LayoutContext {
 
     boolean loggedIn();
 
-    default Iterable<AuthProvider> providers() {
-        return PROVIDERS;
-    }
+    Iterable<UIAuthProvider> providers();
 
     String username();
 
@@ -24,7 +22,7 @@ public interface LayoutContext {
     }
 
     default String placeholder() {
-        var username = displayName();
+        var username = Objects.requireNonNullElseGet(displayName(), this::username);
         var matcher = Pattern.compile("^(\\p{javaUpperCase})\\p{javaLowerCase}*\\s?(\\p{javaUpperCase}).*")
                 .matcher(username);
         if (matcher.matches()) {
@@ -33,40 +31,7 @@ public interface LayoutContext {
         return username.substring(0, Math.min(username.length(), 2)).toUpperCase();
     }
 
-    List<AuthProvider> PROVIDERS = List.of(
-            new AuthProvider("Login with Google", "/oauth/login/google"),
-            new AuthProvider("Login with Discord", "/oauth/login/discord"));
-
     default boolean isFragment() {
         return false;
-    }
-
-    static LayoutContext empty() {
-        return new LayoutContext() {
-            @Override
-            public String title() {
-                return "";
-            }
-
-            @Override
-            public boolean loggedIn() {
-                return false;
-            }
-
-            @Override
-            public String username() {
-                return "";
-            }
-
-            @Override
-            public String pictureUrl() {
-                return null;
-            }
-
-            @Override
-            public boolean isFragment() {
-                return true;
-            }
-        };
     }
 }

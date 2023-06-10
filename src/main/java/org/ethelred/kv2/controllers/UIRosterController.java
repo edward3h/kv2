@@ -10,12 +10,12 @@ import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.*;
 import io.micronaut.security.authentication.*;
 import io.micronaut.security.rules.*;
-import io.micronaut.views.*;
 import java.util.*;
 import org.ethelred.kv2.models.DefaultLayoutContext;
 import org.ethelred.kv2.models.Owner;
 import org.ethelred.kv2.template.Templates;
 import org.ethelred.kv2.util.Debug;
+import org.ethelred.kv2.viewmodels.UIAuthProvider;
 import org.ethelred.roster.RosterParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +32,17 @@ public class UIRosterController {
     private final ApiRosterController delegate;
     private final RosterParser parser;
     private final Templates templates;
+    private final List<UIAuthProvider> authProviders;
 
-    public UIRosterController(ApiRosterController delegate, RosterParser parser, Templates templates) {
+    public UIRosterController(
+            ApiRosterController delegate,
+            RosterParser parser,
+            Templates templates,
+            List<UIAuthProvider> authProviders) {
         this.delegate = delegate;
         this.parser = parser;
         this.templates = templates;
+        this.authProviders = authProviders;
         LOGGER.debug("templates is {}", templates);
     }
 
@@ -44,7 +50,7 @@ public class UIRosterController {
     @Get
     public Writable index(@Nullable Authentication auth) {
         return writable(templates.layout(
-                new DefaultLayoutContext("Home", auth),
+                new DefaultLayoutContext("Home", auth, authProviders),
                 templates.home(auth != null, delegate.userRosters(asOwner(auth)))));
     }
 
@@ -53,7 +59,8 @@ public class UIRosterController {
     public Writable viewRoster(@Nullable Authentication auth, @PathVariable String id) {
         var roster = delegate.getRoster(asOwner(auth), id);
         var parsed = parser.parseRoster(roster.body());
-        return writable(templates.layout(new DefaultLayoutContext(roster.title(), auth), templates.roster(parsed)));
+        return writable(templates.layout(
+                new DefaultLayoutContext(roster.title(), auth, authProviders), templates.roster(parsed)));
     }
 
     @Post(value = "/roster/new", consumes = MediaType.APPLICATION_FORM_URLENCODED)
@@ -66,7 +73,8 @@ public class UIRosterController {
     public Writable editRoster(Authentication auth, @PathVariable String id) {
         var roster = delegate.getRoster(asOwner(auth), id);
         return writable(templates.layout(
-                new DefaultLayoutContext(roster.title(), auth), templates.rosterEdit(roster.id(), roster.body())));
+                new DefaultLayoutContext(roster.title(), auth, authProviders),
+                templates.rosterEdit(roster.id(), roster.body())));
     }
 
     private @Nullable Owner asOwner(@Nullable Authentication auth) {

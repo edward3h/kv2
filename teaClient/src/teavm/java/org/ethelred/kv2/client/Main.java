@@ -21,8 +21,8 @@ public class Main {
         app.run();
     }
 
-    private RosterParser rosterParser = new RosterParserImpl();
-    private Templates templates = new StaticTemplates();
+    private final RosterParser rosterParser = new RosterParserImpl();
+    private final Templates templates = new StaticTemplates();
     private String rosterId;
     private HTMLTextAreaElement editor;
     private HTMLElement viewer;

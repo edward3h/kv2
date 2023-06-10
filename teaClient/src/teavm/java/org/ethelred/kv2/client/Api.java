@@ -11,30 +11,6 @@ public class Api {
 
     private Api() {}
 
-    //    @Async
-    //    public static native String updateRosterFields(String rosterId, String text);
-    //    private static void updateRosterFields(String rosterId, String text, AsyncCallback<String> callback) {
-    //        LOGGER.info("Begin api patch {}", rosterId);
-    //        var url = "/abc/rosters/" + rosterId;
-    //        var obj = SimpleMap.create();
-    //        obj.put("body", text);
-    //        var xhr = XMLHttpRequest.create();
-    //        xhr.open("patch", url);
-    //        xhr.setOnReadyStateChange(() -> {
-    //            if (xhr.getReadyState() != XMLHttpRequest.DONE) {
-    //                return;
-    //            }
-    //
-    //            int statusGroup = xhr.getStatus() / 100;
-    //            if (statusGroup != 2 && statusGroup != 3) {
-    //                callback.error(new IOException("HTTP status: " +
-    //                        xhr.getStatus() + " " + xhr.getStatusText()));
-    //            } else {
-    //                callback.complete("ok");
-    //            }
-    //        });
-    //        xhr.send(JSON.stringify(obj));
-    //    }
     public static void updateRosterFields(String rosterId, String text, Runnable onComplete) {
         LOGGER.info("begin api patch {}", rosterId);
         var url = "/abc/rosters/" + rosterId;

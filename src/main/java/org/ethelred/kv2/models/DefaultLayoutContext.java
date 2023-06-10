@@ -5,16 +5,19 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.security.authentication.Authentication;
 import org.ethelred.kv2.viewmodels.LayoutContext;
+import org.ethelred.kv2.viewmodels.UIAuthProvider;
 
 public class DefaultLayoutContext implements LayoutContext {
     @NonNull
     private final String title;
 
     private final @Nullable Authentication o;
+    private Iterable<UIAuthProvider> providers;
 
-    public DefaultLayoutContext(@NonNull String title, @Nullable Authentication o) {
+    public DefaultLayoutContext(@NonNull String title, @Nullable Authentication o, Iterable<UIAuthProvider> providers) {
         this.title = title;
         this.o = o;
+        this.providers = providers;
     }
 
     @Override
@@ -25,6 +28,11 @@ public class DefaultLayoutContext implements LayoutContext {
     @Override
     public boolean loggedIn() {
         return o != null;
+    }
+
+    @Override
+    public Iterable<UIAuthProvider> providers() {
+        return providers;
     }
 
     @Override

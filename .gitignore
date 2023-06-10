@@ -16,3 +16,4 @@ out/
 *.log
 node_modules/
 data/
+jte-classes/
