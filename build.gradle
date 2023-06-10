@@ -1,11 +1,11 @@
 plugins {
 	id 'java'
-	id("com.github.johnrengelman.shadow") version "8.1.0"
+	id("com.github.johnrengelman.shadow") version "8.1.1"
 	id("io.micronaut.application") version "3.7.9"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
-	id 'io.micronaut.test-resources' version '3.7.5'
+	id 'io.micronaut.test-resources' version '3.7.7'
 }
 
 version = "0.1"
