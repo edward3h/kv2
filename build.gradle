@@ -5,7 +5,7 @@ plugins {
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
-	id 'io.micronaut.test-resources' version '3.7.7'
+	id 'io.micronaut.test-resources' version '3.7.10'
 }
 
 version = "0.1"
@@ -42,7 +42,7 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 	implementation("io.micronaut.views:micronaut-views-jte")
-	runtimeOnly("gg.jte:jte:2.3.0")
+	runtimeOnly("gg.jte:jte:2.3.2")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
