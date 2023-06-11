@@ -1,8 +1,7 @@
 plugins {
 	id 'java'
 	id("com.github.johnrengelman.shadow") version "8.1.1"
-	id("io.micronaut.application") version "3.7.10"
-	id("gg.jte.gradle") version "2.3.2"
+	id("io.micronaut.application") version "3.7.9"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
@@ -15,6 +14,8 @@ group = "org.ethelred"
 repositories {
 	mavenLocal()
 	mavenCentral()
+	maven { url = uri("https://teavm.org/maven/repository") } // TODO
+
 }
 
 micronaut {
@@ -30,6 +31,7 @@ dependencies {
 	annotationProcessor("io.micronaut:micronaut-http-validation")
 	annotationProcessor("io.micronaut.data:micronaut-data-processor")
 	annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+	annotationProcessor("io.micronaut.openapi:micronaut-openapi")
 	implementation("io.micronaut:micronaut-http-client")
 	implementation("io.micronaut:micronaut-runtime")
 	implementation("io.micronaut:micronaut-management")
@@ -40,10 +42,11 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
 	implementation("io.micronaut.views:micronaut-views-jte")
-	implementation("gg.jte:jte:2.3.2")
+	runtimeOnly("gg.jte:jte:2.3.2")
 	implementation("io.micronaut.reactor:micronaut-reactor")
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
+	implementation("io.swagger.core.v3:swagger-annotations")
 	runtimeOnly("ch.qos.logback:logback-classic")
 	runtimeOnly("mysql:mysql-connector-java")
 
@@ -52,10 +55,17 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.2'
+	implementation("gg.jte:jte-runtime:2.3.3-SNAPSHOT")
 
-	runtimeOnly('org.ethelred.cgi:cgi-micronaut:0.4')
-	runtimeOnly('org.ethelred.cgi:standalone:0.4')
+	implementation("gg.jte:jte-models:2.3.3-SNAPSHOT")
 
+	implementation(project(":rosterParser"))
+	implementation(project(":views"))
+	//	implementation(project(":teaClient"))
+	def ethelred_cgi_version = "0.5-SNAPSHOT"
+	runtimeOnly("org.ethelred.cgi:cgi-micronaut:$ethelred_cgi_version")
+	runtimeOnly("org.ethelred.cgi:standalone:$ethelred_cgi_version")
+	runtimeOnly('io.micronaut.servlet:micronaut-servlet-core')
 }
 
 
@@ -63,19 +73,10 @@ application {
 	mainClass.set("org.ethelred.kv2.Application")
 }
 
-//tasks.named('run') {
-//	environment(env.allVariables)
-//}
-
-jte {
-	generate()
-	generateNativeImageResources = true
-	binaryStaticContent = true
-}
-
-// workaround for https://docs.gradle.org/8.0.1/userguide/validation_problems.html#implicit_dependency
-tasks.named('inspectRuntimeClasspath') {
-	dependsOn('generateJte')
+tasks.named('run') {
+	dependsOn(":teaClient:jar") // TODO turn into file dependency
+	//	environment(env.allVariables)
+	environment(CGI_SERVER: "standalone")
 }
 
 /*

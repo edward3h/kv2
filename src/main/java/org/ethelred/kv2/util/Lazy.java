@@ -10,6 +10,10 @@ public class Lazy {
         this.supplier = supplier;
     }
 
+    static Lazy lazy(Supplier<String> supplier) {
+        return new Lazy(supplier);
+    }
+
     @Override
     public String toString() {
         return supplier.get();

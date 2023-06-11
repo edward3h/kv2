@@ -1,0 +1,33 @@
+plugins {
+	id 'java'
+	id("org.ethelred.kv2.java-conventions")
+	id "org.teavm.library" version "0.8.1"
+}
+
+group 'org.ethelred'
+version '0.1'
+
+repositories {
+	//	maven { url = uri("https://teavm.org/maven/repository") }
+
+	mavenCentral()
+}
+
+dependencies {
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+//teavm {
+//	all {
+//		mainClass.set("org.ethelred.roster.Loader")
+//	}
+//	js {
+//		sourceMap.set(true)
+//		//		obfuscated.set(false)
+//	}
+//}

@@ -3,6 +3,13 @@ micronaut:
     name: kv2
   security:
     authentication: cookie
+    intercept-url-map:
+      - pattern: /assets/**
+        httpMethod: GET
+        access: [isAnonymous()]
+      - pattern: /favicon.ico
+        httpMethod: GET
+        access: [isAnonymous()]
     token:
       jwt:
         cookie:
@@ -15,11 +22,11 @@ micronaut:
               jws-algorithm: HS256
     oauth2:
       clients:
-        google:
-          client-id: ${OAUTH_CLIENT_ID:test_client_id}
-          client-secret: ${OAUTH_CLIENT_SECRET:test_client_secret}
-          openid:
-            issuer: ${OAUTH_ISSUER:test_google_issuer}
+#        google:
+#          client-id: ${OAUTH_CLIENT_ID:test_client_id}
+#          client-secret: ${OAUTH_CLIENT_SECRET:test_client_secret}
+#          openid:
+#            issuer: ${OAUTH_ISSUER:test_google_issuer}
         discord:
           client-id: ${DISCORD_CLIENT_ID:test_discord_id}
           client-secret: ${DISCORD_CLIENT_SECRET:test_discord_secret}
@@ -35,7 +42,22 @@ micronaut:
 
     endpoints:
       logout:
+        enabled: true
         get-allowed: true
+  server:
+    netty:
+      access-logger:
+        enabled: true
+  router:
+    static-resources:
+      assets:
+        paths:
+          - classpath:assets
+        mapping: "/assets/**"
+      favicon:
+        paths:
+          - classpath:assets/favicon.ico
+        mapping: "/favicon.ico"
 datasources:
   default:
 #    url: jdbc:mysql://localhost:3306/db

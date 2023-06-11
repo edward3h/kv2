@@ -7,7 +7,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <encoder>
-            <pattern>%cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
+            <pattern>%cyan(%d{HH:mm:ss.SSS}) %yellow([%thread %X{traceId}]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -20,12 +20,15 @@
     </appender>
 
     <!-- <logger name="io.micronaut.http.client.netty.DefaultHttpClient" level="trace"/> -->
-<!--    <logger name="io.micronaut.context.condition" level="DEBUG"/>-->
-    <logger name="io.micronaut.security" level="DEBUG"/>
+<!--    <logger name="io.micronaut.context" level="TRACE"/>-->
+<!--    <logger name="io.micronaut.aop" level="DEBUG"/>-->
+<!--    <logger name="io.micronaut.security" level="DEBUG"/>-->
+<!--    <logger name="io.micronaut.servlet.http" level="DEBUG"/>-->
     <logger name="org.ethelred" level="DEBUG"/>
-    <logger name="io.micronaut.web.router" level="DEBUG"/>
-    <logger name="io.micronaut.http.server" level="DEBUG"/>
-
+    <logger name="org.ethelred.cgi.standalone" level="INFO"/>
+<!--    <logger name="io.micronaut.web.router" level="DEBUG"/>-->
+<!--    <logger name="io.micronaut.http.server" level="DEBUG"/>-->
+    <logger name="HTTP_ACCESS_LOGGER" level="info"/>
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE"/>

@@ -1,9 +1,13 @@
 pluginManagement {
 	repositories {
 		mavenLocal()
+		maven { url = uri("https://teavm.org/maven/repository") }
+
 		gradlePluginPortal()
 	}
 }
 rootProject.name="kv2"
 
-include 'client'
+include 'rosterParser'
+include 'teaClient'
+include 'views'

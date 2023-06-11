@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id("gg.jte.gradle") version "3.0.0-SNAPSHOT"
+	id("org.ethelred.kv2.java-conventions")
+	id "com.github.node-gradle.node" version "3.5.1"
+	id("io.micronaut.library")
+}
+
+version = "0.1"
+group = "org.ethelred"
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	annotationProcessor("io.micronaut:micronaut-inject")
+	implementation("gg.jte:jte:3.0.0-SNAPSHOT")
+	jteGenerate("gg.jte:jte-models:3.0.0-SNAPSHOT")
+	api("gg.jte:jte-models:3.0.0-SNAPSHOT")
+	implementation(project(":rosterParser"))
+	implementation("io.micronaut:micronaut-core") // used for nullability annotations
+	implementation("jakarta.inject:jakarta.inject-api:2.0.1") // used for generated template providers
+}
+
+jte {
+	generate()
+	jteExtension("gg.jte.models.generator.ModelExtension") {
+		implementationAnnotation = "@jakarta.inject.Singleton"
+		staticAnnotation = "@io.micronaut.context.annotation.Secondary"
+		dynamicAnnotation = """@io.micronaut.context.annotation.Requires(property = "micronaut.views.jte.dynamic", value = "true")"""
+	}
+	// TODO binaryStaticContent = true
+	packageName = 'org.ethelred.kv2.template'
+}
+
+tasks.register("generateCss", PnpmTask) {
+	inputs.files("package.json", "tailwind.config.js")
+	inputs.files(fileTree("src/main/jte"), fileTree("src/main/css"))
+	outputs.file("${buildDir}/resources/main/assets/style.css")
+	dependsOn("pnpmInstall")
+	args = "exec tailwindcss -i src/main/css/input.css -o build/resources/main/assets/style.css".split(/\s+/) as List
+}
+
+tasks.register("generateCssWatch", PnpmTask) {
+	dependsOn("pnpmInstall")
+	args = "exec tailwindcss -i src/main/css/input.css -o build/resources/main/assets/style.css --watch".split(/\s+/) as List
+}
+
+tasks.named("jar") {
+	dependsOn("generateCss")
+}
+
+tasks.named("inspectRuntimeClasspath") {
+	dependsOn(tasks.named("generateJte"))
+}
