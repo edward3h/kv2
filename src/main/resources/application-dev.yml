@@ -12,6 +12,7 @@ micronaut:
         paths:
           - file:views/build/resources/main/assets
           - file:teaClient/build/generated/teavm/js
+          - "classpath:META-INF/resources/webjars"
         mapping: "/assets/**"
       favicon:
         paths:

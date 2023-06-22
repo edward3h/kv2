@@ -53,6 +53,7 @@ micronaut:
       assets:
         paths:
           - classpath:assets
+          - "classpath:META-INF/resources/webjars"
         mapping: "/assets/**"
       favicon:
         paths:
@@ -75,3 +76,11 @@ liquibase:
 endpoints:
   all:
     path: /lmno/
+
+assets:
+  styles:
+    - style
+    - "font-awesome/6.4.0/css/fontawesome"
+    - "font-awesome/6.4.0/css/solid"
+  scripts:
+    - editor

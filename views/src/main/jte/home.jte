@@ -10,7 +10,7 @@
         <table>
                 @for(var stub: rosters)
                 <tr>
-                        <td><a href="/roster/${stub.id()}">${stub.title()}</a></td>
+                        <td><a class="link link-neutral" href="/roster/${stub.id()}">${stub.title()}</a></td>
                         <td><a href="/roster/${stub.id()}/edit" class="btn">Edit</a></td>
                 </tr>
                 @endfor
