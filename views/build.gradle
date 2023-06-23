@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id("gg.jte.gradle") version "3.0.0-SNAPSHOT"
+	id("gg.jte.gradle") version "3.0.0"
 	id("org.ethelred.kv2.java-conventions")
 	id "com.github.node-gradle.node" version "3.5.1"
 	id("io.micronaut.minimal.library")
@@ -16,9 +16,9 @@ repositories {
 
 dependencies {
 	annotationProcessor("io.micronaut:micronaut-inject")
-	implementation("gg.jte:jte:3.0.0-SNAPSHOT")
-	jteGenerate("gg.jte:jte-models:3.0.0-SNAPSHOT")
-	api("gg.jte:jte-models:3.0.0-SNAPSHOT")
+	implementation("gg.jte:jte:3.0.0")
+	jteGenerate("gg.jte:jte-models:3.0.0")
+	api("gg.jte:jte-models:3.0.0")
 	implementation(project(":rosterParser"))
 	implementation("io.micronaut:micronaut-core") // used for nullability annotations
 	implementation("jakarta.inject:jakarta.inject-api:2.0.1") // used for generated template providers

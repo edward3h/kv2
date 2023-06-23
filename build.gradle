@@ -55,9 +55,9 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.2'
-	implementation("gg.jte:jte-runtime:2.3.3-SNAPSHOT")
+	implementation("gg.jte:jte-runtime:3.0.0")
 
-	implementation("gg.jte:jte-models:2.3.3-SNAPSHOT")
+	implementation("gg.jte:jte-models:3.0.0")
 
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
