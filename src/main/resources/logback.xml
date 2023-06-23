@@ -11,9 +11,9 @@
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="org.ethelred.util.log.LazyFileAppender">
         <file>kv2.log</file>
-        <append>false</append>
+        <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
@@ -25,10 +25,10 @@
 <!--    <logger name="io.micronaut.security" level="DEBUG"/>-->
 <!--    <logger name="io.micronaut.servlet.http" level="DEBUG"/>-->
     <logger name="org.ethelred" level="DEBUG"/>
-    <logger name="org.ethelred.cgi.standalone" level="INFO"/>
+<!--    <logger name="org.ethelred.cgi.standalone" level="INFO"/>-->
 <!--    <logger name="io.micronaut.web.router" level="DEBUG"/>-->
-<!--    <logger name="io.micronaut.http.server" level="DEBUG"/>-->
-    <logger name="HTTP_ACCESS_LOGGER" level="info"/>
+    <logger name="io.micronaut.http.server" level="DEBUG"/>
+    <logger name="HTTP_ACCESS_LOGGER" level="debug"/>
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE"/>

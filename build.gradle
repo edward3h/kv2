@@ -19,7 +19,7 @@ repositories {
 }
 
 micronaut {
-	//		runtime("netty")
+	runtime("netty")
 	testRuntime("junit5")
 	processing {
 		incremental(true)
@@ -63,9 +63,10 @@ dependencies {
 	implementation(project(":views"))
 	//	implementation(project(":teaClient"))
 	def ethelred_cgi_version = "0.5-SNAPSHOT"
-	runtimeOnly("org.ethelred.cgi:cgi-micronaut:$ethelred_cgi_version")
-	runtimeOnly("org.ethelred.cgi:standalone:$ethelred_cgi_version")
-	runtimeOnly('io.micronaut.servlet:micronaut-servlet-core')
+	implementation("org.ethelred.cgi:logback-native-patch:$ethelred_cgi_version")
+
+	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
+	runtimeOnly('org.webjars:font-awesome:6.4.0')
 }
 
 
@@ -76,6 +77,7 @@ application {
 tasks.named('run') {
 	dependsOn(":teaClient:jar") // TODO turn into file dependency
 	//	environment(env.allVariables)
+	environment(MICRONAUT_ENVIRONMENTS: "dev")
 	environment(CGI_SERVER: "standalone")
 }
 
