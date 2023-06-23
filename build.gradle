@@ -62,7 +62,7 @@ dependencies {
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
 	//	implementation(project(":teaClient"))
-	def ethelred_cgi_version = "0.5-SNAPSHOT"
+	def ethelred_cgi_version = "0.5"
 	implementation("org.ethelred.cgi:logback-native-patch:$ethelred_cgi_version")
 
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
