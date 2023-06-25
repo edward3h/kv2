@@ -9,20 +9,23 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
 import jakarta.inject.Singleton;
 import java.nio.file.Paths;
+import org.ethelred.kv2.template.DynamicTemplates;
+import org.ethelred.kv2.template.StaticTemplates;
+import org.ethelred.kv2.template.Templates;
 
 @Factory
 public class TemplatesFactory {
-    //    @Singleton
-    //    @Requires(property = "micronaut.views.jte.dynamic", value = "false", defaultValue = "false")
-    //    public Templates staticTemplates() {
-    //        return new StaticTemplates();
-    //    }
-    //
-    //    @Singleton
-    //    @Requires(property = "micronaut.views.jte.dynamic", value = "true")
-    //    public Templates dynamicTemplates(TemplateEngine engine) {
-    //        return new DynamicTemplates(engine);
-    //    }
+    @Singleton
+    @Requires(property = "micronaut.views.jte.dynamic", value = "false", defaultValue = "false")
+    public Templates staticTemplates() {
+        return new StaticTemplates();
+    }
+
+    @Singleton
+    @Requires(property = "micronaut.views.jte.dynamic", value = "true")
+    public Templates dynamicTemplates(TemplateEngine engine) {
+        return new DynamicTemplates(engine);
+    }
 
     @Singleton
     @Requires(property = "micronaut.views.jte.dynamic", value = "true")

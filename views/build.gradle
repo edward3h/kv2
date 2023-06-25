@@ -27,9 +27,9 @@ dependencies {
 jte {
 	generate()
 	jteExtension("gg.jte.models.generator.ModelExtension") {
-		implementationAnnotation = "@jakarta.inject.Singleton"
-		staticAnnotation = "@io.micronaut.context.annotation.Secondary"
-		dynamicAnnotation = """@io.micronaut.context.annotation.Requires(property = "micronaut.views.jte.dynamic", value = "true")"""
+		//		property("implementationAnnotation", "@jakarta.inject.Singleton")
+		//		property("staticAnnotation", "@io.micronaut.context.annotation.Secondary")
+		//		property("dynamicAnnotation", """@io.micronaut.context.annotation.Requires(property = "micronaut.views.jte.dynamic", value = "true")""")
 	}
 	// TODO binaryStaticContent = true
 	packageName = 'org.ethelred.kv2.template'
