@@ -67,6 +67,7 @@ dependencies {
 
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
 	runtimeOnly('org.webjars:font-awesome:6.4.0')
+	runtimeOnly(project(":teaClient"))
 }
 
 
@@ -75,7 +76,7 @@ application {
 }
 
 tasks.named('run') {
-	dependsOn(":teaClient:jar") // TODO turn into file dependency
+	//	dependsOn(":teaClient:jar") // TODO turn into file dependency
 	//	environment(env.allVariables)
 	environment(MICRONAUT_ENVIRONMENTS: "dev")
 	environment(CGI_SERVER: "standalone")
