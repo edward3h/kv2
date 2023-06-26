@@ -9,9 +9,7 @@ import org.teavm.jso.json.JSON;
 public class Api {
     private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
 
-    private Api() {}
-
-    public static void updateRosterFields(String rosterId, String text, Runnable onComplete) {
+    public void updateRosterFields(String rosterId, String text, Runnable onComplete) {
         LOGGER.info("begin api patch {}", rosterId);
         var url = "/abc/rosters/" + rosterId;
         var obj = SimpleMap.create();

@@ -5,3 +5,7 @@
 .collapse-title, :where(.collapse > input[type="checkbox"]) {
     min-height: 0 !important;
 }
+
+.CodeMirror {
+  height: 100% !important;
+}

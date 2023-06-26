@@ -47,7 +47,7 @@ dependencies {
 	implementation("io.micronaut.reactor:micronaut-reactor-http-client")
 	implementation("javax.annotation:javax.annotation-api")
 	implementation("io.swagger.core.v3:swagger-annotations")
-	runtimeOnly("ch.qos.logback:logback-classic")
+	runtimeOnly("ch.qos.logback:logback-classic:1.4.8")
 	runtimeOnly("mysql:mysql-connector-java")
 
 	testImplementation("org.testcontainers:junit-jupiter")
@@ -64,6 +64,7 @@ dependencies {
 	//	implementation(project(":teaClient"))
 	def ethelred_cgi_version = "0.5"
 	implementation("org.ethelred.cgi:logback-native-patch:$ethelred_cgi_version")
+	implementation 'org.fusesource.jansi:jansi:2.4.0'
 
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
 	runtimeOnly('org.webjars:font-awesome:6.4.0')

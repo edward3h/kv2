@@ -9,22 +9,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teavm.jso.browser.TimerHandler;
 import org.teavm.jso.browser.Window;
-import org.teavm.jso.dom.events.EventListener;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.html.HTMLTextAreaElement;
 
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+    private CodeMirror codeMirror;
 
     public static void main(String[] args) {
         var app = new Main();
         app.run();
     }
 
+    private final Api api = new Api();
     private final RosterParser rosterParser = new RosterParserImpl();
     private final Templates templates = new StaticTemplates();
     private String rosterId;
-    private HTMLTextAreaElement editor;
     private HTMLElement viewer;
     private int bounceTimeout;
     private int remoteTimeout;
@@ -37,7 +37,7 @@ public class Main {
             LOGGER.info("editor element not found");
             return;
         }
-        editor = editorElement.cast();
+        HTMLTextAreaElement editor = editorElement.cast();
         rosterId = editor.getAttribute("data-roster-id");
         if (rosterId == null || rosterId.isBlank()) {
             LOGGER.info("roster ID not found");
@@ -47,12 +47,13 @@ public class Main {
         if (viewer == null) {
             LOGGER.info("viewer element not found");
         }
-        editor.addEventListener("input", debounce(this::textChanged));
+        codeMirror = CodeMirror.fromTextArea(editor);
+        codeMirror.on("change", debounce(this::textChanged));
         textChanged();
     }
 
-    private EventListener<?> debounce(TimerHandler task) {
-        return e -> {
+    private CodeMirrorEventListener debounce(TimerHandler task) {
+        return (instance, event) -> {
             if (bounceTimeout > 0) {
                 Window.clearTimeout(bounceTimeout);
             }
@@ -62,7 +63,7 @@ public class Main {
 
     private void textChanged() {
         LOGGER.info("text changed");
-        var text = editor.getValue();
+        var text = codeMirror.getValue();
         updateView(text);
         storeLocal(text);
         if (remoteTimeout == 0) {
@@ -72,8 +73,8 @@ public class Main {
 
     private void storeRemote() {
         LOGGER.info("store remote");
-        var text = editor.getValue();
-        Api.updateRosterFields(rosterId, text, () -> {
+        var text = codeMirror.getValue();
+        api.updateRosterFields(rosterId, text, () -> {
             remoteTimeout = 0;
         });
     }
