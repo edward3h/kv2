@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2022-2023 */
+/* (C) Edward Harman and contributors 2022-2024 */
 package org.ethelred.kv2.controllers;
 
 import static org.ethelred.kv2.util.ViewsHelper.writable;

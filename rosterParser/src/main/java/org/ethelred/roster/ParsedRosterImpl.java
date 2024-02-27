@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2023 */
+/* (C) Edward Harman and contributors 2023-2024 */
 package org.ethelred.roster;
 
 import java.util.ArrayList;
