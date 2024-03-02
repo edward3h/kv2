@@ -31,6 +31,7 @@ public class RosterParserTest {
 # Furnace Fraggers (Wastes)
 
 Gang
+ Adjustment [-10]
 
 Vehicles
  Road Thug [25]
@@ -47,10 +48,10 @@ Vehicles
         var parsed = parser.parseRoster(body);
         assertEquals(0, parsed.getStyles().length);
         var root = parsed.getRoot();
-        assertLevel(root, 3, 550);
+        assertLevel(root, 3, 540);
         var l1Children = root.getChildren();
         assertHeader(l1Children[0], 1);
-        assertLevel(l1Children[1], 0, 0);
+        assertLevel(l1Children[1], 1, -10);
         assertLevel(l1Children[2], 2, 550);
     }
 

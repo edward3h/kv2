@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class RosterParserImpl implements RosterParser {
     private static final Pattern INDENTS = Pattern.compile("^\\s*");
-    private static final Pattern POINTS = Pattern.compile("\\s\\[\\s*(\\d+)\\s*]");
+    private static final Pattern POINTS = Pattern.compile("\\s\\[\\s*(-?\\d+)\\s*]");
     private static final Pattern MULTIPLIER = Pattern.compile("\\s[x*]\\s*(\\d+)");
     private static final Pattern ANNOTATION = Pattern.compile(".+:.+");
     private static final Pattern HEADER = Pattern.compile("^\\s*(#+)\\s*(.+)");
