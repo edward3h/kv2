@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2023-2024 */
+/* (C) Edward Harman and contributors 2023-2025 */
 package org.ethelred.kv2.util;
 
 import io.micronaut.security.authentication.ServerAuthentication;

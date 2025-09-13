@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2023-2024 */
+/* (C) Edward Harman and contributors 2023-2025 */
 package org.ethelred.kv2.providers.discord;
 
 import io.micronaut.core.annotation.Order;
