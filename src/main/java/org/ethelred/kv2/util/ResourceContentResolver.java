@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2024 */
+/* (C) Edward Harman and contributors 2024-2025 */
 package org.ethelred.kv2.util;
 
 import io.micronaut.core.io.ResourceResolver;

@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2022-2024 */
+/* (C) Edward Harman and contributors 2022-2025 */
 package org.ethelred.kv2.models;
 
 import io.micronaut.data.annotation.MappedEntity;
