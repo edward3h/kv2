@@ -53,7 +53,7 @@ dependencies {
 	testImplementation("org.testcontainers:mysql")
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
-	implementation 'com.github.ksuid:ksuid:1.1.2'
+	implementation 'com.github.ksuid:ksuid:1.1.4'
 	implementation("gg.jte:jte-runtime:3.0.0")
 
 	implementation("gg.jte:jte-models:3.0.0")
