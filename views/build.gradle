@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id("gg.jte.gradle") version "3.2.1"
 	id("org.ethelred.kv2.java-conventions")
-	id "com.github.node-gradle.node" version "3.6.0"
+	id "com.github.node-gradle.node" version "7.1.0"
 	id("io.micronaut.minimal.library")
 }
 
