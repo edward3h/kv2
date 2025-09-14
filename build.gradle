@@ -1,9 +1,9 @@
 plugins {
 	id 'java'
 	id("com.github.johnrengelman.shadow") version "8.1.1"
-	id("io.micronaut.application") version "3.7.10"
+	id("io.micronaut.application") version "4.5.4"
 	id("org.ethelred.kv2.java-conventions")
-	id "co.uzzu.dotenv.gradle" version "2.1.0"
+	id "co.uzzu.dotenv.gradle" version "4.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
 	//	id 'io.micronaut.test-resources' version '3.7.10'
 }
@@ -66,7 +66,7 @@ dependencies {
 	implementation 'org.fusesource.jansi:jansi:2.4.2'
 
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
-	runtimeOnly('org.webjars:font-awesome:6.7.2')
+	runtimeOnly('org.webjars:font-awesome:7.0.0')
 	runtimeOnly(project(":teaClient"))
 }
 
