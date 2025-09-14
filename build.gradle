@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
 	id("com.github.johnrengelman.shadow") version "8.1.1"
-	id("io.micronaut.application") version "3.7.9"
+	id("io.micronaut.application") version "3.7.10"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "2.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
@@ -54,9 +54,9 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.4'
-	implementation("gg.jte:jte-runtime:3.0.0")
+	implementation("gg.jte:jte-runtime:3.2.1")
 
-	implementation("gg.jte:jte-models:3.0.0")
+	implementation("gg.jte:jte-models:3.2.1")
 
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
@@ -66,7 +66,7 @@ dependencies {
 	implementation 'org.fusesource.jansi:jansi:2.4.2'
 
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
-	runtimeOnly('org.webjars:font-awesome:6.4.0')
+	runtimeOnly('org.webjars:font-awesome:6.7.2')
 	runtimeOnly(project(":teaClient"))
 }
 
