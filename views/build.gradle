@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
 	annotationProcessor("io.micronaut:micronaut-inject")
-	implementation("gg.jte:jte:3.0.0")
+	implementation("gg.jte:jte:3.2.1")
 	jteGenerate("gg.jte:jte-models:3.2.1")
 	api("gg.jte:jte-models:3.2.1")
 	implementation(project(":rosterParser"))
