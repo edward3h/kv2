@@ -23,7 +23,7 @@ jobs:
         java-version: '17'
         components: 'native-image'
         github-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v5
       with:
         node-version: 22
     - uses: pnpm/action-setup@v4
