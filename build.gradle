@@ -3,7 +3,7 @@ plugins {
 	id("com.github.johnrengelman.shadow") version "8.1.1"
 	id("io.micronaut.application") version "4.5.4"
 	id("org.ethelred.kv2.java-conventions")
-	id "co.uzzu.dotenv.gradle" version "2.1.0"
+	id "co.uzzu.dotenv.gradle" version "4.0.0"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
 	//	id 'io.micronaut.test-resources' version '3.7.10'
 }
