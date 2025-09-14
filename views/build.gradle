@@ -17,8 +17,8 @@ repositories {
 dependencies {
 	annotationProcessor("io.micronaut:micronaut-inject")
 	implementation("gg.jte:jte:3.0.0")
-	jteGenerate("gg.jte:jte-models:3.0.0")
-	api("gg.jte:jte-models:3.0.0")
+	jteGenerate("gg.jte:jte-models:3.2.1")
+	api("gg.jte:jte-models:3.2.1")
 	implementation(project(":rosterParser"))
 	implementation("io.micronaut:micronaut-core") // used for nullability annotations
 	implementation("jakarta.inject:jakarta.inject-api:2.0.1") // used for generated template providers
