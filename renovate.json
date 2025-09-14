@@ -1,16 +1,12 @@
 {
-    "extends": [
-        "config:recommended"
-    ],
-    "packageRules": [
-        {
-            "automerge": true,
-            "matchUpdateTypes": [
-                "minor",
-                "patch",
-                "pin",
-                "digest"
-            ]
-        }
-    ]
+    "extends": ["config:recommended"],
+    "packageRules": [{
+        "automerge": true,
+        "matchUpdateTypes": [
+            "minor",
+            "patch",
+            "pin",
+            "digest"
+        ]
+    }]
 }
