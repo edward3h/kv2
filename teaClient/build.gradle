@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id("org.ethelred.kv2.java-conventions")
 	// id "org.teavm" version "0.8.1"
-	id "org.teavm" version "0.9.0-dev-5"
+	id "org.teavm" version "0.12.3"
 }
 
 group 'org.ethelred'
@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
 	implementation(teavm.libs.jso)
 	implementation(teavm.libs.jsoApis)
 	implementation(teavm.libs.interop)
