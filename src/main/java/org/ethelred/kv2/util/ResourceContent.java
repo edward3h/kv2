@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2024-2025 */
+/* (C) Edward Harman and contributors 2024-2026 */
 package org.ethelred.kv2.util;
 
 import gg.jte.Content;

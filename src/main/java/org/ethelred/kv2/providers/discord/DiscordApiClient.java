@@ -1,4 +1,4 @@
-/* (C) Edward Harman and contributors 2022-2025 */
+/* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers.discord;
 
 import io.micronaut.core.async.annotation.SingleResult;
