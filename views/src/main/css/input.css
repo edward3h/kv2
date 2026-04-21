@@ -1,6 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+    themes: lemonade --default, coffee;
+}
 
 .collapse-title, :where(.collapse > input[type="checkbox"]) {
     min-height: 0 !important;

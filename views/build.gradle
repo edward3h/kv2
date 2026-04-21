@@ -36,7 +36,7 @@ jte {
 }
 
 tasks.register("generateCss", PnpmTask) {
-	inputs.files("package.json", "tailwind.config.js")
+	inputs.files("package.json")
 	inputs.files(fileTree("src/main/jte"), fileTree("src/main/css"))
 	outputs.file("${buildDir}/resources/main/assets/style.css")
 	dependsOn("pnpmInstall")
