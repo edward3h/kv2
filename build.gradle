@@ -57,7 +57,7 @@ dependencies {
 	implementation 'com.github.ksuid:ksuid:1.1.4'
 	implementation("gg.jte:jte-runtime:3.2.1")
 
-	implementation("gg.jte:jte-models:3.2.1")
+	implementation("gg.jte:jte-models:3.2.3")
 
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
