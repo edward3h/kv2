@@ -4,7 +4,7 @@ plugins {
 	id("io.micronaut.minimal.application") version "3.7.10"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "4.0.0"
-	id("org.ethelred.kiwiproc") version "0.7-SNAPSHOT"
+	id("org.ethelred.kiwiproc") version "0.7"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
 	//	id 'io.micronaut.test-resources' version '3.7.10'
 }
