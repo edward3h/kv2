@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
 	id("com.github.johnrengelman.shadow") version "8.1.1"
-	id("io.micronaut.minimal.application") version "3.7.10"
+	id("io.micronaut.minimal.application") version "4.6.2"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "4.0.0"
 	id("org.ethelred.kiwiproc") version "0.7"
