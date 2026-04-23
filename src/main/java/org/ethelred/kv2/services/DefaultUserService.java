@@ -1,6 +1,8 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
@@ -20,10 +22,13 @@ public class DefaultUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
     private final IdentityRepository identityRepository;
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
 
-    public DefaultUserService(IdentityRepository identityRepository, UserRepository userRepository) {
+    public DefaultUserService(
+            IdentityRepository identityRepository, UserRepository userRepository, ObjectMapper objectMapper) {
         this.identityRepository = identityRepository;
         this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -54,8 +59,14 @@ public class DefaultUserService implements UserService {
         var user = userRepository.save(
                 new User(null, displayName, (String) auth.getAttributes().get("picture"), UserFlag.ROLE_USER));
         LOGGER.info("User attributes {}", auth.getAttributes());
+        String attributesJson;
+        try {
+            attributesJson = objectMapper.writeValueAsString(auth.getAttributes());
+        } catch (JsonProcessingException e) {
+            attributesJson = "{}";
+        }
         identityRepository.save(new Identity(
-                provider, user, externalId, (String) auth.getAttributes().get("email"), auth.getAttributes()));
+                provider, user, externalId, (String) auth.getAttributes().get("email"), attributesJson));
         return user;
     }
 

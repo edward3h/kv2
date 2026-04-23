@@ -6,10 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
-import java.util.Map;
 import org.ethelred.kv2.models.Identity;
 import org.ethelred.kv2.models.User;
-import org.ethelred.kv2.services.*;
 import org.junit.jupiter.api.Test;
 
 @MicronautTest
@@ -24,7 +22,7 @@ public class UserRepositoryTest {
     public void findUserSuccess() {
         var user1 = new User(null, "Bob", null);
         user1 = userRepository.save(user1);
-        var id1 = new Identity("facespace", user1, "12345", null, Map.of());
+        var id1 = new Identity("facespace", user1, "12345", null, "{}");
         identityRepository.save(id1);
 
         var found = userRepository.findByIdentity("facespace", "12345");

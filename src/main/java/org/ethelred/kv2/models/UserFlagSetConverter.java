@@ -1,30 +1,26 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.models;
 
-import io.micronaut.core.convert.ConversionContext;
-import io.micronaut.data.model.runtime.convert.AttributeConverter;
-import jakarta.inject.Singleton;
 import java.util.EnumSet;
 import java.util.Set;
 
-@Singleton
-public class UserFlagSetConverter implements AttributeConverter<Set<UserFlag>, Integer> {
-    @Override
-    public Integer convertToPersistedValue(Set<UserFlag> entityValue, ConversionContext context) {
-        if (entityValue == null) {
+public class UserFlagSetConverter {
+    private UserFlagSetConverter() {}
+
+    public static int fromSet(Set<UserFlag> flags) {
+        if (flags == null) {
             return 0;
         }
-        return entityValue.stream().mapToInt(UserFlag::bit).sum();
+        return flags.stream().mapToInt(UserFlag::bit).sum();
     }
 
-    @Override
-    public Set<UserFlag> convertToEntityValue(Integer persistedValue, ConversionContext context) {
-        if (persistedValue == null) {
+    public static Set<UserFlag> toSet(int value) {
+        if (value == 0) {
             return Set.of();
         }
         var r = EnumSet.noneOf(UserFlag.class);
         for (var flag : UserFlag.values()) {
-            if ((flag.bit() & persistedValue) > 0) {
+            if ((flag.bit() & value) > 0) {
                 r.add(flag);
             }
         }

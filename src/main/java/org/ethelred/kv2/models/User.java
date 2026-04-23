@@ -1,43 +1,39 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.models;
 
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.data.annotation.DateCreated;
-import io.micronaut.data.annotation.DateUpdated;
-import io.micronaut.data.annotation.Id;
-import io.micronaut.data.annotation.MappedEntity;
-import io.micronaut.data.annotation.TypeDef;
-import io.micronaut.data.model.DataType;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import org.ethelred.kv2.services.GeneratedId;
 import org.ethelred.kv2.util.AuthAttributesHelper;
+import org.jspecify.annotations.Nullable;
 
-@MappedEntity
 public record User(
-        @GeneratedId @Id String id,
+        String id,
         @Nullable String displayName,
         @Nullable String pictureUrl,
-        @TypeDef(type = DataType.INTEGER, converter = UserFlagSetConverter.class) Set<UserFlag> flags,
-        @DateCreated @Nullable Timestamp createdAt,
-        @DateUpdated @Nullable Timestamp updatedAt)
+        int flags,
+        @Nullable LocalDateTime createdAt,
+        @Nullable LocalDateTime updatedAt)
         implements Owner {
 
-    public User(String id, String displayName, String pictureUrl, UserFlag... flags) {
-        this(id, displayName, pictureUrl, Set.of(flags), null, null);
+    public User(String id, String displayName, String pictureUrl, UserFlag... flagValues) {
+        this(id, displayName, pictureUrl, UserFlagSetConverter.fromSet(Set.of(flagValues)), null, null);
+    }
+
+    public Set<UserFlag> userFlags() {
+        return UserFlagSetConverter.toSet(flags);
     }
 
     public Map<String, Object> attributes() {
         return AuthAttributesHelper.map(
                 "displayName", displayName,
                 "picture", pictureUrl,
-                "flags", flags);
+                "flags", userFlags());
     }
 
     public Collection<String> roles() {
-        return flags.stream().filter(UserFlag::isRole).map(Enum::name).toList();
+        return userFlags().stream().filter(UserFlag::isRole).map(Enum::name).toList();
     }
 
     public View view() {
