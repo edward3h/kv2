@@ -1,9 +1,9 @@
 /* (C) Edward Harman and contributors 2023-2026 */
 package org.ethelred.kv2.viewmodels;
 
-import org.jspecify.annotations.Nullable;
 import java.util.Objects;
 import java.util.regex.Pattern;
+import org.jspecify.annotations.Nullable;
 
 public interface LayoutContext {
     String title();
