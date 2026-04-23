@@ -5,8 +5,7 @@ import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.DirectoryCodeResolver;
 import io.micronaut.context.annotation.Factory;
-import io.micronaut.context.annotation.Property;
-import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.annotation.Value;
 import jakarta.inject.Singleton;
 import java.nio.file.Paths;
 import org.ethelred.kv2.template.DynamicTemplates;
@@ -16,21 +15,13 @@ import org.ethelred.kv2.template.Templates;
 @Factory
 public class TemplatesFactory {
     @Singleton
-    @Requires(property = "micronaut.views.jte.dynamic", value = "false", defaultValue = "false")
-    public Templates staticTemplates() {
+    public Templates templates(
+            @Value("${kv2.jte.dynamic:false}") boolean dynamic,
+            @Value("${kv2.jte.dynamic-source-path:views/src/main/jte}") String templatePath) {
+        if (dynamic) {
+            var engine = TemplateEngine.create(new DirectoryCodeResolver(Paths.get(templatePath)), ContentType.Html);
+            return new DynamicTemplates(engine);
+        }
         return new StaticTemplates();
-    }
-
-    @Singleton
-    @Requires(property = "micronaut.views.jte.dynamic", value = "true")
-    public Templates dynamicTemplates(TemplateEngine engine) {
-        return new DynamicTemplates(engine);
-    }
-
-    @Singleton
-    @Requires(property = "micronaut.views.jte.dynamic", value = "true")
-    public TemplateEngine newDynamicTemplateEngine(
-            @Property(name = "micronaut.views.jte.dynamic-source-path") String templatePath) {
-        return TemplateEngine.create(new DirectoryCodeResolver(Paths.get(templatePath)), ContentType.Html);
     }
 }

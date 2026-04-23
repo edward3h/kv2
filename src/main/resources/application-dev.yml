@@ -1,11 +1,11 @@
+kv2:
+  jte:
+    dynamic: true
+    dynamic-source-path: views/src/main/jte
 micronaut:
   http:
     client:
       log-level: DEBUG
-  views:
-    jte:
-      dynamic: true
-      dynamic-source-path: views/src/main/jte
   router:
     static-resources:
       assets:
