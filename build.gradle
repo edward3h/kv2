@@ -1,9 +1,10 @@
 plugins {
 	id 'java'
 	id("com.github.johnrengelman.shadow") version "8.1.1"
-	id("io.micronaut.application") version "3.7.10"
+	id("io.micronaut.minimal.application") version "3.7.10"
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "4.0.0"
+	id("org.ethelred.kiwiproc") version "0.7"
 	//	id("com.felipefzdz.gradle.shellcheck") version "1.4.6"
 	//	id 'io.micronaut.test-resources' version '3.7.10'
 }
@@ -26,15 +27,27 @@ micronaut {
 	}
 }
 
+kiwiProc {
+	dataSources {
+		register("default") {
+			driverClassName = "com.mysql.cj.jdbc.Driver"
+			liquibaseChangelog = file("src/main/resources/db/liquibase-changelog.xml")
+		}
+	}
+}
+
+// Prevent kiwiproc's generated application-test.properties from overriding our application-test.yml
+processTestResources {
+	exclude 'application-test.properties'
+}
+
 dependencies {
 	annotationProcessor("io.micronaut:micronaut-http-validation")
-	annotationProcessor("io.micronaut.data:micronaut-data-processor")
 	annotationProcessor("io.micronaut.security:micronaut-security-annotations")
 	annotationProcessor("io.micronaut.openapi:micronaut-openapi")
 	implementation("io.micronaut:micronaut-http-client")
 	implementation("io.micronaut:micronaut-runtime")
 	implementation("io.micronaut:micronaut-management")
-	implementation("io.micronaut.data:micronaut-data-jdbc")
 	implementation("io.micronaut.liquibase:micronaut-liquibase")
 	implementation("io.micronaut.security:micronaut-security")
 	implementation("io.micronaut.security:micronaut-security-jwt")
@@ -55,6 +68,7 @@ dependencies {
 	testImplementation("org.testcontainers:testcontainers")
 	implementation("io.micronaut:micronaut-validation")
 	implementation 'com.github.ksuid:ksuid:1.1.4'
+	compileOnly 'org.jspecify:jspecify:1.0.0'
 	implementation("gg.jte:jte-runtime:3.2.3")
 
 	implementation("gg.jte:jte-models:3.2.3")

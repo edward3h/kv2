@@ -16,5 +16,5 @@ bin/
 .env
 *.log
 node_modules/
-data/
+/data/
 jte-classes/
