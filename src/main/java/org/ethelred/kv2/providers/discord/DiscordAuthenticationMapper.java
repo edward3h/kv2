@@ -1,7 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers.discord;
 
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.oauth2.endpoint.authorization.state.State;
 import io.micronaut.security.oauth2.endpoint.token.response.OauthAuthenticationMapper;
@@ -11,11 +10,10 @@ import jakarta.inject.Singleton;
 import java.util.stream.Collectors;
 import org.ethelred.kv2.services.*;
 import org.ethelred.kv2.util.*;
+import org.jspecify.annotations.Nullable;
 import org.reactivestreams.Publisher;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-/** @author edward */
 @Named("discord")
 @Singleton
 public class DiscordAuthenticationMapper implements OauthAuthenticationMapper {
@@ -31,28 +29,24 @@ public class DiscordAuthenticationMapper implements OauthAuthenticationMapper {
     @Override
     public Publisher<AuthenticationResponse> createAuthenticationResponse(
             TokenResponse tokenResponse, @Nullable State state) {
-        var accessToken = tokenResponse.getAccessToken();
-        var auth = DiscordApiClient.authorization(accessToken);
-        var userPub = Mono.from(apiClient.getUser(auth));
-        var guildsPub = Flux.from(apiClient.getUserGuilds(auth)).collectList();
-        return Mono.zip(
-                userPub,
-                guildsPub,
-                (user, guilds) -> userService.identityToInternalUser(AuthenticationResponse.success(
-                        user.id(),
-                        AuthAttributesHelper.map(
-                                OauthAuthenticationMapper.PROVIDER_KEY,
-                                "discord",
-                                "user",
-                                user,
-                                "guilds",
-                                guilds.stream().map(DiscordGuild::name).collect(Collectors.toList()),
-                                "email",
-                                user.email(),
-                                "name",
-                                user.username(),
-                                "picture",
-                                getAvatarUrl(user)))));
+        var auth = DiscordApiClient.authorization(tokenResponse.getAccessToken());
+        var user = apiClient.getUser(auth);
+        var guilds = apiClient.getUserGuilds(auth);
+        return Mono.just(userService.identityToInternalUser(AuthenticationResponse.success(
+                user.id(),
+                AuthAttributesHelper.map(
+                        OauthAuthenticationMapper.PROVIDER_KEY,
+                        "discord",
+                        "user",
+                        user,
+                        "guilds",
+                        guilds.stream().map(DiscordGuild::name).collect(Collectors.toList()),
+                        "email",
+                        user.email(),
+                        "name",
+                        user.username(),
+                        "picture",
+                        getAvatarUrl(user)))));
     }
 
     // https://discord.com/developers/docs/reference#image-formatting
