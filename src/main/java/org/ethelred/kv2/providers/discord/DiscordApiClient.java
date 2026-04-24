@@ -1,26 +1,64 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers.discord;
 
-import io.micronaut.core.async.annotation.SingleResult;
-import io.micronaut.http.HttpHeaders;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Header;
-import io.micronaut.http.client.annotation.Client;
-import org.reactivestreams.Publisher;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.inject.Singleton;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.List;
 
-/** @author edward */
-@Header(name = "User-Agent", value = "Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)")
-@Client("https://discord.com/api/v9")
-public interface DiscordApiClient {
+@Singleton
+class DiscordApiClient {
+    private static final String BASE_URL = "https://discord.com/api/v9";
+    private static final String USER_AGENT = "Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)";
 
-    @Get("/users/@me")
-    @SingleResult
-    Publisher<DiscordUser> getUser(@Header(HttpHeaders.AUTHORIZATION) String authorization);
+    private final HttpClient http = HttpClient.newHttpClient();
+    private final ObjectMapper objectMapper;
 
-    @Get("/users/@me/guilds")
-    Publisher<DiscordGuild> getUserGuilds(@Header(HttpHeaders.AUTHORIZATION) String authorization);
+    DiscordApiClient(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    DiscordUser getUser(String authorization) {
+        return get("/users/@me", authorization, DiscordUser.class);
+    }
+
+    List<DiscordGuild> getUserGuilds(String authorization) {
+        return get("/users/@me/guilds", authorization, new TypeReference<>() {});
+    }
 
     static String authorization(String token) {
         return "Bearer %s".formatted(token);
+    }
+
+    private <T> T get(String path, String authorization, Class<T> type) {
+        try {
+            var response = http.send(request(path, authorization), HttpResponse.BodyHandlers.ofString());
+            return objectMapper.readValue(response.body(), type);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private <T> T get(String path, String authorization, TypeReference<T> type) {
+        try {
+            var response = http.send(request(path, authorization), HttpResponse.BodyHandlers.ofString());
+            return objectMapper.readValue(response.body(), type);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private HttpRequest request(String path, String authorization) {
+        return HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + path))
+                .header("Authorization", authorization)
+                .header("User-Agent", USER_AGENT)
+                .GET()
+                .build();
     }
 }
