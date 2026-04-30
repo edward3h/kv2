@@ -14,7 +14,7 @@ repositories {
 }
 
 dependencies {
-	implementation("gg.jte:jte:3.2.3")
+	implementation("gg.jte:jte:3.2.4")
 	jteGenerate("gg.jte:jte-models:3.2.3")
 	api("gg.jte:jte-models:3.2.3")
 	implementation(project(":rosterParser"))

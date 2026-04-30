@@ -52,7 +52,7 @@ dependencies {
 	implementation("io.micronaut.security:micronaut-security-jwt")
 	implementation("io.micronaut.security:micronaut-security-oauth2")
 	implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-	runtimeOnly("gg.jte:jte:3.2.3")
+	runtimeOnly("gg.jte:jte:3.2.4")
 	implementation("io.projectreactor:reactor-core")
 	implementation("javax.annotation:javax.annotation-api")
 	implementation("io.swagger.core.v3:swagger-annotations")
