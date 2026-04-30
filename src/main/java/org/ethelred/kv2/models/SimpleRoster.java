@@ -1,13 +1,11 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.models;
 
-import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
+import io.avaje.jsonb.Json;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import org.jspecify.annotations.Nullable;
 
-@Introspected
 public record SimpleRoster(
         String id,
         String title,
@@ -37,11 +35,11 @@ public record SimpleRoster(
         return new View(id, title, body, owner.view());
     }
 
-    @NonNull
     @Override
     public String ownerId() {
         return owner.id();
     }
 
-    public record View(String id, String title, String body, User.View owner) {}
+    @Json
+    public record View(String id, String title, String body, User.Info owner) {}
 }

@@ -1,88 +1,27 @@
-micronaut:
-  application:
-    name: kv2
-  security:
-    authentication: cookie
-    intercept-url-map:
-      - pattern: /assets/**
-        httpMethod: GET
-        access: [isAnonymous()]
-      - pattern: /favicon.ico
-        httpMethod: GET
-        access: [isAnonymous()]
-    token:
-      jwt:
-        cookie:
-          cookie-http-only: false
-        signatures:
-          secret:
-            generator:
-              secret: ${JWT_SECRET:MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=}
-              base64: true
-              jws-algorithm: HS256
-    oauth2:
-      clients:
-#        google:
-#          client-id: ${OAUTH_CLIENT_ID:test_client_id}
-#          client-secret: ${OAUTH_CLIENT_SECRET:test_client_secret}
-#          openid:
-#            issuer: ${OAUTH_ISSUER:test_google_issuer}
-        discord:
-          client-id: ${DISCORD_CLIENT_ID:test_discord_id}
-          client-secret: ${DISCORD_CLIENT_SECRET:test_discord_secret}
-          scopes:
-            - identify
-            - guilds
-            - email
-          authorization:
-            url: 'https://discord.com/api/oauth2/authorize'
-          token:
-            url: 'https://discord.com/api/oauth2/token'
-            auth-method: CLIENT_SECRET_POST
-
-    endpoints:
-      logout:
-        enabled: true
-        get-allowed: true
-  server:
-    netty:
-      access-logger:
-        enabled: true
-  router:
-    static-resources:
-      assets:
-        paths:
-          - classpath:assets
-          - "classpath:META-INF/resources/webjars"
-        mapping: "/assets/**"
-      favicon:
-        paths:
-          - classpath:assets/favicon.ico
-        mapping: "/favicon.ico"
-datasources:
-  default:
-#    url: jdbc:mysql://localhost:3306/db
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    username: kv2
-#    password: '12345'
-#    schema-generate: None
-    dialect: MYSQL
-#    initializationFailTimeout: 60000
-liquibase:
-  enabled: true
-  datasources:
-    default:
-      change-log: 'classpath:db/liquibase-changelog.xml'
-endpoints:
-  all:
-    path: /lmno/
+datasource:
+  url: ${DB_URL:jdbc:mysql://localhost:3306/db}
+  username: ${DB_USERNAME:kv2}
+  password: ${DB_PASSWORD:12345}
+  driverClassName: com.mysql.cj.jdbc.Driver
 
 assets:
   styles:
     - style
-    - "font-awesome/6.4.0/css/fontawesome"
-    - "font-awesome/6.4.0/css/solid"
-    - "codemirror/6.65.7/lib/codemirror"
+    - font-awesome/6.4.0/css/fontawesome
+    - font-awesome/6.4.0/css/solid
+    - codemirror/6.65.7/lib/codemirror
   scripts:
     - editor
-    - "codemirror/6.65.7/lib/codemirror"
+    - codemirror/6.65.7/lib/codemirror
+
+kv2:
+  jte:
+    dynamic: false
+    dynamic-source-path: views/src/main/jte
+  oauth:
+    discord:
+      client-id: ${DISCORD_CLIENT_ID:test_discord_id}
+      client-secret: ${DISCORD_CLIENT_SECRET:test_discord_secret}
+      redirect-uri: ${DISCORD_REDIRECT_URI:http://localhost:8080/oauth/discord/callback}
+  security:
+    jwt-secret: ${JWT_SECRET:MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=}

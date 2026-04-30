@@ -1,21 +1,17 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.controllers;
 
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.HttpStatus;
-import io.micronaut.http.MediaType;
-import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Consumes;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Delete;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Patch;
-import io.micronaut.http.annotation.PathVariable;
-import io.micronaut.http.annotation.Post;
-import io.micronaut.http.exceptions.HttpStatusException;
-import io.micronaut.security.annotation.Secured;
-import io.micronaut.security.rules.SecurityRule;
-import io.swagger.v3.oas.annotations.Parameter;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.avaje.http.api.Consumes;
+import io.avaje.http.api.Controller;
+import io.avaje.http.api.Delete;
+import io.avaje.http.api.Get;
+import io.avaje.http.api.Patch;
+import io.avaje.http.api.Post;
+import io.avaje.jex.http.Context;
+import io.avaje.jex.http.HttpResponseException;
+import jakarta.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,74 +21,105 @@ import org.ethelred.kv2.models.DocumentStub;
 import org.ethelred.kv2.models.Owner;
 import org.ethelred.kv2.models.SimpleRoster;
 import org.ethelred.kv2.models.Visibility;
+import org.ethelred.kv2.security.AuthFilter;
 import org.ethelred.kv2.services.UserService;
 import org.ethelred.kv2.util.PatchHelper;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Controller("/abc/rosters")
-@Secured({"ROLE_USER"})
-public record ApiRosterController(
-        SimpleRosterRepository rosterRepository, UserService userService, PatchHelper patchHelper) {
+@Singleton
+public class ApiRosterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiRosterController.class);
 
+    private static final TypeReference<Map<String, Object>> MAP_TYPE = new TypeReference<>() {};
+
+    private final SimpleRosterRepository rosterRepository;
+    private final UserService userService;
+    private final PatchHelper patchHelper;
+    private final ObjectMapper objectMapper;
+
+    public ApiRosterController(
+            SimpleRosterRepository rosterRepository,
+            UserService userService,
+            PatchHelper patchHelper,
+            ObjectMapper objectMapper) {
+        this.rosterRepository = rosterRepository;
+        this.userService = userService;
+        this.patchHelper = patchHelper;
+        this.objectMapper = objectMapper;
+    }
+
     @Get
-    public List<DocumentStub> userRosters(@Parameter(hidden = true) @Nullable Owner user) {
-        if (user == null) {
+    public List<DocumentStub> userRosters(Context ctx) {
+        return userRostersFor(AuthFilter.getOwner(ctx));
+    }
+
+    List<DocumentStub> userRostersFor(@Nullable Owner owner) {
+        if (owner == null) {
             return List.of();
         }
-        return rosterRepository.findByOwner(user.id());
+        return rosterRepository.findByOwner(owner.id());
     }
 
     @Get("/{id}")
-    @Secured(SecurityRule.IS_ANONYMOUS)
-    public SimpleRoster.View getRoster(@Parameter(hidden = true) @Nullable Owner user, @PathVariable String id) {
-        var roster = rosterRepository
-                .findById(id)
-                .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
-        if (roster.isVisibleTo(user)) {
+    public SimpleRoster.View getRoster(Context ctx, String id) {
+        return getRosterFor(AuthFilter.getOwner(ctx), id);
+    }
+
+    SimpleRoster.View getRosterFor(@Nullable Owner owner, String id) {
+        var roster = rosterRepository.findById(id).orElseThrow(() -> new HttpResponseException(404, "Not found"));
+        if (roster.isVisibleTo(owner)) {
             return roster.view();
         }
-        LOGGER.debug("Private roster {} user {}", roster, user);
-        throw new HttpStatusException(HttpStatus.FORBIDDEN, "Private roster");
+        LOGGER.debug("Private roster {} user {}", roster, owner);
+        throw new HttpResponseException(403, "Private roster");
     }
 
     @Post
-    @Consumes({MediaType.TEXT_PLAIN})
-    public SimpleRoster.View createRoster(
-            @Parameter(hidden = true) @Nullable Owner owner, @Body @Nullable String rosterBody) {
+    @Consumes("text/plain")
+    public SimpleRoster.View createRoster(Context ctx) {
+        return createRosterFor(AuthFilter.getOwner(ctx), ctx.body());
+    }
+
+    SimpleRoster.View createRosterFor(@Nullable Owner owner, @Nullable String rosterBody) {
         if (owner == null) {
-            throw new HttpStatusException(HttpStatus.UNAUTHORIZED, "wat");
+            throw new HttpResponseException(401, "Unauthorized");
         }
         var user = userService.findById(owner.id());
         if (user.isEmpty()) {
-            throw new HttpStatusException(HttpStatus.NOT_FOUND, "also wat");
+            throw new HttpResponseException(404, "User not found");
         }
         var roster = new SimpleRoster(user.get(), Objects.requireNonNullElse(rosterBody, ""), Visibility.PRIVATE);
         return rosterRepository.save(roster).view();
     }
 
     @Delete("/{id}")
-    public void deleteRoster(@Parameter(hidden = true) Owner owner, @PathVariable String id) {
-        var oldRoster = rosterRepository
-                .findById(id)
-                .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
-        if (!oldRoster.isOwnedBy(owner)) {
-            throw new HttpStatusException(HttpStatus.FORBIDDEN, "Not owner of this roster");
+    public void deleteRoster(Context ctx, String id) {
+        var owner = AuthFilter.getOwner(ctx);
+        var oldRoster = rosterRepository.findById(id).orElseThrow(() -> new HttpResponseException(404, "Not found"));
+        if (owner == null || !oldRoster.isOwnedBy(owner)) {
+            throw new HttpResponseException(403, "Not owner of this roster");
         }
         rosterRepository.deleteById(id);
     }
 
-    @Patch(value = "/{id}", consumes = MediaType.APPLICATION_JSON)
-    public SimpleRoster.View updateRosterFields(
-            @Parameter(hidden = true) Owner owner, @PathVariable String id, @Body Map<String, Object> updates) {
+    @Patch("/{id}")
+    @Consumes("application/json")
+    public SimpleRoster.View updateRosterFields(Context ctx, String id) {
+        Map<String, Object> updates;
+        try {
+            updates = objectMapper.readValue(ctx.body(), MAP_TYPE);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid JSON body: " + e.getMessage());
+        }
         LOGGER.debug("updateRosterFields {}", updates);
-        var oldRoster = rosterRepository
-                .findById(id)
-                .orElseThrow(() -> new HttpStatusException(HttpStatus.NOT_FOUND, "Not found"));
-        if (!oldRoster.isOwnedBy(owner)) {
+        var owner = AuthFilter.getOwner(ctx);
+        var oldRoster = rosterRepository.findById(id).orElseThrow(() -> new HttpResponseException(404, "Not found"));
+        if (owner == null || !oldRoster.isOwnedBy(owner)) {
             LOGGER.debug("Not owner of roster {} {}", owner, oldRoster.owner());
-            throw new HttpStatusException(HttpStatus.FORBIDDEN, "Not owner of this roster");
+            throw new HttpResponseException(403, "Not owner of this roster");
         }
         if (updates.containsKey("body")) {
             updates = new HashMap<>(updates);
@@ -100,28 +127,5 @@ public record ApiRosterController(
         }
         var newRoster = patchHelper.apply(oldRoster, updates);
         return rosterRepository.update(newRoster).view();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (ApiRosterController) obj;
-        return Objects.equals(this.rosterRepository, that.rosterRepository)
-                && Objects.equals(this.userService, that.userService)
-                && Objects.equals(this.patchHelper, that.patchHelper);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(rosterRepository, userService, patchHelper);
-    }
-
-    @Override
-    public String toString() {
-        return "RosterController[" + "rosterRepository="
-                + rosterRepository + ", " + "userService="
-                + userService + ", " + "patchHelper="
-                + patchHelper + ']';
     }
 }

@@ -1,38 +1,20 @@
 /* (C) Edward Harman and contributors 2023-2026 */
 package org.ethelred.kv2.models;
 
-import io.micronaut.context.annotation.ConfigurationProperties;
+import io.avaje.config.Config;
+import io.avaje.inject.Bean;
+import io.avaje.inject.Factory;
 import java.util.List;
 import org.ethelred.kv2.viewmodels.Assets;
 
-@ConfigurationProperties("assets")
-public class AssetsConfiguration implements Assets {
-    private List<String> styles;
-    private List<String> scripts;
-
-    public List<String> getStyles() {
-        return styles;
+@Factory
+public class AssetsConfiguration {
+    @Bean
+    public Assets assets() {
+        var styles = Config.list().of("assets.styles");
+        var scripts = Config.list().of("assets.scripts");
+        return new AssetsRecord(styles, scripts);
     }
 
-    public void setStyles(List<String> styles) {
-        this.styles = styles;
-    }
-
-    public List<String> getScripts() {
-        return scripts;
-    }
-
-    public void setScripts(List<String> scripts) {
-        this.scripts = scripts;
-    }
-
-    @Override
-    public List<String> styles() {
-        return getStyles();
-    }
-
-    @Override
-    public List<String> scripts() {
-        return getScripts();
-    }
+    private record AssetsRecord(List<String> styles, List<String> scripts) implements Assets {}
 }

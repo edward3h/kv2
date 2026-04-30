@@ -9,7 +9,7 @@ import org.ethelred.kv2.models.User;
 import org.jspecify.annotations.Nullable;
 
 @DAO
-interface UserDao {
+public interface UserDao {
     @SqlQuery(
             """
             SELECT id, display_name, picture_url, flags, created_at, updated_at

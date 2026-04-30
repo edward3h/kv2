@@ -1,42 +1,6 @@
 kv2:
+  dev:
+    enabled: true
   jte:
     dynamic: true
     dynamic-source-path: views/src/main/jte
-micronaut:
-  http:
-    client:
-      log-level: DEBUG
-  router:
-    static-resources:
-      assets:
-        paths:
-          - file:views/build/resources/main/assets
-          - file:teaClient/build/generated/teavm/js
-          - "classpath:META-INF/resources/webjars"
-        mapping: "/assets/**"
-      favicon:
-        paths:
-          - file:views/build/resources/main/assets/favicon.ico
-        mapping: "/favicon.ico"
-#datasources:
-#  default:
-#    # auto-run testcontainer mysql
-##    url: jdbc:tc:mysql:8:///kv2
-##    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
-#    url: jdbc:mysql://localhost:3306/db
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    username: kv2
-#    password: '12345'
-#    dialect: MYSQL
-#    initializationFailTimeout: 10000
-endpoints:
-  all:
-    sensitive: false
-  stop:
-    enabled: true
-test-resources:
-  containers:
-    mysql:
-      rw-fs-bind:
-        - "data": /var/lib/mysql
-        

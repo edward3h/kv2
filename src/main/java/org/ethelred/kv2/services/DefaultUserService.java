@@ -3,23 +3,23 @@ package org.ethelred.kv2.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-import io.micronaut.http.HttpStatus;
-import io.micronaut.http.exceptions.HttpStatusException;
-import io.micronaut.security.authentication.*;
-import io.micronaut.security.oauth2.endpoint.token.response.*;
-import jakarta.inject.*;
-import java.util.*;
-import org.ethelred.kv2.data.*;
-import org.ethelred.kv2.models.*;
-import org.ethelred.kv2.util.Debug;
-import org.slf4j.*;
+import jakarta.inject.Singleton;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import org.ethelred.kv2.data.IdentityRepository;
+import org.ethelred.kv2.data.UserRepository;
+import org.ethelred.kv2.models.Identity;
+import org.ethelred.kv2.models.User;
+import org.ethelred.kv2.models.UserFlag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Singleton
-@Debug
 public class DefaultUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
+    private static final List<String> DISPLAY_NAME_KEYS = List.of("name", "username", "email");
+
     private final IdentityRepository identityRepository;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
@@ -32,53 +32,30 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public AuthenticationResponse identityToInternalUser(AuthenticationResponse identityResponse) {
-        var checkAuth = identityResponse.getAuthentication();
-        if (checkAuth.isEmpty()) {
-            return identityResponse;
-        }
-
-        var auth = checkAuth.get();
-        var provider = auth.getAttributes().get(OauthAuthenticationMapper.PROVIDER_KEY);
-        var externalId = auth.getName();
-        var user = userRepository
-                .findByIdentity((String) provider, externalId)
-                .orElseGet(() -> createUser(auth, (String) provider, externalId));
-        return AuthenticationResponse.success(user.id(), user.roles(), user.attributes());
+    public User findOrCreateUser(String provider, String externalId, Map<String, Object> attributes) {
+        return userRepository
+                .findByIdentity(provider, externalId)
+                .orElseGet(() -> createUser(provider, externalId, attributes));
     }
 
-    private static final List<String> DISPLAY_NAME_KEYS = List.of("name", "username", "email");
-
-    private User createUser(Authentication auth, String provider, String externalId) {
+    private User createUser(String provider, String externalId, Map<String, Object> attributes) {
         var displayName = DISPLAY_NAME_KEYS.stream()
-                .filter(auth.getAttributes()::containsKey)
-                .map(auth.getAttributes()::get)
-                .map(String::valueOf)
+                .filter(attributes::containsKey)
+                .map(k -> String.valueOf(attributes.get(k)))
                 .findFirst()
                 .orElse("Unknown");
         var user = userRepository.save(
-                new User(null, displayName, (String) auth.getAttributes().get("picture"), UserFlag.ROLE_USER));
-        LOGGER.info("User attributes {}", auth.getAttributes());
+                new User(null, displayName, (String) attributes.get("picture"), UserFlag.ROLE_USER));
+        LOGGER.info("User attributes {}", attributes);
         String attributesJson;
         try {
-            attributesJson = objectMapper.writeValueAsString(auth.getAttributes());
+            attributesJson = objectMapper.writeValueAsString(attributes);
         } catch (JsonProcessingException e) {
             attributesJson = "{}";
         }
-        identityRepository.save(new Identity(
-                provider, user, externalId, (String) auth.getAttributes().get("email"), attributesJson));
+        identityRepository.save(
+                new Identity(provider, user, externalId, (String) attributes.get("email"), attributesJson));
         return user;
-    }
-
-    @Override
-    @NonNull
-    public User userFromAuthentication(@Nullable Authentication auth) {
-        if (auth == null) {
-            LOGGER.error("No user in request?");
-            throw new HttpStatusException(HttpStatus.FORBIDDEN, "No user in request");
-        }
-        LOGGER.debug("Auth: {}", auth);
-        return userRepository.findById(auth.getName()).orElseThrow(AuthenticationException::new);
     }
 
     @Override

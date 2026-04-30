@@ -3,31 +3,22 @@ package org.ethelred.kv2.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.micronaut.security.authentication.AuthenticationResponse;
-import io.micronaut.security.oauth2.endpoint.token.response.OauthAuthenticationMapper;
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import jakarta.inject.Inject;
-import java.util.List;
+import io.avaje.inject.BeanScope;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@MicronautTest
 public class UserServiceTest {
-
-    @Inject
-    UserService userService;
 
     @Test
     public void testCreate() {
-        var result = userService.identityToInternalUser(AuthenticationResponse.success(
-                "12345",
-                List.of("ROLE_USER"),
-                Map.of(OauthAuthenticationMapper.PROVIDER_KEY, "usTest", "name", "username")));
-        var optionalAuth = result.getAuthentication();
-        Assertions.assertTrue(optionalAuth.isPresent());
-        var auth = optionalAuth.get();
-        var user = userService.userFromAuthentication(auth);
-        assertEquals("username", user.displayName());
+        try (var scope = BeanScope.builder().profiles("test").build()) {
+            var userService = scope.get(UserService.class);
+
+            var user = userService.findOrCreateUser("usTest", "12345", Map.of("name", "username"));
+            assertEquals("username", user.displayName());
+
+            var found = userService.findById(user.id());
+            assertEquals("username", found.get().displayName());
+        }
     }
 }
