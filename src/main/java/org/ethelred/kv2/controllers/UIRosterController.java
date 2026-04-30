@@ -1,8 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.controllers;
 
-import static org.ethelred.kv2.util.ViewsHelper.render;
-
 import io.avaje.http.api.Controller;
 import io.avaje.http.api.Get;
 import io.avaje.http.api.Post;
@@ -49,10 +47,12 @@ public class UIRosterController {
     public String index(Context ctx) {
         var principal = AuthFilter.getPrincipal(ctx);
         var owner = AuthFilter.getOwner(ctx);
-        return render(templates.layout(
-                assets,
-                new DefaultLayoutContext("Home", principal, authProviders),
-                templates.home(principal != null, delegate.userRostersFor(owner))));
+        return templates
+                .layout(
+                        assets,
+                        new DefaultLayoutContext("Home", principal, authProviders),
+                        templates.home(principal != null, delegate.userRostersFor(owner)))
+                .render();
     }
 
     @Get("/roster/{id}")
@@ -60,8 +60,12 @@ public class UIRosterController {
         var principal = AuthFilter.getPrincipal(ctx);
         var roster = delegate.getRosterFor(AuthFilter.getOwner(ctx), id);
         var parsed = parser.parseRoster(roster.body());
-        return render(templates.layout(
-                assets, new DefaultLayoutContext(roster.title(), principal, authProviders), templates.roster(parsed)));
+        return templates
+                .layout(
+                        assets,
+                        new DefaultLayoutContext(roster.title(), principal, authProviders),
+                        templates.roster(parsed))
+                .render();
     }
 
     @Post("/roster/new")
@@ -75,9 +79,11 @@ public class UIRosterController {
     public String editRoster(Context ctx, String id) {
         var principal = AuthFilter.getPrincipal(ctx);
         var roster = delegate.getRosterFor(AuthFilter.getOwner(ctx), id);
-        return render(templates.layout(
-                assets,
-                new DefaultLayoutContext(roster.title(), principal, authProviders),
-                templates.rosterEdit(roster.id(), roster.body())));
+        return templates
+                .layout(
+                        assets,
+                        new DefaultLayoutContext(roster.title(), principal, authProviders),
+                        templates.rosterEdit(roster.id(), roster.body()))
+                .render();
     }
 }

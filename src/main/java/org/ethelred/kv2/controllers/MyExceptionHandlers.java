@@ -12,9 +12,9 @@ public class MyExceptionHandlers {
 
     public void configure(Jex app) {
         app.error(IllegalArgumentException.class, (ctx, ex) -> {
-            LOGGER.error("had exception", ex);
+            LOGGER.error("{} {} had exception", ctx.method(), ctx.path(), ex);
             ctx.status(400);
-            ctx.text("Bad Request: " + ex.getMessage());
+            ctx.text("Bad Request");
         });
     }
 }
