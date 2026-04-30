@@ -24,16 +24,14 @@ public interface SimpleRosterDao {
             @Nullable LocalDateTime createdAt,
             @Nullable LocalDateTime updatedAt) {}
 
-    @SqlQuery(
-            """
+    @SqlQuery("""
             SELECT id, title
             FROM simple_roster
             WHERE owner_id = :ownerId
             """)
     List<DocumentStub> findByOwner(String ownerId);
 
-    @SqlQuery(
-            """
+    @SqlQuery("""
             SELECT sr.id, sr.title, sr.body, sr.visibility, sr.created_at, sr.updated_at,
                    u.id AS owner_id, u.display_name AS owner_display_name,
                    u.picture_url AS owner_picture_url, u.flags AS owner_flags
@@ -43,15 +41,13 @@ public interface SimpleRosterDao {
             """)
     Optional<RosterRow> findRosterRowById(String id);
 
-    @SqlUpdate(
-            """
+    @SqlUpdate("""
             INSERT INTO simple_roster (id, title, body, owner_id, visibility)
             VALUES (:id, :title, :body, :ownerId, :visibility)
             """)
     boolean insertRoster(String id, String title, String body, String ownerId, String visibility);
 
-    @SqlUpdate(
-            """
+    @SqlUpdate("""
             UPDATE simple_roster
             SET title = :title, body = :body, visibility = :visibility
             WHERE id = :id

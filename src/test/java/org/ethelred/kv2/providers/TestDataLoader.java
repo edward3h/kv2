@@ -50,14 +50,12 @@ public class TestDataLoader {
     }
 
     private void _insert(Connection conn, DataMapping mapping) throws SQLException {
-        try (var s = conn.prepareStatement(
-                """
+        try (var s = conn.prepareStatement("""
             LOAD DATA LOCAL INFILE ?
             INTO TABLE %s
             FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
             IGNORE 1 LINES
-            """
-                        .formatted(mapping.tablename()))) {
+            """.formatted(mapping.tablename()))) {
             s.setURL(1, mapping.path());
             s.execute();
         }

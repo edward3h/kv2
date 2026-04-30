@@ -7,8 +7,7 @@ import org.jspecify.annotations.Nullable;
 
 @DAO
 public interface IdentityDao {
-    @SqlUpdate(
-            """
+    @SqlUpdate("""
             INSERT INTO identity (id, provider, user_id, external_id, email, attributes)
             VALUES (:id, :provider, :userId, :externalId, :email, :attributes)
             """)

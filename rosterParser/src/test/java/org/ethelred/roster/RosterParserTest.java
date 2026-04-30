@@ -26,8 +26,7 @@ public class RosterParserTest {
 
     @Test
     public void sample1() {
-        var body =
-                """
+        var body = """
 # Furnace Fraggers (Wastes)
 
 Gang

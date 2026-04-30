@@ -10,16 +10,14 @@ import org.jspecify.annotations.Nullable;
 
 @DAO
 public interface UserDao {
-    @SqlQuery(
-            """
+    @SqlQuery("""
             SELECT id, display_name, picture_url, flags, created_at, updated_at
             FROM user
             WHERE id = :id
             """)
     Optional<User> findById(String id);
 
-    @SqlQuery(
-            """
+    @SqlQuery("""
             SELECT u.id, u.display_name, u.picture_url, u.flags, u.created_at, u.updated_at
             FROM user u
             JOIN identity i ON u.id = i.user_id
@@ -28,8 +26,7 @@ public interface UserDao {
             """)
     Optional<User> findByIdentity(String provider, String externalId);
 
-    @SqlUpdate(
-            """
+    @SqlUpdate("""
             INSERT INTO user (id, display_name, picture_url, flags)
             VALUES (:id, :displayName, :pictureUrl, :flags)
             """)
