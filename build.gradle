@@ -50,7 +50,7 @@ dependencies {
 	implementation("com.nimbusds:nimbus-jose-jwt:9.47")
 
 	// Jackson
-	implementation(platform("com.fasterxml.jackson:jackson-bom:2.18.3"))
+	implementation(platform("com.fasterxml.jackson:jackson-bom:2.21.3"))
 	implementation("com.fasterxml.jackson.core:jackson-databind")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
