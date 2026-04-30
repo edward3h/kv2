@@ -12,10 +12,10 @@ import io.avaje.http.api.Post;
 import io.avaje.jex.http.Context;
 import io.avaje.jex.http.HttpResponseException;
 import jakarta.inject.Singleton;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import org.ethelred.kv2.data.SimpleRosterRepository;
 import org.ethelred.kv2.models.DocumentStub;
 import org.ethelred.kv2.models.Owner;
@@ -23,7 +23,6 @@ import org.ethelred.kv2.models.SimpleRoster;
 import org.ethelred.kv2.models.Visibility;
 import org.ethelred.kv2.security.AuthFilter;
 import org.ethelred.kv2.services.UserService;
-import org.ethelred.kv2.util.PatchHelper;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,17 +36,12 @@ public class ApiRosterController {
 
     private final SimpleRosterRepository rosterRepository;
     private final UserService userService;
-    private final PatchHelper patchHelper;
     private final ObjectMapper objectMapper;
 
     public ApiRosterController(
-            SimpleRosterRepository rosterRepository,
-            UserService userService,
-            PatchHelper patchHelper,
-            ObjectMapper objectMapper) {
+            SimpleRosterRepository rosterRepository, UserService userService, ObjectMapper objectMapper) {
         this.rosterRepository = rosterRepository;
         this.userService = userService;
-        this.patchHelper = patchHelper;
         this.objectMapper = objectMapper;
     }
 
@@ -121,11 +115,27 @@ public class ApiRosterController {
             LOGGER.debug("Not owner of roster {} {}", owner, oldRoster.owner());
             throw new HttpResponseException(403, "Not owner of this roster");
         }
-        if (updates.containsKey("body")) {
-            updates = new HashMap<>(updates);
-            updates.put("title", SimpleRoster.extractTitle((String) updates.get("body")));
+        var allowedKeys = Set.of("body", "title", "visibility");
+        for (var key : updates.keySet()) {
+            if (!allowedKeys.contains(key)) {
+                throw new IllegalArgumentException("No property named %s on type SimpleRoster".formatted(key));
+            }
         }
-        var newRoster = patchHelper.apply(oldRoster, updates);
+        var body = updates.containsKey("body") ? (String) updates.get("body") : oldRoster.body();
+        var title = updates.containsKey("body")
+                ? SimpleRoster.extractTitle(body)
+                : updates.containsKey("title") ? (String) updates.get("title") : oldRoster.title();
+        var visibility = updates.containsKey("visibility")
+                ? Visibility.valueOf((String) updates.get("visibility"))
+                : oldRoster.visibility();
+        var newRoster = new SimpleRoster(
+                oldRoster.id(),
+                title,
+                body,
+                oldRoster.owner(),
+                visibility,
+                oldRoster.createdAt(),
+                oldRoster.updatedAt());
         return rosterRepository.update(newRoster).view();
     }
 }
