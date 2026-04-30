@@ -22,7 +22,7 @@ spotless {
     format 'misc', {
         target '*.md', '.gitignore'
         trimTrailingWhitespace()
-        indentWithSpaces()
+        leadingTabsToSpaces()
         endWithNewline()
     }
     java {

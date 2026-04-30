@@ -147,8 +147,7 @@ public class ApiRosterControllerTest {
 
     @Test
     public void createRosterWithTitle() throws Exception {
-        var body =
-                """
+        var body = """
                 # My First Roster
 
                 Big Detachment
