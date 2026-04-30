@@ -15,8 +15,8 @@ repositories {
 
 dependencies {
 	implementation("gg.jte:jte:3.2.4")
-	jteGenerate("gg.jte:jte-models:3.2.3")
-	api("gg.jte:jte-models:3.2.3")
+	jteGenerate("gg.jte:jte-models:3.2.4")
+	api("gg.jte:jte-models:3.2.4")
 	implementation(project(":rosterParser"))
 	compileOnly('org.jspecify:jspecify:1.0.0')
 }

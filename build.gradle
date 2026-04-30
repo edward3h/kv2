@@ -68,7 +68,7 @@ dependencies {
 	compileOnly 'org.jspecify:jspecify:1.0.0'
 	implementation("gg.jte:jte-runtime:3.2.3")
 
-	implementation("gg.jte:jte-models:3.2.3")
+	implementation("gg.jte:jte-models:3.2.4")
 
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
