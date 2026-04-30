@@ -49,12 +49,6 @@ dependencies {
 	// JWT
 	implementation("com.nimbusds:nimbus-jose-jwt:9.48")
 
-	// Jackson
-	implementation(platform("com.fasterxml.jackson:jackson-bom:2.21.3"))
-	implementation("com.fasterxml.jackson.core:jackson-databind")
-	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
-
 	// JTE templates
 	runtimeOnly("gg.jte:jte:3.2.4")
 	implementation("gg.jte:jte-runtime:3.2.4")

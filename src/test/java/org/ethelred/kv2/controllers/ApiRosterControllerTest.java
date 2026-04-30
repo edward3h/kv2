@@ -3,11 +3,12 @@ package org.ethelred.kv2.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.avaje.inject.BeanScope;
 import io.avaje.jex.Jex;
 import io.avaje.jex.Routing;
+import io.avaje.jsonb.JsonType;
+import io.avaje.jsonb.Jsonb;
+import io.avaje.jsonb.Types;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -35,7 +36,8 @@ public class ApiRosterControllerTest {
     private JwtService jwtService;
     private UserService userService;
     private TestDataLoader dataLoader;
-    private ObjectMapper objectMapper;
+    private JsonType<List<DocumentStub>> documentStubListType;
+    private JsonType<SimpleRoster.View> rosterViewType;
     private final HttpClient http = HttpClient.newHttpClient();
 
     @BeforeAll
@@ -44,7 +46,9 @@ public class ApiRosterControllerTest {
         jwtService = scope.get(JwtService.class);
         userService = scope.get(UserService.class);
         dataLoader = new TestDataLoader(scope.get(DataSource.class));
-        objectMapper = scope.get(ObjectMapper.class);
+        var jsonb = scope.get(Jsonb.class);
+        documentStubListType = jsonb.type(Types.listOf(DocumentStub.class));
+        rosterViewType = jsonb.type(SimpleRoster.View.class);
 
         var authFilter = scope.get(AuthFilter.class);
         var exHandlers = scope.get(org.ethelred.kv2.controllers.MyExceptionHandlers.class);
@@ -100,7 +104,7 @@ public class ApiRosterControllerTest {
     public void listEmpty() throws Exception {
         var response = send(withJwt(get("/abc/rosters"), "empty"));
         assertEquals(200, response.statusCode());
-        var result = objectMapper.readValue(response.body(), new TypeReference<List<DocumentStub>>() {});
+        var result = documentStubListType.fromJson(response.body());
         assertEquals(List.of(), result);
     }
 
@@ -108,7 +112,7 @@ public class ApiRosterControllerTest {
     public void listFirst() throws Exception {
         var response = send(withJwt(get("/abc/rosters"), "first"));
         assertEquals(200, response.statusCode());
-        var result = objectMapper.readValue(response.body(), new TypeReference<List<DocumentStub>>() {});
+        var result = documentStubListType.fromJson(response.body());
         assertEquals(List.of(new DocumentStub("123", "Test Roster 1")), result);
     }
 
@@ -116,27 +120,21 @@ public class ApiRosterControllerTest {
     public void getPublicSignedIn() throws Exception {
         var response = send(withJwt(get("/abc/rosters/123"), "first"));
         assertEquals(200, response.statusCode());
-        assertEquals(
-                "Body goes here",
-                objectMapper.readValue(response.body(), SimpleRoster.View.class).body());
+        assertEquals("Body goes here", rosterViewType.fromJson(response.body()).body());
     }
 
     @Test
     public void getPublicAnonymous() throws Exception {
         var response = send(get("/abc/rosters/123"));
         assertEquals(200, response.statusCode());
-        assertEquals(
-                "Body goes here",
-                objectMapper.readValue(response.body(), SimpleRoster.View.class).body());
+        assertEquals("Body goes here", rosterViewType.fromJson(response.body()).body());
     }
 
     @Test
     public void getPrivateSignedIn() throws Exception {
         var response = send(withJwt(get("/abc/rosters/345"), "second"));
         assertEquals(200, response.statusCode());
-        assertEquals(
-                "Body goes here",
-                objectMapper.readValue(response.body(), SimpleRoster.View.class).body());
+        assertEquals("Body goes here", rosterViewType.fromJson(response.body()).body());
     }
 
     @Test
@@ -161,7 +159,7 @@ public class ApiRosterControllerTest {
                 "first");
         var response = send(req);
         assertEquals(201, response.statusCode());
-        var view = objectMapper.readValue(response.body(), SimpleRoster.View.class);
+        var view = rosterViewType.fromJson(response.body());
         assertEquals("My First Roster", view.title());
         assertEquals("ABC", view.owner().displayName());
         assertEquals(body, view.body());
@@ -181,7 +179,7 @@ public class ApiRosterControllerTest {
                 "first");
         var response = send(req);
         assertEquals(201, response.statusCode());
-        var view = objectMapper.readValue(response.body(), SimpleRoster.View.class);
+        var view = rosterViewType.fromJson(response.body());
         assertEquals("My Roster", view.title());
         assertEquals("ABC", view.owner().displayName());
     }
@@ -202,10 +200,7 @@ public class ApiRosterControllerTest {
         var getResponse = send(get("/abc/rosters/345"));
         assertEquals(200, getResponse.statusCode());
         assertEquals(
-                "Body goes here",
-                objectMapper
-                        .readValue(getResponse.body(), SimpleRoster.View.class)
-                        .body());
+                "Body goes here", rosterViewType.fromJson(getResponse.body()).body());
     }
 
     @Test

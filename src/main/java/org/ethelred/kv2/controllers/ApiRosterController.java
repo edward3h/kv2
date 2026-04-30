@@ -1,8 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.controllers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.avaje.http.api.Consumes;
 import io.avaje.http.api.Controller;
 import io.avaje.http.api.Delete;
@@ -11,6 +9,9 @@ import io.avaje.http.api.Patch;
 import io.avaje.http.api.Post;
 import io.avaje.jex.http.Context;
 import io.avaje.jex.http.HttpResponseException;
+import io.avaje.jsonb.JsonType;
+import io.avaje.jsonb.Jsonb;
+import io.avaje.jsonb.Types;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Map;
@@ -32,17 +33,14 @@ import org.slf4j.LoggerFactory;
 public class ApiRosterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiRosterController.class);
 
-    private static final TypeReference<Map<String, Object>> MAP_TYPE = new TypeReference<>() {};
-
     private final SimpleRosterRepository rosterRepository;
     private final UserService userService;
-    private final ObjectMapper objectMapper;
+    private final JsonType<Map<String, Object>> mapType;
 
-    public ApiRosterController(
-            SimpleRosterRepository rosterRepository, UserService userService, ObjectMapper objectMapper) {
+    public ApiRosterController(SimpleRosterRepository rosterRepository, UserService userService, Jsonb jsonb) {
         this.rosterRepository = rosterRepository;
         this.userService = userService;
-        this.objectMapper = objectMapper;
+        this.mapType = jsonb.type(Types.mapOf(Object.class));
     }
 
     @Get
@@ -104,7 +102,7 @@ public class ApiRosterController {
     public SimpleRoster.View updateRosterFields(Context ctx, String id) {
         Map<String, Object> updates;
         try {
-            updates = objectMapper.readValue(ctx.body(), MAP_TYPE);
+            updates = mapType.fromJson(ctx.body());
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid JSON body: " + e.getMessage());
         }
