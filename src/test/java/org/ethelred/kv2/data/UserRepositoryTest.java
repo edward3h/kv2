@@ -5,10 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.avaje.inject.BeanScope;
+import org.ethelred.kv2.MySQLContainerExtension;
 import org.ethelred.kv2.models.Identity;
 import org.ethelred.kv2.models.User;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(MySQLContainerExtension.class)
 public class UserRepositoryTest {
 
     @Test

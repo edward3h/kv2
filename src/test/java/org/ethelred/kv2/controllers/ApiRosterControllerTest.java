@@ -16,6 +16,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+import org.ethelred.kv2.MySQLContainerExtension;
 import org.ethelred.kv2.models.DocumentStub;
 import org.ethelred.kv2.models.SimpleRoster;
 import org.ethelred.kv2.providers.TestDataLoader;
@@ -27,7 +28,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(MySQLContainerExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ApiRosterControllerTest {
     private BeanScope scope;
