@@ -1,12 +1,13 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.security;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.avaje.config.Config;
 import io.avaje.http.api.Controller;
 import io.avaje.http.api.Get;
 import io.avaje.jex.http.Context;
+import io.avaje.jsonb.JsonType;
+import io.avaje.jsonb.Jsonb;
+import io.avaje.jsonb.Types;
 import jakarta.inject.Singleton;
 import java.io.IOException;
 import java.net.URI;
@@ -36,21 +37,18 @@ public class OAuthController {
     private final UserService userService;
     private final JwtService jwtService;
     private final DiscordApiClient discordApiClient;
-    private final ObjectMapper objectMapper;
+    private final JsonType<Map<String, Object>> mapType;
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public OAuthController(
-            UserService userService,
-            JwtService jwtService,
-            DiscordApiClient discordApiClient,
-            ObjectMapper objectMapper) {
+            UserService userService, JwtService jwtService, DiscordApiClient discordApiClient, Jsonb jsonb) {
         this.clientId = Config.get("kv2.oauth.discord.client-id", "test_discord_id");
         this.clientSecret = Config.get("kv2.oauth.discord.client-secret", "test_discord_secret");
         this.redirectUri = Config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/discord/callback");
         this.userService = userService;
         this.jwtService = jwtService;
         this.discordApiClient = discordApiClient;
-        this.objectMapper = objectMapper;
+        this.mapType = jsonb.type(Types.mapOf(Object.class));
     }
 
     @Get("/discord")
@@ -122,7 +120,7 @@ public class OAuthController {
                 .build();
 
         var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        Map<String, Object> json = objectMapper.readValue(response.body(), new TypeReference<>() {});
+        Map<String, Object> json = mapType.fromJson(response.body());
         var token = json.get("access_token");
         if (token == null) {
             throw new IOException("No access_token in response: " + response.body());

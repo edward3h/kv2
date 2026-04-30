@@ -1,8 +1,9 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers.discord;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.avaje.jsonb.JsonType;
+import io.avaje.jsonb.Jsonb;
+import io.avaje.jsonb.Types;
 import jakarta.inject.Singleton;
 import java.io.IOException;
 import java.net.URI;
@@ -17,37 +18,30 @@ public class DiscordApiClient {
     private static final String USER_AGENT = "Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)";
 
     private final HttpClient http = HttpClient.newHttpClient();
-    private final ObjectMapper objectMapper;
+    private final JsonType<DiscordUser> userType;
+    private final JsonType<List<DiscordGuild>> guildsType;
 
-    DiscordApiClient(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+    DiscordApiClient(Jsonb jsonb) {
+        this.userType = jsonb.type(DiscordUser.class);
+        this.guildsType = jsonb.type(Types.listOf(DiscordGuild.class));
     }
 
     public DiscordUser getUser(String authorization) {
-        return get("/users/@me", authorization, DiscordUser.class);
+        return get("/users/@me", authorization, userType);
     }
 
     public List<DiscordGuild> getUserGuilds(String authorization) {
-        return get("/users/@me/guilds", authorization, new TypeReference<>() {});
+        return get("/users/@me/guilds", authorization, guildsType);
     }
 
     public static String authorization(String token) {
         return "Bearer %s".formatted(token);
     }
 
-    private <T> T get(String path, String authorization, Class<T> type) {
+    private <T> T get(String path, String authorization, JsonType<T> type) {
         try {
             var response = http.send(request(path, authorization), HttpResponse.BodyHandlers.ofString());
-            return objectMapper.readValue(response.body(), type);
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private <T> T get(String path, String authorization, TypeReference<T> type) {
-        try {
-            var response = http.send(request(path, authorization), HttpResponse.BodyHandlers.ofString());
-            return objectMapper.readValue(response.body(), type);
+            return type.fromJson(response.body());
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

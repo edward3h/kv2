@@ -1,8 +1,9 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.avaje.jsonb.JsonType;
+import io.avaje.jsonb.Jsonb;
+import io.avaje.jsonb.Types;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +23,12 @@ public class DefaultUserService implements UserService {
 
     private final IdentityRepository identityRepository;
     private final UserRepository userRepository;
-    private final ObjectMapper objectMapper;
+    private final JsonType<Map<String, Object>> mapType;
 
-    public DefaultUserService(
-            IdentityRepository identityRepository, UserRepository userRepository, ObjectMapper objectMapper) {
+    public DefaultUserService(IdentityRepository identityRepository, UserRepository userRepository, Jsonb jsonb) {
         this.identityRepository = identityRepository;
         this.userRepository = userRepository;
-        this.objectMapper = objectMapper;
+        this.mapType = jsonb.type(Types.mapOf(Object.class));
     }
 
     @Override
@@ -49,8 +49,8 @@ public class DefaultUserService implements UserService {
         LOGGER.info("User attributes {}", attributes);
         String attributesJson;
         try {
-            attributesJson = objectMapper.writeValueAsString(attributes);
-        } catch (JsonProcessingException e) {
+            attributesJson = mapType.toJson(attributes);
+        } catch (Exception e) {
             attributesJson = "{}";
         }
         identityRepository.save(
