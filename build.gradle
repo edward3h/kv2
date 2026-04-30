@@ -47,7 +47,7 @@ dependencies {
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 
 	// JWT
-	implementation("com.nimbusds:nimbus-jose-jwt:9.47")
+	implementation("com.nimbusds:nimbus-jose-jwt:9.48")
 
 	// Jackson
 	implementation(platform("com.fasterxml.jackson:jackson-bom:2.21.3"))
