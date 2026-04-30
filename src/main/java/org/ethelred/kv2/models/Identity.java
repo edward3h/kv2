@@ -1,8 +1,8 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.models;
 
-import io.micronaut.core.annotation.Nullable;
 import java.time.LocalDateTime;
+import org.jspecify.annotations.Nullable;
 
 public record Identity(
         String id,

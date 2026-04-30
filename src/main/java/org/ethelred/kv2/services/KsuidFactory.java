@@ -2,13 +2,13 @@
 package org.ethelred.kv2.services;
 
 import com.github.ksuid.KsuidGenerator;
-import io.micronaut.context.annotation.Factory;
-import jakarta.inject.Singleton;
+import io.avaje.inject.Bean;
+import io.avaje.inject.Factory;
 
 @Factory
 public class KsuidFactory {
-    @Singleton
-    IdGenerator ksuidGenerator() {
+    @Bean
+    public IdGenerator ksuidGenerator() {
         return KsuidGenerator::generate;
     }
 }

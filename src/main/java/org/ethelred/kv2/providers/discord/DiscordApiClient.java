@@ -12,7 +12,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 @Singleton
-class DiscordApiClient {
+public class DiscordApiClient {
     private static final String BASE_URL = "https://discord.com/api/v9";
     private static final String USER_AGENT = "Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)";
 
@@ -23,15 +23,15 @@ class DiscordApiClient {
         this.objectMapper = objectMapper;
     }
 
-    DiscordUser getUser(String authorization) {
+    public DiscordUser getUser(String authorization) {
         return get("/users/@me", authorization, DiscordUser.class);
     }
 
-    List<DiscordGuild> getUserGuilds(String authorization) {
+    public List<DiscordGuild> getUserGuilds(String authorization) {
         return get("/users/@me/guilds", authorization, new TypeReference<>() {});
     }
 
-    static String authorization(String token) {
+    public static String authorization(String token) {
         return "Bearer %s".formatted(token);
     }
 

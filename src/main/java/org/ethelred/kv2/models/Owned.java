@@ -1,17 +1,14 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.models;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public interface Owned {
-    @NonNull
     String ownerId();
 
-    @NonNull
     Visibility visibility();
 
-    default boolean isOwnedBy(@NonNull Owner owner) {
+    default boolean isOwnedBy(Owner owner) {
         return ownerId().equals(owner.id());
     }
 

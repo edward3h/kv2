@@ -11,7 +11,7 @@ import org.ethelred.kv2.models.DocumentStub;
 import org.jspecify.annotations.Nullable;
 
 @DAO
-interface SimpleRosterDao {
+public interface SimpleRosterDao {
     record RosterRow(
             String id,
             String title,

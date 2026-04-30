@@ -1,6 +1,7 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.models;
 
+import io.avaje.jsonb.Json;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
@@ -36,9 +37,10 @@ public record User(
         return userFlags().stream().filter(UserFlag::isRole).map(Enum::name).toList();
     }
 
-    public View view() {
-        return new View(id, displayName);
+    public Info view() {
+        return new Info(id, displayName);
     }
 
-    public record View(String id, String displayName) {}
+    @Json
+    public record Info(String id, String displayName) {}
 }

@@ -1,22 +1,20 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.controllers;
 
-import io.micronaut.context.annotation.Factory;
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.server.exceptions.ExceptionHandler;
+import io.avaje.jex.Jex;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Factory
+@Singleton
 public class MyExceptionHandlers {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyExceptionHandlers.class);
 
-    @Singleton
-    public ExceptionHandler<IllegalArgumentException, HttpResponse<?>> illegalArgumentHandler() {
-        return ((request, exception) -> {
-            LOGGER.error("{} {} had exception", request.getMethodName(), request.getPath(), exception);
-            return HttpResponse.badRequest();
+    public void configure(Jex app) {
+        app.error(IllegalArgumentException.class, (ctx, ex) -> {
+            LOGGER.error("{} {} had exception", ctx.method(), ctx.path(), ex);
+            ctx.status(400);
+            ctx.text("Bad Request");
         });
     }
 }

@@ -1,9 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers;
 
-import io.micronaut.core.io.scan.ClassPathResourceLoader;
-import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -12,15 +9,11 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.sql.DataSource;
 
-@Singleton
 public class TestDataLoader {
     private final DataSource dataSource;
-    private final ClassPathResourceLoader resourceLoader;
 
-    @Inject
-    public TestDataLoader(DataSource dataSource, ClassPathResourceLoader resourceLoader) {
+    public TestDataLoader(DataSource dataSource) {
         this.dataSource = dataSource;
-        this.resourceLoader = resourceLoader;
     }
 
     private record DataMapping(String filename, String tablename, URL path) {}
@@ -37,11 +30,11 @@ public class TestDataLoader {
                 if (!tableNames.contains(tablename)) {
                     throw new IllegalArgumentException("No table matching " + tablename);
                 }
-                var url = resourceLoader.getResource(filename);
-                if (url.isEmpty()) {
+                var resource = Thread.currentThread().getContextClassLoader().getResource(filename);
+                if (resource == null) {
                     throw new IllegalArgumentException("Could not find file " + filename);
                 }
-                fileMapping.add(new DataMapping(filename, tablename, url.get()));
+                fileMapping.add(new DataMapping(filename, tablename, resource));
             }
             // delete contents in reverse order
             for (int i = fileMapping.size() - 1; i >= 0; i--) {
