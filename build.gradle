@@ -31,7 +31,7 @@ processTestResources {
 
 dependencies {
 	// Avaje stack
-	annotationProcessor("io.avaje:avaje-inject-generator:11.6")
+	annotationProcessor("io.avaje:avaje-inject-generator:12.5")
 	annotationProcessor("io.avaje:avaje-http-jex-generator:3.8")
 	annotationProcessor("io.avaje:avaje-jsonb-generator:3.5")
 	implementation("io.avaje:avaje-inject:11.6")
