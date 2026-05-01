@@ -38,7 +38,7 @@ dependencies {
 	implementation("io.avaje:avaje-jex:3.5")
 	implementation("io.avaje:avaje-http-api:3.8")
 	implementation("io.avaje:avaje-config:5.1")
-	implementation("io.avaje:avaje-jsonb:3.5")
+	implementation("io.avaje:avaje-jsonb:3.13")
 	implementation("io.avaje:avaje-jsonb-inject-plugin:3.5")
 
 	// Database
