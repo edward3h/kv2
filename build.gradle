@@ -43,7 +43,7 @@ dependencies {
 
 	// Database
 	implementation("com.zaxxer:HikariCP:5.1.0")
-	implementation("org.liquibase:liquibase-core:4.33.0")
+	implementation("org.liquibase:liquibase-core:5.0.2")
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 
 	// JWT
