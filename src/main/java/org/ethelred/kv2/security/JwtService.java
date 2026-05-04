@@ -61,8 +61,7 @@ public class JwtService {
         }
     }
 
-    @Nullable
-    public Principal parse(String token) {
+    public @Nullable Principal parse(String token) {
         try {
             var jwt = SignedJWT.parse(token);
             if (!jwt.verify(verifier)) {

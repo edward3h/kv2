@@ -56,13 +56,11 @@ public class AuthFilter {
         return true;
     }
 
-    @Nullable
-    public static Principal getPrincipal(Context ctx) {
+    public static @Nullable Principal getPrincipal(Context ctx) {
         return ctx.attribute(PRINCIPAL_ATTR);
     }
 
-    @Nullable
-    public static Owner getOwner(Context ctx) {
+    public static @Nullable Owner getOwner(Context ctx) {
         return getPrincipal(ctx);
     }
 }
