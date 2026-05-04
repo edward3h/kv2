@@ -25,7 +25,6 @@ checkerFramework {
     checkers = ['org.checkerframework.checker.nullness.NullnessChecker']
     version = eisopVersion
     extraJavacArgs = ['-AskipFiles=.*/build/generated.*']
-    excludeTests = true
 }
 
 dependencies {

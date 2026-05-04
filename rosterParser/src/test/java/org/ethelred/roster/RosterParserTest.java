@@ -2,9 +2,9 @@
 package org.ethelred.roster;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.Test;
 
 public class RosterParserTest {
@@ -58,7 +58,7 @@ Vehicles
         assertLevel(l, children, total, null);
     }
 
-    private void assertLevel(Level l, int children, int total, String contains) {
+    private void assertLevel(Level l, int children, int total, @Nullable String contains) {
         assertEquals(children, l.getChildren().length);
         assertEquals(total, l.getTotal());
         if (contains != null) {
@@ -67,7 +67,6 @@ Vehicles
     }
 
     private void assertHeader(Level l, int header) {
-        assertNotNull(l.getHeader());
-        assertEquals(header, l.getHeader());
+        assertEquals(Integer.valueOf(header), l.getHeader());
     }
 }

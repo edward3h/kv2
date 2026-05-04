@@ -30,7 +30,9 @@ public class TestDataLoader {
                 if (!tableNames.contains(tablename)) {
                     throw new IllegalArgumentException("No table matching " + tablename);
                 }
-                var resource = Thread.currentThread().getContextClassLoader().getResource(filename);
+                var classLoader = Thread.currentThread().getContextClassLoader();
+                if (classLoader == null) classLoader = ClassLoader.getSystemClassLoader();
+                var resource = classLoader.getResource(filename);
                 if (resource == null) {
                     throw new IllegalArgumentException("Could not find file " + filename);
                 }
@@ -86,7 +88,8 @@ public class TestDataLoader {
         try (var rs = dbmd.getTables(null, null, null, new String[] {"TABLE"})) {
             var tableNames = new HashSet<String>();
             while (rs.next()) {
-                tableNames.add(rs.getString("TABLE_NAME"));
+                var name = rs.getString("TABLE_NAME");
+                if (name != null) tableNames.add(name);
             }
             return tableNames;
         }

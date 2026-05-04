@@ -32,6 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(MySQLContainerExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SuppressWarnings("initialization")
 public class ApiRosterControllerTest {
     private BeanScope scope;
     private Jex.Server server;

@@ -1,6 +1,7 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.testcontainers.containers.MySQLContainer;
@@ -9,7 +10,7 @@ public class MySQLContainerExtension
         implements BeforeAllCallback, ExtensionContext.Store.CloseableResource, AutoCloseable {
 
     private static final String STORE_KEY = "MySQLContainerExtension";
-    private MySQLContainer<?> container;
+    private @Nullable MySQLContainer<?> container;
 
     @Override
     public void beforeAll(ExtensionContext context) {
