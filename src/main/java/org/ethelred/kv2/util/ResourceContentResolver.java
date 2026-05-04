@@ -13,8 +13,9 @@ public class ResourceContentResolver {
         if (path.startsWith("/")) {
             path = path.substring(1);
         }
-        return Optional.ofNullable(
-                        Thread.currentThread().getContextClassLoader().getResourceAsStream(path))
+        var classLoader = Thread.currentThread().getContextClassLoader();
+        if (classLoader == null) classLoader = ClassLoader.getSystemClassLoader();
+        return Optional.ofNullable(classLoader.getResourceAsStream(path))
                 .map(ResourceContent::new)
                 .orElse(ResourceContent.empty());
     }

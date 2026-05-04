@@ -18,6 +18,7 @@ public record SimpleRoster(
     private static final Comparator<String> HEADER_SORT =
             Comparator.comparingLong(s -> s.chars().takeWhile(c -> c == '#').count());
 
+    @SuppressWarnings("nullness")
     public SimpleRoster(User owner, String rosterBody, Visibility visibility) {
         this(null, extractTitle(rosterBody), rosterBody, owner, visibility, null, null);
     }

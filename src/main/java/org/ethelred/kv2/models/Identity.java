@@ -13,7 +13,8 @@ public record Identity(
         @Nullable String attributes,
         @Nullable LocalDateTime createdAt,
         @Nullable LocalDateTime updatedAt) {
-    public Identity(String provider, User user, String externalId, String email, String attributes) {
+    public Identity(
+            String provider, User user, String externalId, @Nullable String email, @Nullable String attributes) {
         this(provider + "#" + externalId, provider, user.id(), externalId, email, attributes, null, null);
     }
 }

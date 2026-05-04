@@ -3,6 +3,7 @@ package org.ethelred.roster;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jspecify.annotations.Nullable;
 
 public class LevelImpl implements Level {
     @Override
@@ -16,7 +17,7 @@ public class LevelImpl implements Level {
     }
 
     @Override
-    public Integer getHeader() {
+    public @Nullable Integer getHeader() {
         return header;
     }
 
@@ -37,7 +38,7 @@ public class LevelImpl implements Level {
 
     private final List<Level> children = new ArrayList<>();
     private String text;
-    private Integer header;
+    private @Nullable Integer header;
     private boolean annotation;
     private int cost;
     private int multiplier;

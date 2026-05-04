@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'com.diffplug.spotless'
     id "com.github.jakemarsden.git-hooks"
+    id 'org.checkerframework'
 }
 
 repositories {
@@ -16,6 +17,23 @@ java {
 
 gitHooks {
     hooks = ['pre-commit': 'build']
+}
+
+def eisopVersion = "3.49.3-eisop1"
+
+checkerFramework {
+    checkers = ['org.checkerframework.checker.nullness.NullnessChecker']
+    version = eisopVersion
+    extraJavacArgs = ['-AskipFiles=.*/build/generated.*']
+    excludeTests = true
+}
+
+dependencies {
+    compileOnly 'org.jspecify:jspecify:1.0.0'
+    compileOnly "io.github.eisop:checker-qual:$eisopVersion"
+    testCompileOnly "io.github.eisop:checker-qual:$eisopVersion"
+    checkerQual "io.github.eisop:checker-qual:$eisopVersion"
+    checkerFramework "io.github.eisop:checker:$eisopVersion"
 }
 
 spotless {

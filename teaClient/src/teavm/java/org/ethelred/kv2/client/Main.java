@@ -5,6 +5,7 @@ import org.ethelred.kv2.template.StaticTemplates;
 import org.ethelred.kv2.template.Templates;
 import org.ethelred.roster.RosterParser;
 import org.ethelred.roster.RosterParserImpl;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.teavm.jso.browser.TimerHandler;
@@ -14,7 +15,7 @@ import org.teavm.jso.dom.html.HTMLTextAreaElement;
 
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
-    private CodeMirror codeMirror;
+    private @Nullable CodeMirror codeMirror;
 
     public static void main(String[] args) {
         var app = new Main();
@@ -24,8 +25,8 @@ public class Main {
     private final Api api = new Api();
     private final RosterParser rosterParser = new RosterParserImpl();
     private final Templates templates = new StaticTemplates();
-    private String rosterId;
-    private HTMLElement viewer;
+    private @Nullable String rosterId;
+    private @Nullable HTMLElement viewer;
     private int bounceTimeout;
     private int remoteTimeout;
 
@@ -63,6 +64,7 @@ public class Main {
 
     private void textChanged() {
         LOGGER.info("text changed");
+        if (codeMirror == null) return;
         var text = codeMirror.getValue();
         updateView(text);
         storeLocal(text);
@@ -73,21 +75,27 @@ public class Main {
 
     private void storeRemote() {
         LOGGER.info("store remote");
-        var text = codeMirror.getValue();
-        api.updateRosterFields(rosterId, text, () -> {
+        var cm = codeMirror;
+        var rId = rosterId;
+        if (cm == null || rId == null) return;
+        var text = cm.getValue();
+        api.updateRosterFields(rId, text, () -> {
             remoteTimeout = 0;
         });
     }
 
     private void storeLocal(String text) {
         LOGGER.info("store local");
+        if (rosterId == null) return;
         var localStorage = Window.current().getLocalStorage();
         localStorage.setItem("roster." + rosterId, text);
     }
 
     private void updateView(String text) {
         LOGGER.info("update view");
+        var v = viewer;
+        if (v == null) return;
         var parsed = rosterParser.parseRoster(text);
-        viewer.setInnerHTML(templates.roster(parsed).render());
+        v.setInnerHTML(templates.roster(parsed).render());
     }
 }

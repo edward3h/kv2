@@ -38,6 +38,7 @@ public class DefaultUserService implements UserService {
                 .orElseGet(() -> createUser(provider, externalId, attributes));
     }
 
+    @SuppressWarnings("nullness")
     private User createUser(String provider, String externalId, Map<String, Object> attributes) {
         var displayName = DISPLAY_NAME_KEYS.stream()
                 .filter(attributes::containsKey)

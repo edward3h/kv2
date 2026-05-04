@@ -18,7 +18,9 @@ public record User(
         @Nullable LocalDateTime updatedAt)
         implements Owner {
 
-    public User(String id, String displayName, String pictureUrl, UserFlag... flagValues) {
+    @SuppressWarnings("nullness")
+    public User(
+            @Nullable String id, @Nullable String displayName, @Nullable String pictureUrl, UserFlag... flagValues) {
         this(id, displayName, pictureUrl, UserFlagSetConverter.fromSet(Set.of(flagValues)), null, null);
     }
 
@@ -42,5 +44,5 @@ public record User(
     }
 
     @Json
-    public record Info(String id, String displayName) {}
+    public record Info(String id, @Nullable String displayName) {}
 }

@@ -65,7 +65,7 @@ public class ApiRosterController {
         if (roster.isVisibleTo(owner)) {
             return roster.view();
         }
-        LOGGER.debug("Private roster {} user {}", roster, owner);
+        LOGGER.debug("Private roster {} user {}", roster, String.valueOf(owner));
         throw new HttpResponseException(403, "Private roster");
     }
 
@@ -97,6 +97,7 @@ public class ApiRosterController {
         rosterRepository.deleteById(id);
     }
 
+    @SuppressWarnings("nullness")
     @Patch("/{id}")
     @Consumes("application/json")
     public SimpleRoster.View updateRosterFields(Context ctx, String id) {
@@ -110,7 +111,7 @@ public class ApiRosterController {
         var owner = AuthFilter.getOwner(ctx);
         var oldRoster = rosterRepository.findById(id).orElseThrow(() -> new HttpResponseException(404, "Not found"));
         if (owner == null || !oldRoster.isOwnedBy(owner)) {
-            LOGGER.debug("Not owner of roster {} {}", owner, oldRoster.owner());
+            LOGGER.debug("Not owner of roster {} {}", String.valueOf(owner), oldRoster.owner());
             throw new HttpResponseException(403, "Not owner of this roster");
         }
         var allowedKeys = Set.of("body", "title", "visibility");

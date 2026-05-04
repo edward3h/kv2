@@ -7,6 +7,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.jspecify.annotations.Nullable;
 
 public class RosterParserImpl implements RosterParser {
     private static final Pattern INDENTS = Pattern.compile("^\\s*");
@@ -31,6 +32,7 @@ public class RosterParserImpl implements RosterParser {
         return new ParsedRosterImpl(styles, root);
     }
 
+    @SuppressWarnings("initialization")
     private LevelImpl build(List<LineInfo> lineInfos) {
         var indents =
                 lineInfos.stream().map(LineInfo::indent).distinct().sorted().collect(Collectors.toList());
@@ -52,7 +54,9 @@ public class RosterParserImpl implements RosterParser {
             if (liDepth > (parents.size() - 1)) {
                 parents.push(last);
             }
-            parents.getFirst().addChild(liLevel);
+            var parent = parents.getFirst();
+            if (parent == null) throw new IllegalStateException("parent stack is empty");
+            parent.addChild(liLevel);
             last = liLevel;
         }
         return root;
@@ -75,39 +79,45 @@ public class RosterParserImpl implements RosterParser {
         if (s.isBlank()) {
             return EMPTY;
         }
-        if (find(STYLE, s)) {
-            return new StyleInfo(matchResult.group(1));
+        var styleMatch = find(STYLE, s);
+        if (styleMatch != null) {
+            var g1 = styleMatch.group(1);
+            if (g1 == null) throw new IllegalStateException("STYLE group 1 missing");
+            return new StyleInfo(g1);
         }
         var indent = 0;
-        if (find(INDENTS, s)) {
-            indent = matchResult.group().length();
+        var indentMatch = find(INDENTS, s);
+        if (indentMatch != null) {
+            indent = indentMatch.group().length();
         }
-        if (find(HEADER, s)) {
-            return new HeaderInfo(matchResult.group(2), matchResult.group(1).length(), indent);
+        var headerMatch = find(HEADER, s);
+        if (headerMatch != null) {
+            var g1 = headerMatch.group(1);
+            var g2 = headerMatch.group(2);
+            if (g1 == null || g2 == null) throw new IllegalStateException("HEADER groups missing");
+            return new HeaderInfo(g2, g1.length(), indent);
         }
-        var annotation = find(ANNOTATION, s);
+        var annotation = find(ANNOTATION, s) != null;
         var cost = 0;
         var multiplier = 1;
-        if (find(POINTS, s)) {
-            cost = Integer.parseInt(matchResult.group(1), 10);
-            if (find(MULTIPLIER, s)) {
-                multiplier = Integer.parseInt(matchResult.group(1), 10);
+        var pointsMatch = find(POINTS, s);
+        if (pointsMatch != null) {
+            var g1 = pointsMatch.group(1);
+            if (g1 == null) throw new IllegalStateException("POINTS group 1 missing");
+            cost = Integer.parseInt(g1, 10);
+            var multiplierMatch = find(MULTIPLIER, s);
+            if (multiplierMatch != null) {
+                var mg1 = multiplierMatch.group(1);
+                if (mg1 == null) throw new IllegalStateException("MULTIPLIER group 1 missing");
+                multiplier = Integer.parseInt(mg1, 10);
             }
         }
         return new NormalLineInfo(s.trim(), indent, annotation, cost, multiplier);
     }
 
-    private MatchResult matchResult;
-
-    private boolean find(Pattern p, String s) {
+    private @Nullable MatchResult find(Pattern p, String s) {
         var matcher = p.matcher(s);
-        if (matcher.find()) {
-            matchResult = matcher.toMatchResult();
-            return true;
-        } else {
-            matchResult = null;
-            return false;
-        }
+        return matcher.find() ? matcher.toMatchResult() : null;
     }
 
     interface LineInfo {
@@ -139,7 +149,7 @@ public class RosterParserImpl implements RosterParser {
 
         @Override
         public String text() {
-            return null;
+            throw new UnsupportedOperationException();
         }
     };
 

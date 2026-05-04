@@ -50,8 +50,8 @@ public class JwtService {
                     .issueTime(Date.from(now))
                     .expirationTime(Date.from(now.plusSeconds(EXPIRY_SECONDS)))
                     .claim("roles", user.roles())
-                    .claim("displayName", user.displayName())
-                    .claim("picture", user.pictureUrl())
+                    .claim("displayName", orEmpty(user.displayName()))
+                    .claim("picture", orEmpty(user.pictureUrl()))
                     .build();
             var jwt = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), claims);
             jwt.sign(signer);
@@ -79,7 +79,7 @@ public class JwtService {
                     "picture", orEmpty(claims.getStringClaim("picture")));
             return new Principal(claims.getSubject(), roles, attributes);
         } catch (ParseException | JOSEException e) {
-            LOGGER.debug("Invalid JWT: {}", e.getMessage());
+            LOGGER.debug("Invalid JWT: {}", e.toString());
             return null;
         }
     }

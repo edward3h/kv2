@@ -44,7 +44,8 @@ public class DefaultLayoutContext implements LayoutContext {
 
     @Override
     public String displayName() {
-        return attribute("displayName");
+        var attr = attribute("displayName");
+        return attr != null ? attr : username();
     }
 
     private @Nullable String attribute(String key) {
