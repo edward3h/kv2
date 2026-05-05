@@ -42,7 +42,7 @@ dependencies {
 	implementation("io.avaje:avaje-jsonb-inject-plugin:3.13")
 
 	// Database
-	implementation("com.zaxxer:HikariCP:5.1.0")
+	implementation("com.zaxxer:HikariCP:7.0.2")
 	implementation("org.liquibase:liquibase-core:4.33.0")
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 
