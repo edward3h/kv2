@@ -3,7 +3,7 @@ plugins {
 	id 'application'
 	id("org.ethelred.kv2.java-conventions")
 	id "co.uzzu.dotenv.gradle" version "4.0.0"
-	id("org.ethelred.kiwiproc") version "0.7"
+	id("org.ethelred.kiwiproc") version "0.8"
 }
 
 version = "0.1"
