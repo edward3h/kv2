@@ -93,7 +93,22 @@ tasks.named('test') {
 	systemProperty "avaje.profiles", "test"
 }
 
+tasks.register('startDevMySQL', Exec) {
+	group = 'dev'
+	description = 'Start MySQL via Docker Compose, waiting until healthy'
+	commandLine 'docker', 'compose', 'up', '-d', '--wait', 'mysql'
+}
+
+tasks.register('stopDevMySQL', Exec) {
+	group = 'dev'
+	description = 'Stop MySQL Docker Compose service'
+	commandLine 'docker', 'compose', 'stop', 'mysql'
+	ignoreExitValue = true
+}
+
 tasks.named('run') {
+	dependsOn 'startDevMySQL'
+	finalizedBy 'stopDevMySQL'
 	systemProperty "avaje.profiles", "dev"
 	environment(CGI_SERVER: "standalone")
 }
