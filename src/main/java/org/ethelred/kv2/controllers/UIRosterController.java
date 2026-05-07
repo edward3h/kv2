@@ -1,10 +1,13 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.controllers;
 
+import static org.ethelred.kv2.util.StreamingOutputAdapter.streaming;
+
 import io.avaje.http.api.Controller;
 import io.avaje.http.api.Get;
 import io.avaje.http.api.Post;
 import io.avaje.http.api.Produces;
+import io.avaje.http.api.StreamingOutput;
 import io.avaje.jex.http.Context;
 import jakarta.inject.Singleton;
 import java.util.List;
@@ -19,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 @Controller
 @Singleton
-@Produces("text/html")
 public class UIRosterController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UIRosterController.class);
 
@@ -44,28 +46,24 @@ public class UIRosterController {
     }
 
     @Get("/")
-    public String index(Context ctx) {
+    @Produces("text/html")
+    public StreamingOutput index(Context ctx) {
         var principal = AuthFilter.getPrincipal(ctx);
         var owner = AuthFilter.getOwner(ctx);
-        return templates
-                .layout(
-                        assets,
-                        new DefaultLayoutContext("Home", principal, authProviders),
-                        templates.home(principal != null, delegate.userRostersFor(owner)))
-                .render();
+        return streaming(templates.layout(
+                assets,
+                new DefaultLayoutContext("Home", principal, authProviders),
+                templates.home(principal != null, delegate.userRostersFor(owner))));
     }
 
     @Get("/roster/{id}")
-    public String viewRoster(Context ctx, String id) {
+    @Produces("text/html")
+    public StreamingOutput viewRoster(Context ctx, String id) {
         var principal = AuthFilter.getPrincipal(ctx);
         var roster = delegate.getRosterFor(AuthFilter.getOwner(ctx), id);
         var parsed = parser.parseRoster(roster.body());
-        return templates
-                .layout(
-                        assets,
-                        new DefaultLayoutContext(roster.title(), principal, authProviders),
-                        templates.roster(parsed))
-                .render();
+        return streaming(templates.layout(
+                assets, new DefaultLayoutContext(roster.title(), principal, authProviders), templates.roster(parsed)));
     }
 
     @Post("/roster/new")
@@ -76,14 +74,13 @@ public class UIRosterController {
     }
 
     @Get("/roster/{id}/edit")
-    public String editRoster(Context ctx, String id) {
+    @Produces("text/html")
+    public StreamingOutput editRoster(Context ctx, String id) {
         var principal = AuthFilter.getPrincipal(ctx);
         var roster = delegate.getRosterFor(AuthFilter.getOwner(ctx), id);
-        return templates
-                .layout(
-                        assets,
-                        new DefaultLayoutContext(roster.title(), principal, authProviders),
-                        templates.rosterEdit(roster.id(), roster.body()))
-                .render();
+        return streaming(templates.layout(
+                assets,
+                new DefaultLayoutContext(roster.title(), principal, authProviders),
+                templates.rosterEdit(roster.id(), roster.body())));
     }
 }
