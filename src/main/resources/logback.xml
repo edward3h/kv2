@@ -20,7 +20,7 @@
     </appender>
 
     <logger name="org.ethelred" level="DEBUG"/>
-    <logger name="HTTP_ACCESS_LOGGER" level="debug"/>
+<!--    <logger name="HTTP_ACCESS_LOGGER" level="debug"/>-->
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE"/>

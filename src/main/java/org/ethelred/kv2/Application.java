@@ -3,7 +3,6 @@ package org.ethelred.kv2;
 
 import io.avaje.inject.BeanScope;
 import io.avaje.jex.Jex;
-import io.avaje.jex.Routing;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import org.ethelred.kv2.controllers.MyExceptionHandlers;
@@ -12,15 +11,14 @@ import org.ethelred.kv2.security.AuthFilter;
 public class Application {
 
     public static void main(String[] args) {
+        System.out.println("Running...");
         registerDevShutdownHook();
-        var context = BeanScope.builder().build();
-        var authFilter = context.get(AuthFilter.class);
-        var exceptionHandlers = context.get(MyExceptionHandlers.class);
+        var beanScope = BeanScope.builder().build();
+        var authFilter = beanScope.get(AuthFilter.class);
+        var exceptionHandlers = beanScope.get(MyExceptionHandlers.class);
 
-        var app = Jex.create()
-                .routing(context.list(Routing.HttpService.class))
-                .before(authFilter::before)
-                .port(8080);
+        var app =
+                Jex.create().configureWith(beanScope).before(authFilter::before).port(8080);
 
         exceptionHandlers.configure(app);
 

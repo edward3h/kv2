@@ -36,6 +36,7 @@ dependencies {
 	annotationProcessor("io.avaje:avaje-jsonb-generator:3.13")
 	implementation("io.avaje:avaje-inject:11.6")
 	implementation("io.avaje:avaje-jex:3.5")
+	implementation("io.avaje:avaje-jex-static-content:3.5")
 	implementation("io.avaje:avaje-http-api:3.8")
 	implementation("io.avaje:avaje-config:5.1")
 	implementation("io.avaje:avaje-jsonb:3.13")
@@ -107,8 +108,8 @@ tasks.register('stopDevMySQL', Exec) {
 }
 
 tasks.named('run') {
-	dependsOn 'startDevMySQL'
-	finalizedBy 'stopDevMySQL'
+	//dependsOn 'startDevMySQL'
+	//finalizedBy 'stopDevMySQL'
 	systemProperty "avaje.profiles", "dev"
 	environment(CGI_SERVER: "standalone")
 }

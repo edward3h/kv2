@@ -7,8 +7,8 @@ datasource:
 assets:
   styles:
     - style
-    - font-awesome/6.4.0/css/fontawesome
-    - font-awesome/6.4.0/css/solid
+    - font-awesome/7.2.0/css/fontawesome
+    - font-awesome/7.2.0/css/solid
     - codemirror/6.65.7/lib/codemirror
   scripts:
     - editor
