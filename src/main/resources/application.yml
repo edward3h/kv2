@@ -22,6 +22,6 @@ kv2:
     discord:
       client-id: ${DISCORD_CLIENT_ID:test_discord_id}
       client-secret: ${DISCORD_CLIENT_SECRET:test_discord_secret}
-      redirect-uri: ${DISCORD_REDIRECT_URI:http://localhost:8080/oauth/discord/callback}
+      redirect-uri: ${DISCORD_REDIRECT_URI:http://localhost:8080/oauth/callback/discord}
   security:
     jwt-secret: ${JWT_SECRET:MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=}

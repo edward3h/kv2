@@ -64,7 +64,7 @@ public class OAuthController {
         ctx.redirect(url);
     }
 
-    @Get("/discord/callback")
+    @Get("/callback/discord")
     public void discordCallback(Context ctx) {
         var code = ctx.queryParam("code");
         var state = ctx.queryParam("state");
