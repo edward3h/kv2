@@ -10,11 +10,7 @@
     "name": "kv2",
     "description": "",
     "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
+    "scripts": {"test": "echo \"Error: no test specified\" && exit 1"},
     "version": "1.0.0",
-    "dependencies": {
-        "daisyui": "^5.0.0"
-    }
+    "dependencies": {"daisyui": "^5.0.0"}
 }
