@@ -2,8 +2,8 @@ plugins {
 	id 'java'
 	id 'application'
 	id("org.ethelred.kv2.java-conventions")
-	id "co.uzzu.dotenv.gradle" version "4.0.0"
-	id("org.ethelred.kiwiproc") version "0.8"
+
+	id("org.ethelred.kiwiproc") version "0.8.1"
 }
 
 version = "0.1"
@@ -107,9 +107,16 @@ tasks.register('stopDevMySQL', Exec) {
 	ignoreExitValue = true
 }
 
+def dotenvVars = [:]
+file('.env').eachLine { line ->
+	def m = (line =~ /^(?:export\s+)?([A-Z_][A-Z0-9_]*)=(.*)$/)
+	if (m.matches()) dotenvVars[m.group(1)] = m.group(2)
+}
+
 tasks.named('run') {
 	//dependsOn 'startDevMySQL'
 	//finalizedBy 'stopDevMySQL'
 	systemProperty "avaje.profiles", "dev"
 	environment(CGI_SERVER: "standalone")
+	environment dotenvVars
 }
