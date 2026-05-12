@@ -27,13 +27,13 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class OAuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthController.class);
-    private static final String DISCORD_AUTHORIZE_URL = "https://discord.com/api/oauth2/authorize";
-    private static final String DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token";
     private static final String STATE_COOKIE = "oauth_state";
 
     private final String clientId;
     private final String clientSecret;
     private final String redirectUri;
+    private final String authorizeUrl;
+    private final String tokenUrl;
     private final UserService userService;
     private final JwtService jwtService;
     private final DiscordApiClient discordApiClient;
@@ -45,6 +45,8 @@ public class OAuthController {
         this.clientId = Config.get("kv2.oauth.discord.client-id", "test_discord_id");
         this.clientSecret = Config.get("kv2.oauth.discord.client-secret", "test_discord_secret");
         this.redirectUri = Config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/discord/callback");
+        this.authorizeUrl = Config.get("kv2.oauth.discord.authorize-url", "https://discord.com/api/oauth2/authorize");
+        this.tokenUrl = Config.get("kv2.oauth.discord.token-url", "https://discord.com/api/oauth2/token");
         this.userService = userService;
         this.jwtService = jwtService;
         this.discordApiClient = discordApiClient;
@@ -55,7 +57,7 @@ public class OAuthController {
     public void discordLogin(Context ctx) {
         var state = UUID.randomUUID().toString();
         ctx.cookie(STATE_COOKIE, state, 600); // 10 min TTL
-        var url = DISCORD_AUTHORIZE_URL
+        var url = authorizeUrl
                 + "?client_id=" + encode(clientId)
                 + "&redirect_uri=" + encode(redirectUri)
                 + "&response_type=code"
@@ -114,7 +116,7 @@ public class OAuthController {
                 + "&client_secret=" + encode(clientSecret);
 
         var request = HttpRequest.newBuilder()
-                .uri(URI.create(DISCORD_TOKEN_URL))
+                .uri(URI.create(tokenUrl))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();

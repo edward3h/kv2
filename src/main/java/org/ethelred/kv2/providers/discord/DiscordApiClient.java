@@ -1,6 +1,7 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers.discord;
 
+import io.avaje.config.Config;
 import io.avaje.jsonb.JsonType;
 import io.avaje.jsonb.Jsonb;
 import io.avaje.jsonb.Types;
@@ -14,14 +15,15 @@ import java.util.List;
 
 @Singleton
 public class DiscordApiClient {
-    private static final String BASE_URL = "https://discord.com/api/v9";
     private static final String USER_AGENT = "Ordo Acerbus Login (https://github.com/edward3h/kv2 0.1)";
 
+    private final String apiBaseUrl;
     private final HttpClient http = HttpClient.newHttpClient();
     private final JsonType<DiscordUser> userType;
     private final JsonType<List<DiscordGuild>> guildsType;
 
     DiscordApiClient(Jsonb jsonb) {
+        this.apiBaseUrl = Config.get("kv2.oauth.discord.api-base-url", "https://discord.com/api/v9");
         this.userType = jsonb.type(DiscordUser.class);
         this.guildsType = jsonb.type(Types.listOf(DiscordGuild.class));
     }
@@ -49,7 +51,7 @@ public class DiscordApiClient {
 
     private HttpRequest request(String path, String authorization) {
         return HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + path))
+                .uri(URI.create(apiBaseUrl + path))
                 .header("Authorization", authorization)
                 .header("User-Agent", USER_AGENT)
                 .GET()
