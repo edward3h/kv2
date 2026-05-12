@@ -117,6 +117,11 @@ tasks.named('run') {
 	//dependsOn 'startDevMySQL'
 	//finalizedBy 'stopDevMySQL'
 	systemProperty "avaje.profiles", "dev"
+	// Point OAuth to the embedded stub so dev login works without real Discord credentials
+	systemProperty "kv2.oauth.discord.authorize-url", "http://localhost:8080/stub/oauth/authorize"
+	systemProperty "kv2.oauth.discord.token-url", "http://localhost:8080/stub/oauth/token"
+	systemProperty "kv2.oauth.discord.api-base-url", "http://localhost:8080/stub/api/v9"
+	systemProperty "kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/callback/discord"
 	environment(CGI_SERVER: "standalone")
 	environment dotenvVars
 }
