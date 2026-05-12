@@ -4,6 +4,7 @@ package org.ethelred.kv2.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import io.avaje.config.Config;
 import io.avaje.inject.BeanScope;
 import io.avaje.jex.Jex;
 import io.avaje.jex.Routing;
@@ -43,11 +44,11 @@ public class OAuthControllerTest {
         }
 
         // Set stub URL config before BeanScope constructs OAuthController + DiscordApiClient
-        System.setProperty("kv2.oauth.discord.authorize-url", "http://localhost:" + port + "/stub/oauth/authorize");
-        System.setProperty("kv2.oauth.discord.token-url", "http://localhost:" + port + "/stub/oauth/token");
-        System.setProperty("kv2.oauth.discord.api-base-url", "http://localhost:" + port + "/stub/api/v9");
-        System.setProperty("kv2.oauth.discord.redirect-uri", "http://localhost:" + port + "/oauth/callback/discord");
-        System.setProperty("kv2.dev.enabled", "true");
+        Config.setProperty("kv2.oauth.discord.authorize-url", "http://localhost:" + port + "/stub/oauth/authorize");
+        Config.setProperty("kv2.oauth.discord.token-url", "http://localhost:" + port + "/stub/oauth/token");
+        Config.setProperty("kv2.oauth.discord.api-base-url", "http://localhost:" + port + "/stub/api/v9");
+        Config.setProperty("kv2.oauth.discord.redirect-uri", "http://localhost:" + port + "/oauth/callback/discord");
+        Config.setProperty("kv2.dev.enabled", "true");
 
         scope = BeanScope.builder().profiles("test").build();
         jwtService = scope.get(JwtService.class);
@@ -67,11 +68,11 @@ public class OAuthControllerTest {
     public void stopServer() {
         server.shutdown();
         scope.close();
-        System.clearProperty("kv2.oauth.discord.authorize-url");
-        System.clearProperty("kv2.oauth.discord.token-url");
-        System.clearProperty("kv2.oauth.discord.api-base-url");
-        System.clearProperty("kv2.oauth.discord.redirect-uri");
-        System.clearProperty("kv2.dev.enabled");
+        Config.clearProperty("kv2.oauth.discord.authorize-url");
+        Config.clearProperty("kv2.oauth.discord.token-url");
+        Config.clearProperty("kv2.oauth.discord.api-base-url");
+        Config.clearProperty("kv2.oauth.discord.redirect-uri");
+        Config.clearProperty("kv2.dev.enabled");
     }
 
     private URI uri(String path) {

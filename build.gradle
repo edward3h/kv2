@@ -108,9 +108,12 @@ tasks.register('stopDevMySQL', Exec) {
 }
 
 def dotenvVars = [:]
-file('.env').eachLine { line ->
-	def m = (line =~ /^(?:export\s+)?([A-Z_][A-Z0-9_]*)=(.*)$/)
-	if (m.matches()) dotenvVars[m.group(1)] = m.group(2)
+def envFile = file('.env')
+if (envFile.exists()) {
+	envFile.eachLine { line ->
+		def m = (line =~ /^(?:export\s+)?([A-Z_][A-Z0-9_]*)=(.*)$/)
+		if (m.matches()) dotenvVars[m.group(1)] = m.group(2)
+	}
 }
 
 tasks.named('run') {
