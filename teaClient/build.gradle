@@ -22,7 +22,7 @@ dependencies {
 	implementation(teavm.libs.jsoApis)
 	implementation(teavm.libs.interop)
 	implementation("org.teavm:teavm-extras-slf4j:0.14.0")
-	implementation("org.slf4j:slf4j-api:2.0.17")
+	implementation("org.slf4j:slf4j-api:2.0.18")
 	implementation(project(":rosterParser"))
 	implementation(project(":views"))
 }
