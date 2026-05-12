@@ -147,4 +147,50 @@ public class OAuthControllerTest {
         assertEquals(200, response.statusCode());
         assertTrue(response.body().contains("Dev Guild"));
     }
+
+    @Test
+    public void fullOAuthFlow() throws Exception {
+        // Step 1: initiate login — OAuthController redirects to stub authorize URL
+        var loginResponse = get("/oauth/discord");
+        assertEquals(302, loginResponse.statusCode());
+        var authorizeLocation = loginResponse.headers().firstValue("Location").orElseThrow();
+        assertTrue(authorizeLocation.contains("/stub/oauth/authorize"));
+
+        // Extract oauth_state cookie value
+        var stateCookieHeader = loginResponse.headers().allValues("Set-Cookie").stream()
+                .filter(c -> c.startsWith("oauth_state="))
+                .findFirst()
+                .orElseThrow();
+        var stateValue = stateCookieHeader.split("=")[1].split(";")[0];
+
+        // Step 2: call select directly (bypassing the HTML picker UI)
+        var redirectUri =
+                URLEncoder.encode("http://localhost:" + port + "/oauth/callback/discord", StandardCharsets.UTF_8);
+        var selectResponse = get("/stub/oauth/authorize/select?user_id=999999999999999999" + "&redirect_uri="
+                + redirectUri + "&state=" + stateValue);
+        assertEquals(302, selectResponse.statusCode());
+        var callbackLocation = selectResponse.headers().firstValue("Location").orElseThrow();
+        assertTrue(callbackLocation.contains("/oauth/callback/discord"));
+        assertTrue(callbackLocation.contains("code=999999999999999999"));
+
+        // Step 3: complete the callback with the oauth_state cookie
+        // callbackLocation is absolute (http://localhost:PORT/oauth/callback/discord?code=...&state=...)
+        var callbackResponse = http.send(
+                HttpRequest.newBuilder(URI.create(callbackLocation))
+                        .header("Cookie", "oauth_state=" + stateValue)
+                        .GET()
+                        .build(),
+                HttpResponse.BodyHandlers.ofString());
+        assertEquals(302, callbackResponse.statusCode());
+        var jwtCookieHeader = callbackResponse.headers().allValues("Set-Cookie").stream()
+                .filter(c -> c.startsWith("JWT_TOKEN="))
+                .findFirst()
+                .orElseThrow();
+
+        // Step 4: validate the JWT
+        var jwtValue = jwtCookieHeader.split("=")[1].split(";")[0];
+        var principal = jwtService.parse(jwtValue);
+        if (principal == null) throw new AssertionError("JWT parse returned null");
+        assertTrue(principal.roles().contains("ROLE_USER"));
+    }
 }
