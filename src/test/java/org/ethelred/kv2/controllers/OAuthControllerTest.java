@@ -1,0 +1,150 @@
+/* (C) Edward Harman and contributors 2022-2026 */
+package org.ethelred.kv2.controllers;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import io.avaje.inject.BeanScope;
+import io.avaje.jex.Jex;
+import io.avaje.jex.Routing;
+import java.net.ServerSocket;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import org.ethelred.kv2.MySQLContainerExtension;
+import org.ethelred.kv2.security.AuthFilter;
+import org.ethelred.kv2.security.JwtService;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+@ExtendWith(MySQLContainerExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SuppressWarnings("initialization")
+public class OAuthControllerTest {
+
+    private BeanScope scope;
+    private Jex.Server server;
+    private int port;
+    private JwtService jwtService;
+    private final HttpClient http =
+            HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NEVER).build();
+
+    @BeforeAll
+    public void startServer() throws Exception {
+        // Allocate a free port so we can configure stub URLs before BeanScope creation
+        try (var ss = new ServerSocket(0)) {
+            port = ss.getLocalPort();
+        }
+
+        // Set stub URL config before BeanScope constructs OAuthController + DiscordApiClient
+        System.setProperty("kv2.oauth.discord.authorize-url", "http://localhost:" + port + "/stub/oauth/authorize");
+        System.setProperty("kv2.oauth.discord.token-url", "http://localhost:" + port + "/stub/oauth/token");
+        System.setProperty("kv2.oauth.discord.api-base-url", "http://localhost:" + port + "/stub/api/v9");
+        System.setProperty("kv2.oauth.discord.redirect-uri", "http://localhost:" + port + "/oauth/callback/discord");
+        System.setProperty("kv2.dev.enabled", "true");
+
+        scope = BeanScope.builder().profiles("test").build();
+        jwtService = scope.get(JwtService.class);
+
+        var authFilter = scope.get(AuthFilter.class);
+        var exHandlers = scope.get(MyExceptionHandlers.class);
+
+        var app = Jex.create()
+                .routing(scope.list(Routing.HttpService.class))
+                .before(authFilter::before)
+                .port(port);
+        exHandlers.configure(app);
+        server = app.start();
+    }
+
+    @AfterAll
+    public void stopServer() {
+        server.shutdown();
+        scope.close();
+        System.clearProperty("kv2.oauth.discord.authorize-url");
+        System.clearProperty("kv2.oauth.discord.token-url");
+        System.clearProperty("kv2.oauth.discord.api-base-url");
+        System.clearProperty("kv2.oauth.discord.redirect-uri");
+        System.clearProperty("kv2.dev.enabled");
+    }
+
+    private URI uri(String path) {
+        return URI.create("http://localhost:" + port + path);
+    }
+
+    private HttpResponse<String> get(String path) throws Exception {
+        return http.send(HttpRequest.newBuilder(uri(path)).GET().build(), HttpResponse.BodyHandlers.ofString());
+    }
+
+    private HttpResponse<String> post(String path, String body) throws Exception {
+        return http.send(
+                HttpRequest.newBuilder(uri(path))
+                        .header("Content-Type", "application/x-www-form-urlencoded")
+                        .POST(HttpRequest.BodyPublishers.ofString(body))
+                        .build(),
+                HttpResponse.BodyHandlers.ofString());
+    }
+
+    @Test
+    public void stubAuthorizeShowsUsers() throws Exception {
+        var redirectUri =
+                URLEncoder.encode("http://localhost:" + port + "/oauth/callback/discord", StandardCharsets.UTF_8);
+        var response = get("/stub/oauth/authorize?client_id=test&redirect_uri=" + redirectUri
+                + "&response_type=code&scope=identify&state=teststate");
+        assertEquals(200, response.statusCode());
+        assertTrue(response.body().contains("devuser"));
+        assertTrue(response.body().contains("testuser"));
+    }
+
+    @Test
+    public void stubSelectRedirectsWithCode() throws Exception {
+        var redirectUri =
+                URLEncoder.encode("http://localhost:" + port + "/oauth/callback/discord", StandardCharsets.UTF_8);
+        var response = get("/stub/oauth/authorize/select?user_id=111111111111111111" + "&redirect_uri=" + redirectUri
+                + "&state=teststate");
+        assertEquals(302, response.statusCode());
+        var location = response.headers().firstValue("Location").orElseThrow();
+        assertTrue(location.contains("code=111111111111111111"));
+        assertTrue(location.contains("state=teststate"));
+    }
+
+    @Test
+    public void stubTokenReturnsAccessToken() throws Exception {
+        var body = "grant_type=authorization_code&code=111111111111111111"
+                + "&redirect_uri=http%3A%2F%2Flocalhost%3A" + port + "%2Foauth%2Fcallback%2Fdiscord"
+                + "&client_id=test&client_secret=test";
+        var response = post("/stub/oauth/token", body);
+        assertEquals(200, response.statusCode());
+        assertTrue(response.body().contains("\"access_token\":\"111111111111111111\""));
+    }
+
+    @Test
+    public void stubGetUserReturnsFakeUser() throws Exception {
+        var response = http.send(
+                HttpRequest.newBuilder(uri("/stub/api/v9/users/@me"))
+                        .header("Authorization", "Bearer 111111111111111111")
+                        .GET()
+                        .build(),
+                HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, response.statusCode());
+        assertTrue(response.body().contains("devuser"));
+    }
+
+    @Test
+    public void stubGetGuildsReturnsFakeGuilds() throws Exception {
+        var response = http.send(
+                HttpRequest.newBuilder(uri("/stub/api/v9/users/@me/guilds"))
+                        .header("Authorization", "Bearer 111111111111111111")
+                        .GET()
+                        .build(),
+                HttpResponse.BodyHandlers.ofString());
+        assertEquals(200, response.statusCode());
+        assertTrue(response.body().contains("Dev Guild"));
+    }
+}

@@ -50,7 +50,7 @@ public class AuthFilter {
             return false;
         }
         // OAuth/dev paths are always public
-        if (path.startsWith("/oauth/") || path.startsWith("/dev/")) {
+        if (path.startsWith("/oauth/") || path.startsWith("/dev/") || path.startsWith("/stub/")) {
             return false;
         }
         return true;
