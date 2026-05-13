@@ -94,6 +94,53 @@ tasks.named('test') {
 	systemProperty "avaje.profiles", "test"
 }
 
+testing {
+	suites {
+		uiTest(JvmTestSuite) {
+			dependencies {
+				implementation(project())
+				implementation(sourceSets.test.output)
+				implementation("com.microsoft.playwright:playwright:1.59.0")
+				implementation(platform("org.testcontainers:testcontainers-bom:1.21.4"))
+				implementation("org.testcontainers:junit-jupiter")
+				implementation("org.testcontainers:mysql")
+				implementation("org.testcontainers:testcontainers")
+				runtimeOnly("mysql:mysql-connector-java:8.0.33")
+				runtimeOnly("ch.qos.logback:logback-classic:1.5.32")
+			}
+			targets {
+				all {
+					testTask.configure {
+						systemProperty "api.version", "1.44"
+						systemProperty "avaje.profiles", "test"
+					}
+				}
+			}
+		}
+	}
+}
+
+// uiTest compile classpath must see the main source set's implementation deps
+// (the java plugin does this automatically for the built-in test suite but not for additional suites)
+configurations.uiTestCompileClasspath.extendsFrom(configurations.compileClasspath)
+configurations.uiTestRuntimeClasspath.extendsFrom(configurations.runtimeClasspath)
+
+tasks.register('installPlaywrightBrowsers', JavaExec) {
+	group = 'verification'
+	description = 'Download Playwright Chromium browser binary'
+	classpath = configurations.uiTestRuntimeClasspath
+	mainClass = 'com.microsoft.playwright.CLI'
+	args = ['install', 'chromium']
+}
+
+tasks.named('uiTest') {
+	dependsOn installPlaywrightBrowsers
+}
+
+tasks.named('check') {
+	dependsOn testing.suites.uiTest
+}
+
 tasks.register('startDevMySQL', Exec) {
 	group = 'dev'
 	description = 'Start MySQL via Docker Compose, waiting until healthy'

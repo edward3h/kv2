@@ -59,7 +59,9 @@ public class DevLoginController {
         }
         var user = userService.findOrCreateUser("dev", username, Map.of("name", username));
         var jwt = jwtService.generate(user);
-        ctx.cookie("JWT_TOKEN", jwt, (int) (7 * 24 * 60 * 60));
+        ctx.cookie(Context.Cookie.of("JWT_TOKEN", jwt)
+                .maxAge(java.time.Duration.ofSeconds(7 * 24 * 60 * 60))
+                .path("/"));
         ctx.redirect("/");
     }
 }
