@@ -27,7 +27,7 @@ jobs:
         node-version: 24
     - uses: pnpm/action-setup@v6
       with:
-        version: 10
+        version: 11
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v3
       with:
