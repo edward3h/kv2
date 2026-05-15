@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.diffplug.spotless'
+    id "com.github.jakemarsden.git-hooks"
     id 'org.checkerframework'
 }
 
@@ -14,13 +15,8 @@ java {
     }
 }
 
-// Only install hooks in the main working tree; git worktrees use a pointer
-// file for .git rather than a directory, so hook installation would fail.
-if (new File(rootProject.projectDir, ".git").isDirectory()) {
-    apply plugin: 'com.github.jakemarsden.git-hooks'
-    gitHooks {
-        hooks = ['pre-commit': 'build']
-    }
+gitHooks {
+    hooks = ['pre-commit': 'build']
 }
 
 def eisopVersion = "3.49.5-eisop1"
