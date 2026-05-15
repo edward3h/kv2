@@ -14,12 +14,20 @@ import org.ethelred.kv2.template.Templates;
 
 @Factory
 public class TemplatesFactory {
+
     @Bean
-    public Templates templates() {
-        boolean dynamic = Config.getBool("kv2.jte.dynamic", false);
-        String templatePath = Config.get("kv2.jte.dynamic-source-path", "views/src/main/jte");
-        if (dynamic) {
-            var engine = TemplateEngine.create(new DirectoryCodeResolver(Paths.get(templatePath)), ContentType.Html);
+    public TemplatesConfig templatesConfig() {
+        record Impl(boolean dynamic, String dynamicSourcePath) implements TemplatesConfig {}
+        return new Impl(
+                Config.getBool("kv2.jte.dynamic", false),
+                Config.get("kv2.jte.dynamic-source-path", "views/src/main/jte"));
+    }
+
+    @Bean
+    public Templates templates(TemplatesConfig config) {
+        if (config.dynamic()) {
+            var engine = TemplateEngine.create(
+                    new DirectoryCodeResolver(Paths.get(config.dynamicSourcePath())), ContentType.Html);
             return new DynamicTemplates(engine);
         }
         return new StaticTemplates();
