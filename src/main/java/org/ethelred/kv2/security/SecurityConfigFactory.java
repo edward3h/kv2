@@ -21,7 +21,7 @@ public class SecurityConfigFactory {
         return new Impl(
                 Config.get("kv2.oauth.discord.client-id", "test_discord_id"),
                 Config.get("kv2.oauth.discord.client-secret", "test_discord_secret"),
-                Config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/discord/callback"),
+                Config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/callback/discord"),
                 Config.get("kv2.oauth.discord.authorize-url", "https://discord.com/api/oauth2/authorize"),
                 Config.get("kv2.oauth.discord.token-url", "https://discord.com/api/oauth2/token"));
     }
