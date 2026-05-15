@@ -40,6 +40,7 @@ public class LoginUITest {
             port = ss.getLocalPort();
         }
 
+        // JwtConfig uses the SecurityConfigFactory default — both generate/parse paths use the same key
         scope = BeanScope.builder()
                 .profiles("test")
                 .bean(OAuthDiscordConfig.class, new OAuthDiscordConfig() {
