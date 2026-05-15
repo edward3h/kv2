@@ -1,7 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.providers.discord;
 
-import io.avaje.config.Config;
 import io.avaje.jsonb.JsonType;
 import io.avaje.jsonb.Jsonb;
 import io.avaje.jsonb.Types;
@@ -22,8 +21,8 @@ public class DiscordApiClient {
     private final JsonType<DiscordUser> userType;
     private final JsonType<List<DiscordGuild>> guildsType;
 
-    DiscordApiClient(Jsonb jsonb) {
-        this.apiBaseUrl = Config.get("kv2.oauth.discord.api-base-url", "https://discord.com/api/v9");
+    DiscordApiClient(DiscordApiConfig config, Jsonb jsonb) {
+        this.apiBaseUrl = config.apiBaseUrl();
         this.userType = jsonb.type(DiscordUser.class);
         this.guildsType = jsonb.type(Types.listOf(DiscordGuild.class));
     }
