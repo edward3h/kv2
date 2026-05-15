@@ -27,7 +27,7 @@ One public interface per configuration domain, defined as a top-level type in th
 |---|---|---|
 | `OAuthDiscordConfig` | `security/` | `clientId()`, `clientSecret()`, `redirectUri()`, `authorizeUrl()`, `tokenUrl()` |
 | `JwtConfig` | `security/` | `jwtSecret()` |
-| `DataSourceConfig` | `data/` | `url()`, `driverClassName()`, `username()` (returns `Optional<String>`), `password()` |
+| `DataSourceConfig` | `data/` | `url()`, `driverClassName()`, `@Nullable String username()`, `password()` |
 | `TemplatesConfig` | `services/` | `dynamic()`, `dynamicSourcePath()` |
 | `DevConfig` | `dev/` | `enabled()` |
 | `DiscordApiConfig` | `providers/discord/` | `apiBaseUrl()` |
@@ -105,13 +105,12 @@ The existing `DataSourceFactory` currently reads Config in its `@Bean DataSource
 class DataSourceFactory {
     @Bean
     DataSourceConfig dataSourceConfig() {
-        // username field is Optional<String> — matches Config.getOptional()
-        record Impl(String url, String driverClassName, Optional<String> username, String password)
+        record Impl(String url, String driverClassName, @Nullable String username, String password)
                 implements DataSourceConfig {}
         return new Impl(
             Config.get("datasource.url"),
             Config.get("datasource.driverClassName", "com.mysql.cj.jdbc.Driver"),
-            Config.getOptional("datasource.username"),
+            Config.getOptional("datasource.username").orElse(null),
             Config.get("datasource.password", "")
         );
     }
@@ -174,7 +173,7 @@ var scope = BeanScope.builder()
 
 ## Error Handling
 
-No change in startup behaviour. `Config.get()` without a default already throws if the property is absent; `Config.getOptional()` returns `Optional.empty()`. These semantics are preserved — the calls simply move into factory methods.
+No change in startup behaviour. `Config.get()` without a default already throws if the property is absent; `Config.getOptional()` returns `Optional.empty()`, which the factory converts to `null` via `.orElse(null)` for the `@Nullable` field. These semantics are preserved — the calls simply move into factory methods.
 
 ---
 
