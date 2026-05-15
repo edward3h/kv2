@@ -1,7 +1,6 @@
 /* (C) Edward Harman and contributors 2023-2026 */
 package org.ethelred.kv2.dev;
 
-import io.avaje.config.Config;
 import io.avaje.http.api.Controller;
 import io.avaje.http.api.Get;
 import io.avaje.http.api.Post;
@@ -17,14 +16,16 @@ import org.ethelred.kv2.services.UserService;
 public class DevLoginController {
     private final UserService userService;
     private final JwtService jwtService;
+    private final DevConfig devConfig;
 
-    public DevLoginController(UserService userService, JwtService jwtService) {
+    public DevLoginController(UserService userService, JwtService jwtService, DevConfig devConfig) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.devConfig = devConfig;
     }
 
     private boolean isDevEnabled() {
-        return Config.getBool("kv2.dev.enabled", false);
+        return devConfig.enabled();
     }
 
     @Get("/login")
