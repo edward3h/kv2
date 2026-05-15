@@ -1,7 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.dev;
 
-import io.avaje.config.Config;
 import io.avaje.jex.Routing;
 import io.avaje.jex.http.Context;
 import io.avaje.jex.http.HttpResponseException;
@@ -26,6 +25,12 @@ public class StubOAuthController implements Routing.HttpService {
             "999999999999999999",
             List.of(new DiscordGuild("888888888888888888", "Test Guild", null)));
 
+    private final DevConfig devConfig;
+
+    public StubOAuthController(DevConfig devConfig) {
+        this.devConfig = devConfig;
+    }
+
     @Override
     public void add(Routing routing) {
         routing.get("/stub/oauth/authorize", this::authorize);
@@ -36,7 +41,7 @@ public class StubOAuthController implements Routing.HttpService {
     }
 
     private boolean isDevEnabled() {
-        return Config.getBool("kv2.dev.enabled", false);
+        return devConfig.enabled();
     }
 
     private void authorize(Context ctx) {

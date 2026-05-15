@@ -1,7 +1,6 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2.security;
 
-import io.avaje.config.Config;
 import io.avaje.http.api.Controller;
 import io.avaje.http.api.Get;
 import io.avaje.jex.http.Context;
@@ -29,11 +28,7 @@ public class OAuthController {
     private static final Logger LOGGER = LoggerFactory.getLogger(OAuthController.class);
     private static final String STATE_COOKIE = "oauth_state";
 
-    private final String clientId;
-    private final String clientSecret;
-    private final String redirectUri;
-    private final String authorizeUrl;
-    private final String tokenUrl;
+    private final OAuthDiscordConfig config;
     private final UserService userService;
     private final JwtService jwtService;
     private final DiscordApiClient discordApiClient;
@@ -41,12 +36,12 @@ public class OAuthController {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public OAuthController(
-            UserService userService, JwtService jwtService, DiscordApiClient discordApiClient, Jsonb jsonb) {
-        this.clientId = Config.get("kv2.oauth.discord.client-id", "test_discord_id");
-        this.clientSecret = Config.get("kv2.oauth.discord.client-secret", "test_discord_secret");
-        this.redirectUri = Config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/discord/callback");
-        this.authorizeUrl = Config.get("kv2.oauth.discord.authorize-url", "https://discord.com/api/oauth2/authorize");
-        this.tokenUrl = Config.get("kv2.oauth.discord.token-url", "https://discord.com/api/oauth2/token");
+            OAuthDiscordConfig config,
+            UserService userService,
+            JwtService jwtService,
+            DiscordApiClient discordApiClient,
+            Jsonb jsonb) {
+        this.config = config;
         this.userService = userService;
         this.jwtService = jwtService;
         this.discordApiClient = discordApiClient;
@@ -57,9 +52,9 @@ public class OAuthController {
     public void discordLogin(Context ctx) {
         var state = UUID.randomUUID().toString();
         ctx.cookie(STATE_COOKIE, state, 600); // 10 min TTL
-        var url = authorizeUrl
-                + "?client_id=" + encode(clientId)
-                + "&redirect_uri=" + encode(redirectUri)
+        var url = config.authorizeUrl()
+                + "?client_id=" + encode(config.clientId())
+                + "&redirect_uri=" + encode(config.redirectUri())
                 + "&response_type=code"
                 + "&scope=identify+guilds+email"
                 + "&state=" + encode(state);
@@ -113,12 +108,12 @@ public class OAuthController {
     private String exchangeCode(String code) throws IOException, InterruptedException {
         var body = "grant_type=authorization_code"
                 + "&code=" + encode(code)
-                + "&redirect_uri=" + encode(redirectUri)
-                + "&client_id=" + encode(clientId)
-                + "&client_secret=" + encode(clientSecret);
+                + "&redirect_uri=" + encode(config.redirectUri())
+                + "&client_id=" + encode(config.clientId())
+                + "&client_secret=" + encode(config.clientSecret());
 
         var request = HttpRequest.newBuilder()
-                .uri(URI.create(tokenUrl))
+                .uri(URI.create(config.tokenUrl()))
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
