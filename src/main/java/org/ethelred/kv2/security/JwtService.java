@@ -10,7 +10,6 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import io.avaje.config.Config;
 import jakarta.inject.Singleton;
 import java.text.ParseException;
 import java.time.Instant;
@@ -31,10 +30,9 @@ public class JwtService {
     private final JWSSigner signer;
     private final JWSVerifier verifier;
 
-    public JwtService() {
-        var secret = Config.get("kv2.security.jwt-secret", "MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=");
+    public JwtService(JwtConfig config) {
         try {
-            var keyBytes = Base64.getDecoder().decode(secret);
+            var keyBytes = Base64.getDecoder().decode(config.jwtSecret());
             this.signer = new MACSigner(keyBytes);
             this.verifier = new MACVerifier(keyBytes);
         } catch (JOSEException e) {

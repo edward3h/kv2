@@ -4,7 +4,6 @@ package org.ethelred.kv2.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.avaje.config.Config;
 import io.avaje.inject.BeanScope;
 import io.avaje.jex.Jex;
 import io.avaje.jex.Routing;
@@ -16,8 +15,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import org.ethelred.kv2.MySQLContainerExtension;
+import org.ethelred.kv2.dev.DevConfig;
+import org.ethelred.kv2.providers.discord.DiscordApiConfig;
 import org.ethelred.kv2.security.AuthFilter;
 import org.ethelred.kv2.security.JwtService;
+import org.ethelred.kv2.security.OAuthDiscordConfig;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,19 +40,44 @@ public class OAuthControllerTest {
 
     @BeforeAll
     public void startServer() throws Exception {
-        // Allocate a free port so we can configure stub URLs before BeanScope creation
         try (var ss = new ServerSocket(0)) {
             port = ss.getLocalPort();
         }
 
-        // Set stub URL config before BeanScope constructs OAuthController + DiscordApiClient
-        Config.setProperty("kv2.oauth.discord.authorize-url", "http://localhost:" + port + "/stub/oauth/authorize");
-        Config.setProperty("kv2.oauth.discord.token-url", "http://localhost:" + port + "/stub/oauth/token");
-        Config.setProperty("kv2.oauth.discord.api-base-url", "http://localhost:" + port + "/stub/api/v9");
-        Config.setProperty("kv2.oauth.discord.redirect-uri", "http://localhost:" + port + "/oauth/callback/discord");
-        Config.setProperty("kv2.dev.enabled", "true");
+        scope = BeanScope.builder()
+                .profiles("test")
+                .bean(OAuthDiscordConfig.class, new OAuthDiscordConfig() {
+                    public String clientId() {
+                        return "test_discord_id";
+                    }
 
-        scope = BeanScope.builder().profiles("test").build();
+                    public String clientSecret() {
+                        return "test_discord_secret";
+                    }
+
+                    public String redirectUri() {
+                        return "http://localhost:" + port + "/oauth/callback/discord";
+                    }
+
+                    public String authorizeUrl() {
+                        return "http://localhost:" + port + "/stub/oauth/authorize";
+                    }
+
+                    public String tokenUrl() {
+                        return "http://localhost:" + port + "/stub/oauth/token";
+                    }
+                })
+                .bean(DiscordApiConfig.class, new DiscordApiConfig() {
+                    public String apiBaseUrl() {
+                        return "http://localhost:" + port + "/stub/api/v9";
+                    }
+                })
+                .bean(DevConfig.class, new DevConfig() {
+                    public boolean enabled() {
+                        return true;
+                    }
+                })
+                .build();
         jwtService = scope.get(JwtService.class);
 
         var authFilter = scope.get(AuthFilter.class);
@@ -68,11 +95,6 @@ public class OAuthControllerTest {
     public void stopServer() {
         server.shutdown();
         scope.close();
-        Config.clearProperty("kv2.oauth.discord.authorize-url");
-        Config.clearProperty("kv2.oauth.discord.token-url");
-        Config.clearProperty("kv2.oauth.discord.api-base-url");
-        Config.clearProperty("kv2.oauth.discord.redirect-uri");
-        Config.clearProperty("kv2.dev.enabled");
     }
 
     private URI uri(String path) {
