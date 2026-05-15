@@ -20,16 +20,27 @@ public class DataSourceFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceFactory.class);
 
     @Bean
+    @SuppressWarnings("nullness")
+    public DataSourceConfig dataSourceConfig() {
+        record Impl(String url, String driverClassName, String username, String password) implements DataSourceConfig {}
+        return new Impl(
+                Config.get("datasource.url"),
+                Config.get("datasource.driverClassName", "com.mysql.cj.jdbc.Driver"),
+                Config.getOptional("datasource.username").orElse(null),
+                Config.get("datasource.password", ""));
+    }
+
+    @Bean
     @Named("default")
-    public DataSource dataSource() {
+    public DataSource dataSource(DataSourceConfig config) {
         var hikari = new HikariConfig();
-        hikari.setJdbcUrl(Config.get("datasource.url"));
-        hikari.setDriverClassName(Config.get("datasource.driverClassName", "com.mysql.cj.jdbc.Driver"));
-        var username = Config.getOptional("datasource.username");
-        username.ifPresent(u -> {
-            hikari.setUsername(u);
-            hikari.setPassword(Config.get("datasource.password", ""));
-        });
+        hikari.setJdbcUrl(config.url());
+        hikari.setDriverClassName(config.driverClassName());
+        var username = config.username();
+        if (username != null) {
+            hikari.setUsername(username);
+            hikari.setPassword(config.password());
+        }
         var ds = new HikariDataSource(hikari);
         runLiquibase(ds);
         return ds;
