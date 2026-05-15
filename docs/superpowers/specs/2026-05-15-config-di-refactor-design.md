@@ -162,7 +162,7 @@ Config.clearProperty("kv2.oauth.discord.client-id");
 
 // After
 var scope = BeanScope.builder()
-    .withBean(OAuthDiscordConfig.class, new OAuthDiscordConfig() {
+    .bean(OAuthDiscordConfig.class, new OAuthDiscordConfig() {
         public String clientId() { return "test_id"; }
         // ...
     })
