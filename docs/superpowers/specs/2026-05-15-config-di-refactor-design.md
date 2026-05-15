@@ -27,7 +27,7 @@ One public interface per configuration domain, defined as a top-level type in th
 |---|---|---|
 | `OAuthDiscordConfig` | `security/` | `clientId()`, `clientSecret()`, `redirectUri()`, `authorizeUrl()`, `tokenUrl()` |
 | `JwtConfig` | `security/` | `jwtSecret()` |
-| `DataSourceConfig` | `data/` | `url()`, `driverClassName()`, `username()` (`Optional<String>`), `password()` |
+| `DataSourceConfig` | `data/` | `url()`, `driverClassName()`, `username()` (returns `Optional<String>`), `password()` |
 | `TemplatesConfig` | `services/` | `dynamic()`, `dynamicSourcePath()` |
 | `DevConfig` | `dev/` | `enabled()` |
 | `DiscordApiConfig` | `providers/discord/` | `apiBaseUrl()` |
@@ -105,7 +105,9 @@ The existing `DataSourceFactory` currently reads Config in its `@Bean DataSource
 class DataSourceFactory {
     @Bean
     DataSourceConfig dataSourceConfig() {
-        record Impl(...) implements DataSourceConfig {}
+        // username field is Optional<String> — matches Config.getOptional()
+        record Impl(String url, String driverClassName, Optional<String> username, String password)
+                implements DataSourceConfig {}
         return new Impl(
             Config.get("datasource.url"),
             Config.get("datasource.driverClassName", "com.mysql.cj.jdbc.Driver"),
