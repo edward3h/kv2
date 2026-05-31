@@ -48,7 +48,7 @@ dependencies {
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 
 	// JWT
-	implementation("com.nimbusds:nimbus-jose-jwt:10.9")
+	implementation("com.nimbusds:nimbus-jose-jwt:10.9.1")
 
 	// JTE templates
 	runtimeOnly("gg.jte:jte:3.2.4")
