@@ -75,7 +75,7 @@ dependencies {
 	runtimeOnly(project(":teaClient"))
 
 	// Test
-	testImplementation(platform("org.testcontainers:testcontainers-bom:1.21.4"))
+	testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.5"))
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mysql")
 	testImplementation("org.testcontainers:testcontainers")
@@ -101,7 +101,7 @@ testing {
 				implementation(project())
 				implementation(sourceSets.test.output)
 				implementation("com.microsoft.playwright:playwright:1.60.0")
-				implementation(platform("org.testcontainers:testcontainers-bom:1.21.4"))
+				implementation(platform("org.testcontainers:testcontainers-bom:2.0.5"))
 				implementation("org.testcontainers:junit-jupiter")
 				implementation("org.testcontainers:mysql")
 				implementation("org.testcontainers:testcontainers")
