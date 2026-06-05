@@ -34,7 +34,7 @@ dependencies {
 	annotationProcessor("io.avaje:avaje-inject-generator:12.5")
 	annotationProcessor("io.avaje:avaje-http-jex-generator:3.9")
 	annotationProcessor("io.avaje:avaje-jsonb-generator:3.14")
-	implementation("io.avaje:avaje-inject:12.5")
+	implementation("io.avaje:avaje-inject:12.6")
 	implementation("io.avaje:avaje-jex:3.5")
 	implementation("io.avaje:avaje-jex-static-content:3.5")
 	implementation("io.avaje:avaje-http-api:3.9")
