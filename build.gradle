@@ -36,7 +36,7 @@ dependencies {
 	annotationProcessor("io.avaje:avaje-jsonb-generator:3.14")
 	implementation("io.avaje:avaje-inject:12.6")
 	implementation("io.avaje:avaje-jex:3.6")
-	implementation("io.avaje:avaje-jex-static-content:3.5")
+	implementation("io.avaje:avaje-jex-static-content:3.6")
 	implementation("io.avaje:avaje-http-api:3.9")
 	implementation("io.avaje:avaje-config:5.2")
 	implementation("io.avaje:avaje-jsonb:3.14")
