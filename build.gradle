@@ -100,7 +100,7 @@ testing {
 			dependencies {
 				implementation(project())
 				implementation(sourceSets.test.output)
-				implementation("com.microsoft.playwright:playwright:1.60.0")
+				implementation("com.microsoft.playwright:playwright:1.61.0")
 				implementation(platform("org.testcontainers:testcontainers-bom:1.21.4"))
 				implementation("org.testcontainers:junit-jupiter")
 				implementation("org.testcontainers:mysql")
