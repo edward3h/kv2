@@ -67,7 +67,7 @@ dependencies {
 
 	// Static assets (webjars)
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
-	runtimeOnly('org.webjars:font-awesome:7.2.0')
+	runtimeOnly('org.webjars:font-awesome:7.3.0')
 
 	// Sub-projects
 	implementation(project(":rosterParser"))
