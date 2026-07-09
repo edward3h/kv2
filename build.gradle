@@ -3,7 +3,7 @@ plugins {
 	id 'application'
 	id("org.ethelred.kv2.java-conventions")
 
-	id("org.ethelred.kiwiproc") version "0.9"
+	id("org.ethelred.kiwiproc") version "1.0"
 }
 
 version = "0.1"
@@ -79,6 +79,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mysql")
 	testImplementation("org.testcontainers:testcontainers")
+	testRuntimeOnly("commons-codec:commons-codec:1.17.1")
 	testImplementation(platform("org.junit:junit-bom:6.1.1"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -105,6 +106,7 @@ testing {
 				implementation("org.testcontainers:junit-jupiter")
 				implementation("org.testcontainers:mysql")
 				implementation("org.testcontainers:testcontainers")
+				runtimeOnly("commons-codec:commons-codec:1.17.1")
 				runtimeOnly("mysql:mysql-connector-java:8.0.33")
 				runtimeOnly("ch.qos.logback:logback-classic:1.5.38")
 			}
