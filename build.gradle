@@ -31,24 +31,24 @@ processTestResources {
 
 dependencies {
 	// Avaje stack
-	annotationProcessor("io.avaje:avaje-inject-generator:12.5")
-	annotationProcessor("io.avaje:avaje-http-jex-generator:3.8")
-	annotationProcessor("io.avaje:avaje-jsonb-generator:3.13")
-	implementation("io.avaje:avaje-inject:12.5")
-	implementation("io.avaje:avaje-jex:3.5")
-	implementation("io.avaje:avaje-jex-static-content:3.5")
-	implementation("io.avaje:avaje-http-api:3.8")
-	implementation("io.avaje:avaje-config:5.1")
-	implementation("io.avaje:avaje-jsonb:3.13")
-	implementation("io.avaje:avaje-jsonb-inject-plugin:3.13")
+	annotationProcessor("io.avaje:avaje-inject-generator:12.6")
+	annotationProcessor("io.avaje:avaje-http-jex-generator:3.10")
+	annotationProcessor("io.avaje:avaje-jsonb-generator:3.14")
+	implementation("io.avaje:avaje-inject:12.6")
+	implementation("io.avaje:avaje-jex:3.6")
+	implementation("io.avaje:avaje-jex-static-content:3.6")
+	implementation("io.avaje:avaje-http-api:3.10")
+	implementation("io.avaje:avaje-config:5.2")
+	implementation("io.avaje:avaje-jsonb:3.14")
+	implementation("io.avaje:avaje-jsonb-inject-plugin:3.14")
 
 	// Database
-	implementation("com.zaxxer:HikariCP:7.0.2")
+	implementation("com.zaxxer:HikariCP:7.1.0")
 	implementation("org.liquibase:liquibase-core:5.0.3")
 	runtimeOnly("mysql:mysql-connector-java:8.0.33")
 
 	// JWT
-	implementation("com.nimbusds:nimbus-jose-jwt:10.9")
+	implementation("com.nimbusds:nimbus-jose-jwt:10.9.1")
 
 	// JTE templates
 	runtimeOnly("gg.jte:jte:3.2.4")
@@ -56,7 +56,7 @@ dependencies {
 	implementation("gg.jte:jte-models:3.2.4")
 
 	// Logging
-	runtimeOnly("ch.qos.logback:logback-classic:1.5.32")
+	runtimeOnly("ch.qos.logback:logback-classic:1.5.37")
 
 	// Other
 	implementation 'com.github.ksuid:ksuid:1.1.4'
@@ -67,7 +67,7 @@ dependencies {
 
 	// Static assets (webjars)
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
-	runtimeOnly('org.webjars:font-awesome:7.2.0')
+	runtimeOnly('org.webjars:font-awesome:7.3.0')
 
 	// Sub-projects
 	implementation(project(":rosterParser"))
@@ -79,7 +79,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mysql")
 	testImplementation("org.testcontainers:testcontainers")
-	testImplementation(platform("org.junit:junit-bom:6.0.3"))
+	testImplementation(platform("org.junit:junit-bom:6.1.1"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -100,13 +100,13 @@ testing {
 			dependencies {
 				implementation(project())
 				implementation(sourceSets.test.output)
-				implementation("com.microsoft.playwright:playwright:1.59.0")
+				implementation("com.microsoft.playwright:playwright:1.61.0")
 				implementation(platform("org.testcontainers:testcontainers-bom:1.21.4"))
 				implementation("org.testcontainers:junit-jupiter")
 				implementation("org.testcontainers:mysql")
 				implementation("org.testcontainers:testcontainers")
 				runtimeOnly("mysql:mysql-connector-java:8.0.33")
-				runtimeOnly("ch.qos.logback:logback-classic:1.5.32")
+				runtimeOnly("ch.qos.logback:logback-classic:1.5.37")
 			}
 			targets {
 				all {
