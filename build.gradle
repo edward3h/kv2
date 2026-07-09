@@ -76,8 +76,8 @@ dependencies {
 
 	// Test
 	testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.5"))
-	testImplementation("org.testcontainers:junit-jupiter")
-	testImplementation("org.testcontainers:mysql")
+	testImplementation("org.testcontainers:testcontainers-junit-jupiter")
+	testImplementation("org.testcontainers:testcontainers-mysql")
 	testImplementation("org.testcontainers:testcontainers")
 	testImplementation(platform("org.junit:junit-bom:6.1.1"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
@@ -102,8 +102,8 @@ testing {
 				implementation(sourceSets.test.output)
 				implementation("com.microsoft.playwright:playwright:1.61.0")
 				implementation(platform("org.testcontainers:testcontainers-bom:2.0.5"))
-				implementation("org.testcontainers:junit-jupiter")
-				implementation("org.testcontainers:mysql")
+				implementation("org.testcontainers:testcontainers-junit-jupiter")
+				implementation("org.testcontainers:testcontainers-mysql")
 				implementation("org.testcontainers:testcontainers")
 				runtimeOnly("mysql:mysql-connector-java:8.0.33")
 				runtimeOnly("ch.qos.logback:logback-classic:1.5.38")
