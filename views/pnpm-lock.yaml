@@ -10,7 +10,7 @@ importers:
     dependencies:
       daisyui:
         specifier: ^5.0.0
-        version: 5.5.23
+        version: 5.6.16
     devDependencies:
       '@tailwindcss/cli':
         specifier: ^4.2.4
@@ -235,8 +235,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  daisyui@5.5.23:
-    resolution: {integrity: sha512-xuheNUSL4T6ZVtWXoioqcNkjoyGX85QTDz4HTw2aBPfqk4fuMjax5HDo8qCmpV6M1YN8bGvfx5BpYCoDeRlt+A==}
+  daisyui@5.6.16:
+    resolution: {integrity: sha512-A5/IrcFCXyfzQ7M2fnKVPfMbKCVu0xeM7/G22gK1XRcp2dgA39kvFOeEAK8f2KpJJQJ+s9Jc5pZoJoYsPEJ8JQ==}
 
   detect-libc@1.0.3:
     resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
@@ -554,7 +554,7 @@ snapshots:
 
   cssesc@3.0.0: {}
 
-  daisyui@5.5.23: {}
+  daisyui@5.6.16: {}
 
   detect-libc@1.0.3: {}
 
