@@ -56,14 +56,13 @@ dependencies {
 	implementation("gg.jte:jte-models:3.2.4")
 
 	// Logging
-	runtimeOnly("ch.qos.logback:logback-classic:1.5.38")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.8.2")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.8.2")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.8.2")
 
 	// Other
 	implementation 'com.github.ksuid:ksuid:1.1.4'
 	compileOnly 'org.jspecify:jspecify:1.0.0'
-	def ethelred_cgi_version = "0.5"
-	implementation("org.ethelred.cgi:logback-native-patch:$ethelred_cgi_version")
-	implementation 'org.fusesource.jansi:jansi:2.4.3'
 
 	// Static assets (webjars)
 	runtimeOnly('org.webjars.npm:codemirror:6.65.7')
@@ -108,7 +107,9 @@ testing {
 				implementation("org.testcontainers:testcontainers")
 				runtimeOnly("commons-codec:commons-codec:1.17.1")
 				runtimeOnly("mysql:mysql-connector-java:8.0.33")
-				runtimeOnly("ch.qos.logback:logback-classic:1.5.38")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.8.2")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.8.2")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.8.2")
 			}
 			targets {
 				all {

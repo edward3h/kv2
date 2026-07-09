@@ -1,6 +1,7 @@
 /* (C) Edward Harman and contributors 2022-2026 */
 package org.ethelred.kv2;
 
+import io.avaje.config.Config;
 import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -22,7 +23,7 @@ public class MySQLContainerExtension
                     .withPassword("12345")
                     .withConfigurationOverride("data/mysql-conf");
             container.start();
-            System.setProperty(
+            Config.setProperty(
                     "datasource.url", container.getJdbcUrl() + "?allowLoadLocalInfile=true&allowUrlInLocalInfile=true");
             store.put(STORE_KEY, this);
         }
