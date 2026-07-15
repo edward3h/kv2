@@ -1,12 +1,19 @@
 {
     "extends": ["config:recommended"],
-    "packageRules": [{
-        "automerge": true,
-        "matchUpdateTypes": [
-            "minor",
-            "patch",
-            "pin",
-            "digest"
-        ]
-    }]
+    "packageRules": [
+        {
+            "automerge": true,
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ]
+        },
+        {
+            "matchDepNames": ["pnpm"],
+            "matchManagers": ["asdf"],
+            "automerge": false
+        }
+    ]
 }
