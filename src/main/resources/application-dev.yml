@@ -4,3 +4,6 @@ kv2:
   jte:
     dynamic: true
     dynamic-source-path: views/src/main/jte
+  security:
+    # dev-only, insecure — never use in production
+    jwt-secret: ${JWT_SECRET:MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=}

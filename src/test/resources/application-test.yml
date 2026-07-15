@@ -1,1 +1,4 @@
 # Test profile — datasource URL set by MySQLContainerExtension at runtime
+kv2:
+  security:
+    jwt-secret: MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=

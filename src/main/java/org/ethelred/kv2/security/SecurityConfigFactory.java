@@ -11,7 +11,7 @@ public class SecurityConfigFactory {
     @Bean
     public JwtConfig jwtConfig() {
         record Impl(String jwtSecret) implements JwtConfig {}
-        return new Impl(Config.get("kv2.security.jwt-secret", "MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE="));
+        return new Impl(Config.get("kv2.security.jwt-secret"));
     }
 
     @Bean
