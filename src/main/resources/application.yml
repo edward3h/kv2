@@ -31,4 +31,4 @@ kv2:
       client-secret: ${DISCORD_CLIENT_SECRET:test_discord_secret}
       redirect-uri: ${DISCORD_REDIRECT_URI:http://localhost:8080/oauth/callback/discord}
   security:
-    jwt-secret: ${JWT_SECRET:MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE=}
+    jwt-secret: ${JWT_SECRET}
