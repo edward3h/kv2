@@ -27,9 +27,8 @@ See [docs/architecture.md](docs/architecture.md) for more detail.
 
 ### Requirements
 
-* Java - JDK per the Gradle toolchain (currently 21). [SDKMAN](https://sdkman.io/) is the recommended tool for managing JDK versions.
+* Java, Node.js and [pnpm](https://pnpm.io/installation), at the versions pinned in [`.tool-versions`](.tool-versions). [asdf](https://asdf-vm.com/) is the recommended tool for managing these.
 * [GNG](https://github.com/gdubw/gng) is _recommended_ to use the `gw` command instead of `./gradlew`
-* Node.js and [pnpm](https://pnpm.io/installation), at the versions pinned in [`.tool-versions`](.tool-versions). [asdf](https://asdf-vm.com/) or [mise](https://mise.jdx.dev/) can manage these automatically.
 * Docker, to run MySQL locally via `docker-compose.yml`.
 
 ### Setup
