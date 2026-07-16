@@ -11,7 +11,7 @@ A user will always have at least one identity, since that is how they are create
 
 ### Roles
 Users have roles, which are used to determine what they can do.
-In implementation, roles map to Micronaut Security roles.
+In implementation, a user's roles are embedded as a claim in their signed JWT, decoded into a `Principal` on each request, and checked with `Principal.hasRole(...)` by the auth filter.
 
 #### _Anonymous_
 Not a role, but the absence of any roles. i.e. not authenticated.
