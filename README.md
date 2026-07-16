@@ -28,7 +28,6 @@ See [docs/architecture.md](docs/architecture.md) for more detail.
 ### Requirements
 
 * Java, Node.js and [pnpm](https://pnpm.io/installation), at the versions pinned in [`.tool-versions`](.tool-versions). [asdf](https://asdf-vm.com/) is the recommended tool for managing these.
-* [GNG](https://github.com/gdubw/gng) is _recommended_ to use the `gw` command instead of `./gradlew`
 * Docker, to run MySQL locally via `docker-compose.yml`.
 
 ### Setup
@@ -42,7 +41,7 @@ Create a `.env` file in the project root with at least:
 
 ```
 docker compose up -d --wait mysql   # or: ./gradlew startDevMySQL
-./gradlew run                       # or: gw run
+./gradlew run
 ```
 
 The app starts on http://localhost:8080.
