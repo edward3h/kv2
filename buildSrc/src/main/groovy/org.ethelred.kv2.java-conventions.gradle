@@ -28,7 +28,7 @@ checkerFramework {
 }
 
 dependencies {
-    compileOnly 'org.jspecify:jspecify:1.0.0'
+    compileOnly 'org.jspecify:jspecify:1.0.1'
     compileOnly "io.github.eisop:checker-qual:$eisopVersion"
     testCompileOnly "io.github.eisop:checker-qual:$eisopVersion"
     checkerQual "io.github.eisop:checker-qual:$eisopVersion"
