@@ -57,7 +57,7 @@ dependencies {
 
 	// Logging
 	runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.8.2")
-	runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.8.2")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.9.0")
 	runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.9.0")
 
 	// Other
@@ -108,7 +108,7 @@ testing {
 				runtimeOnly("commons-codec:commons-codec:1.22.1")
 				runtimeOnly("mysql:mysql-connector-java:8.0.33")
 				runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.8.2")
-				runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.8.2")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.9.0")
 				runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.9.0")
 			}
 			targets {
