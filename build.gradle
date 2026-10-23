@@ -56,9 +56,10 @@ dependencies {
 	implementation("gg.jte:jte-models:3.2.4")
 
 	// Logging
-	runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.10.0")
-	runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.10.0")
-	runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.10.0")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.15.1")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-file:0.15.1")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.15.1")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.15.1")
 
 	// Other
 	implementation 'com.github.ksuid:ksuid:1.1.4'
@@ -100,16 +101,17 @@ testing {
 			dependencies {
 				implementation(project())
 				implementation(sourceSets.test.output)
-				implementation("com.microsoft.playwright:playwright:1.63.0")
+				implementation("com.microsoft.playwright:playwright:1.64.0")
 				implementation(platform("org.testcontainers:testcontainers-bom:2.0.5"))
 				implementation("org.testcontainers:testcontainers-junit-jupiter")
 				implementation("org.testcontainers:testcontainers-mysql")
 				implementation("org.testcontainers:testcontainers")
 				runtimeOnly("commons-codec:commons-codec:1.23.0")
 				runtimeOnly("mysql:mysql-connector-java:8.0.33")
-				runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.10.0")
-				runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.10.0")
-				runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.10.0")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.15.1")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-file:0.15.1")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.15.1")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.15.1")
 			}
 			targets {
 				all {
