@@ -27,7 +27,7 @@ See [docs/architecture.md](docs/architecture.md) for more detail.
 
 ### Requirements
 
-* Java, Node.js and [pnpm](https://pnpm.io/installation), at the versions pinned in [`.tool-versions`](.tool-versions). [asdf](https://asdf-vm.com/) is the recommended tool for managing these.
+* Java, Node.js and [pnpm](https://pnpm.io/installation), at the versions pinned in [`.tool-versions`](.tool-versions). [mise](https://mise.jdx.dev/) is the recommended tool for managing these: run `mise install` in the project root.
 * Docker, to run MySQL locally via `docker-compose.yml`.
 
 ### Setup
