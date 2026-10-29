@@ -59,7 +59,7 @@ dependencies {
 	runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.16.2")
 	runtimeOnly("io.jstach.rainbowgum:rainbowgum-file:0.16.1")
 	runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.16.1")
-	runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.16.1")
+	runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.16.2")
 
 	// Other
 	implementation 'com.github.ksuid:ksuid:1.1.4'
@@ -111,7 +111,7 @@ testing {
 				runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.16.2")
 				runtimeOnly("io.jstach.rainbowgum:rainbowgum-file:0.16.1")
 				runtimeOnly("io.jstach.rainbowgum:rainbowgum-jansi:0.16.1")
-				runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.16.1")
+				runtimeOnly("io.jstach.rainbowgum:rainbowgum-avaje-config:0.16.2")
 			}
 			targets {
 				all {
