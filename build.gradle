@@ -53,7 +53,7 @@ dependencies {
 	// JTE templates
 	runtimeOnly("gg.jte:jte:3.2.5")
 	implementation("gg.jte:jte-runtime:3.2.5")
-	implementation("gg.jte:jte-models:3.2.4")
+	implementation("gg.jte:jte-models:3.2.5")
 
 	// Logging
 	runtimeOnly("io.jstach.rainbowgum:rainbowgum-slf4j:0.16.3")
