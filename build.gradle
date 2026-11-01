@@ -51,7 +51,7 @@ dependencies {
 	implementation("com.nimbusds:nimbus-jose-jwt:10.10")
 
 	// JTE templates
-	runtimeOnly("gg.jte:jte:3.2.4")
+	runtimeOnly("gg.jte:jte:3.2.5")
 	implementation("gg.jte:jte-runtime:3.2.4")
 	implementation("gg.jte:jte-models:3.2.4")
 
