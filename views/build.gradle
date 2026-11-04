@@ -1,6 +1,6 @@
 plugins {
 	id 'java-library'
-	id("gg.jte.gradle") version "3.2.4"
+	id("gg.jte.gradle") version "3.2.5"
 	id("org.ethelred.kv2.java-conventions")
 	id "com.github.node-gradle.node" version "7.1.0"
 }
@@ -14,9 +14,9 @@ repositories {
 }
 
 dependencies {
-	implementation("gg.jte:jte:3.2.4")
-	jteGenerate("gg.jte:jte-models:3.2.4")
-	api("gg.jte:jte-models:3.2.4")
+	implementation("gg.jte:jte:3.2.5")
+	jteGenerate("gg.jte:jte-models:3.2.5")
+	api("gg.jte:jte-models:3.2.5")
 	implementation(project(":rosterParser"))
 	compileOnly('org.jspecify:jspecify:1.0.1')
 }
