@@ -8,7 +8,7 @@ import org.ethelred.kiwiproc.annotation.SqlUpdate;
 import org.ethelred.kv2.models.User;
 import org.jspecify.annotations.Nullable;
 
-@DAO
+@DAO(autoCommit = true)
 public interface UserDao {
     @SqlQuery("""
             SELECT id, display_name, picture_url, flags, created_at, updated_at
