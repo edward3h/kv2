@@ -5,7 +5,7 @@ import org.ethelred.kiwiproc.annotation.DAO;
 import org.ethelred.kiwiproc.annotation.SqlUpdate;
 import org.jspecify.annotations.Nullable;
 
-@DAO
+@DAO(autoCommit = true)
 public interface IdentityDao {
     @SqlUpdate("""
             INSERT INTO identity (id, provider, user_id, external_id, email, attributes)

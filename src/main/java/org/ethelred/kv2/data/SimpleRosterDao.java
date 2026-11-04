@@ -10,7 +10,7 @@ import org.ethelred.kiwiproc.annotation.SqlUpdate;
 import org.ethelred.kv2.models.DocumentStub;
 import org.jspecify.annotations.Nullable;
 
-@DAO
+@DAO(autoCommit = true)
 public interface SimpleRosterDao {
     record RosterRow(
             String id,
