@@ -4,9 +4,7 @@ package org.ethelred.kv2.models;
 import io.avaje.jsonb.Json;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
-import org.ethelred.kv2.util.AuthAttributesHelper;
 import org.jspecify.annotations.Nullable;
 
 public record User(
@@ -26,13 +24,6 @@ public record User(
 
     public Set<UserFlag> userFlags() {
         return UserFlagSetConverter.toSet(flags);
-    }
-
-    public Map<String, Object> attributes() {
-        return AuthAttributesHelper.map(
-                "displayName", displayName,
-                "picture", pictureUrl,
-                "flags", userFlags());
     }
 
     public Collection<String> roles() {
