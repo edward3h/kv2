@@ -23,8 +23,7 @@ public class UserRepositoryTest {
             var user1 = new User(null, "Bob", null);
             user1 = userRepository.save(user1);
             var id1 = new Identity("facespace", user1, "12345", null, "{}");
-            identityDao.insertIdentity(
-                    id1.id(), id1.provider(), id1.userId(), id1.externalId(), id1.email(), id1.attributes());
+            identityDao.insertIdentity(id1);
 
             var found = userRepository.findByIdentity("facespace", "12345");
             assertTrue(found.isPresent(), "User was found");

@@ -54,14 +54,8 @@ public class DefaultUserService implements UserService {
         } catch (Exception e) {
             attributesJson = "{}";
         }
-        var identity = new Identity(provider, user, externalId, (String) attributes.get("email"), attributesJson);
         identityDao.insertIdentity(
-                identity.id(),
-                identity.provider(),
-                identity.userId(),
-                identity.externalId(),
-                identity.email(),
-                identity.attributes());
+                new Identity(provider, user, externalId, (String) attributes.get("email"), attributesJson));
         return user;
     }
 
