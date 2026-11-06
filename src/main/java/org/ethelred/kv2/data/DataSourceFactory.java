@@ -3,7 +3,7 @@ package org.ethelred.kv2.data;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import io.avaje.config.Config;
+import io.avaje.config.Configuration;
 import io.avaje.inject.Bean;
 import io.avaje.inject.Factory;
 import jakarta.inject.Named;
@@ -21,13 +21,13 @@ public class DataSourceFactory {
 
     @Bean
     @SuppressWarnings("nullness")
-    public DataSourceConfig dataSourceConfig() {
+    public DataSourceConfig dataSourceConfig(Configuration config) {
         record Impl(String url, String driverClassName, String username, String password) implements DataSourceConfig {}
         return new Impl(
-                Config.get("datasource.url"),
-                Config.get("datasource.driverClassName", "com.mysql.cj.jdbc.Driver"),
-                Config.getOptional("datasource.username").orElse(null),
-                Config.get("datasource.password", ""));
+                config.get("datasource.url"),
+                config.get("datasource.driverClassName", "com.mysql.cj.jdbc.Driver"),
+                config.getOptional("datasource.username").orElse(null),
+                config.get("datasource.password", ""));
     }
 
     @Bean

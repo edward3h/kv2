@@ -1,7 +1,7 @@
 /* (C) Edward Harman and contributors 2026 */
 package org.ethelred.kv2.security;
 
-import io.avaje.config.Config;
+import io.avaje.config.Configuration;
 import io.avaje.inject.Bean;
 import io.avaje.inject.Factory;
 
@@ -9,20 +9,20 @@ import io.avaje.inject.Factory;
 public class SecurityConfigFactory {
 
     @Bean
-    public JwtConfig jwtConfig() {
+    public JwtConfig jwtConfig(Configuration config) {
         record Impl(String jwtSecret) implements JwtConfig {}
-        return new Impl(Config.get("kv2.security.jwt-secret"));
+        return new Impl(config.get("kv2.security.jwt-secret"));
     }
 
     @Bean
-    public OAuthDiscordConfig oauthDiscordConfig() {
+    public OAuthDiscordConfig oauthDiscordConfig(Configuration config) {
         record Impl(String clientId, String clientSecret, String redirectUri, String authorizeUrl, String tokenUrl)
                 implements OAuthDiscordConfig {}
         return new Impl(
-                Config.get("kv2.oauth.discord.client-id", "test_discord_id"),
-                Config.get("kv2.oauth.discord.client-secret", "test_discord_secret"),
-                Config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/callback/discord"),
-                Config.get("kv2.oauth.discord.authorize-url", "https://discord.com/api/oauth2/authorize"),
-                Config.get("kv2.oauth.discord.token-url", "https://discord.com/api/oauth2/token"));
+                config.get("kv2.oauth.discord.client-id", "test_discord_id"),
+                config.get("kv2.oauth.discord.client-secret", "test_discord_secret"),
+                config.get("kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/callback/discord"),
+                config.get("kv2.oauth.discord.authorize-url", "https://discord.com/api/oauth2/authorize"),
+                config.get("kv2.oauth.discord.token-url", "https://discord.com/api/oauth2/token"));
     }
 }
