@@ -3,8 +3,10 @@ package org.ethelred.kv2.data;
 
 import jakarta.inject.Singleton;
 import java.util.Optional;
+import org.ethelred.kv2.models.Identity;
 import org.ethelred.kv2.models.User;
 import org.ethelred.kv2.services.IdGenerator;
+import org.jspecify.annotations.Nullable;
 
 @Singleton
 class UserRepositoryImpl implements UserRepository {
@@ -31,5 +33,17 @@ class UserRepositoryImpl implements UserRepository {
         var id = idGenerator.generate();
         dao.insertUser(id, user.displayName(), user.pictureUrl(), user.flags());
         return dao.findById(id).orElseThrow();
+    }
+
+    @Override
+    public User saveWithIdentity(
+            User user, String provider, String externalId, @Nullable String email, @Nullable String attributes) {
+        return dao.<User>call(d -> {
+            var id = idGenerator.generate();
+            d.insertUser(id, user.displayName(), user.pictureUrl(), user.flags());
+            var saved = d.findById(id).orElseThrow();
+            d.insertIdentity(new Identity(provider, saved, externalId, email, attributes));
+            return saved;
+        });
     }
 }

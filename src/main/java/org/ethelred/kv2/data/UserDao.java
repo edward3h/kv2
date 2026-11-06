@@ -5,11 +5,13 @@ import java.util.Optional;
 import org.ethelred.kiwiproc.annotation.DAO;
 import org.ethelred.kiwiproc.annotation.SqlQuery;
 import org.ethelred.kiwiproc.annotation.SqlUpdate;
+import org.ethelred.kiwiproc.api.TransactionalDAO;
+import org.ethelred.kv2.models.Identity;
 import org.ethelred.kv2.models.User;
 import org.jspecify.annotations.Nullable;
 
 @DAO(autoCommit = true)
-public interface UserDao {
+public interface UserDao extends TransactionalDAO<UserDao> {
     @SqlQuery("""
             SELECT id, display_name, picture_url, flags, created_at, updated_at
             FROM user
@@ -31,4 +33,10 @@ public interface UserDao {
             VALUES (:id, :displayName, :pictureUrl, :flags)
             """)
     boolean insertUser(String id, @Nullable String displayName, @Nullable String pictureUrl, int flags);
+
+    @SqlUpdate("""
+            INSERT INTO identity (id, provider, user_id, external_id, email, attributes)
+            VALUES (:id, :provider, :userId, :externalId, :email, :attributes)
+            """)
+    boolean insertIdentity(Identity identity);
 }
