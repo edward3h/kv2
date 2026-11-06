@@ -5,12 +5,12 @@ import io.avaje.jsonb.JsonType;
 import io.avaje.jsonb.Jsonb;
 import io.avaje.jsonb.Types;
 import jakarta.inject.Singleton;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.ethelred.kv2.data.IdentityDao;
+import org.ethelred.kiwiproc.exception.UncheckedSQLException;
 import org.ethelred.kv2.data.UserRepository;
-import org.ethelred.kv2.models.Identity;
 import org.ethelred.kv2.models.User;
 import org.ethelred.kv2.models.UserFlag;
 import org.slf4j.Logger;
@@ -21,12 +21,10 @@ public class DefaultUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
     private static final List<String> DISPLAY_NAME_KEYS = List.of("name", "username", "email");
 
-    private final IdentityDao identityDao;
     private final UserRepository userRepository;
     private final JsonType<Map<String, Object>> mapType;
 
-    public DefaultUserService(IdentityDao identityDao, UserRepository userRepository, Jsonb jsonb) {
-        this.identityDao = identityDao;
+    public DefaultUserService(UserRepository userRepository, Jsonb jsonb) {
         this.userRepository = userRepository;
         this.mapType = jsonb.type(Types.mapOf(Object.class));
     }
@@ -45,8 +43,6 @@ public class DefaultUserService implements UserService {
                 .map(k -> String.valueOf(attributes.get(k)))
                 .findFirst()
                 .orElse("Unknown");
-        var user = userRepository.save(
-                new User(null, displayName, (String) attributes.get("picture"), UserFlag.ROLE_USER));
         LOGGER.info("User attributes {}", attributes);
         String attributesJson;
         try {
@@ -54,9 +50,21 @@ public class DefaultUserService implements UserService {
         } catch (Exception e) {
             attributesJson = "{}";
         }
-        identityDao.insertIdentity(
-                new Identity(provider, user, externalId, (String) attributes.get("email"), attributesJson));
-        return user;
+        var email = (String) attributes.get("email");
+        try {
+            return userRepository.saveWithIdentity(
+                    new User(null, displayName, (String) attributes.get("picture"), UserFlag.ROLE_USER),
+                    provider,
+                    externalId,
+                    email,
+                    attributesJson);
+        } catch (UncheckedSQLException e) {
+            // A concurrent first login for the same identity may have created it since our lookup.
+            if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
+                return userRepository.findByIdentity(provider, externalId).orElseThrow(() -> e);
+            }
+            throw e;
+        }
     }
 
     @Override
