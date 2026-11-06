@@ -3,7 +3,7 @@ package org.ethelred.kv2.data;
 
 import org.ethelred.kiwiproc.annotation.DAO;
 import org.ethelred.kiwiproc.annotation.SqlUpdate;
-import org.jspecify.annotations.Nullable;
+import org.ethelred.kv2.models.Identity;
 
 @DAO(autoCommit = true)
 public interface IdentityDao {
@@ -11,11 +11,5 @@ public interface IdentityDao {
             INSERT INTO identity (id, provider, user_id, external_id, email, attributes)
             VALUES (:id, :provider, :userId, :externalId, :email, :attributes)
             """)
-    boolean insertIdentity(
-            String id,
-            String provider,
-            String userId,
-            String externalId,
-            @Nullable String email,
-            @Nullable String attributes);
+    boolean insertIdentity(Identity identity);
 }
