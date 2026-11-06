@@ -8,7 +8,7 @@ import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import org.ethelred.kv2.data.IdentityRepository;
+import org.ethelred.kv2.data.IdentityDao;
 import org.ethelred.kv2.data.UserRepository;
 import org.ethelred.kv2.models.Identity;
 import org.ethelred.kv2.models.User;
@@ -21,12 +21,12 @@ public class DefaultUserService implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUserService.class);
     private static final List<String> DISPLAY_NAME_KEYS = List.of("name", "username", "email");
 
-    private final IdentityRepository identityRepository;
+    private final IdentityDao identityDao;
     private final UserRepository userRepository;
     private final JsonType<Map<String, Object>> mapType;
 
-    public DefaultUserService(IdentityRepository identityRepository, UserRepository userRepository, Jsonb jsonb) {
-        this.identityRepository = identityRepository;
+    public DefaultUserService(IdentityDao identityDao, UserRepository userRepository, Jsonb jsonb) {
+        this.identityDao = identityDao;
         this.userRepository = userRepository;
         this.mapType = jsonb.type(Types.mapOf(Object.class));
     }
@@ -54,8 +54,14 @@ public class DefaultUserService implements UserService {
         } catch (Exception e) {
             attributesJson = "{}";
         }
-        identityRepository.save(
-                new Identity(provider, user, externalId, (String) attributes.get("email"), attributesJson));
+        var identity = new Identity(provider, user, externalId, (String) attributes.get("email"), attributesJson);
+        identityDao.insertIdentity(
+                identity.id(),
+                identity.provider(),
+                identity.userId(),
+                identity.externalId(),
+                identity.email(),
+                identity.attributes());
         return user;
     }
 

@@ -18,12 +18,13 @@ public class UserRepositoryTest {
     public void findUserSuccess() {
         try (var scope = BeanScope.builder().profiles("test").build()) {
             var userRepository = scope.get(UserRepository.class);
-            var identityRepository = scope.get(IdentityRepository.class);
+            var identityDao = scope.get(IdentityDao.class);
 
             var user1 = new User(null, "Bob", null);
             user1 = userRepository.save(user1);
             var id1 = new Identity("facespace", user1, "12345", null, "{}");
-            identityRepository.save(id1);
+            identityDao.insertIdentity(
+                    id1.id(), id1.provider(), id1.userId(), id1.externalId(), id1.email(), id1.attributes());
 
             var found = userRepository.findByIdentity("facespace", "12345");
             assertTrue(found.isPresent(), "User was found");
