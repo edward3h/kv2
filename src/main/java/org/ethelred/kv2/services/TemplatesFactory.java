@@ -4,7 +4,7 @@ package org.ethelred.kv2.services;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.DirectoryCodeResolver;
-import io.avaje.config.Config;
+import io.avaje.config.Configuration;
 import io.avaje.inject.Bean;
 import io.avaje.inject.Factory;
 import java.nio.file.Paths;
@@ -16,11 +16,11 @@ import org.ethelred.kv2.template.Templates;
 public class TemplatesFactory {
 
     @Bean
-    public TemplatesConfig templatesConfig() {
+    public TemplatesConfig templatesConfig(Configuration config) {
         record Impl(boolean dynamic, String dynamicSourcePath) implements TemplatesConfig {}
         return new Impl(
-                Config.getBool("kv2.jte.dynamic", false),
-                Config.get("kv2.jte.dynamic-source-path", "views/src/main/jte"));
+                config.getBool("kv2.jte.dynamic", false),
+                config.get("kv2.jte.dynamic-source-path", "views/src/main/jte"));
     }
 
     @Bean
