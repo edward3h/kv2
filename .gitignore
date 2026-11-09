@@ -20,3 +20,6 @@ node_modules/
 jte-classes/
 supertool
 
+
+# Workaround: avaje-inject 12.7 @MainClass check looks for this in the project root
+/avaje-plugins.csv

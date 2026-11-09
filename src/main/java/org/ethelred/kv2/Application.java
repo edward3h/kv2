@@ -2,12 +2,14 @@
 package org.ethelred.kv2;
 
 import io.avaje.inject.BeanScope;
+import io.avaje.inject.MainClass;
 import io.avaje.jex.Jex;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import org.ethelred.kv2.controllers.MyExceptionHandlers;
 import org.ethelred.kv2.security.AuthFilter;
 
+@MainClass
 public class Application {
 
     public static void main(String[] args) {

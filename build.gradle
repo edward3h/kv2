@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'application'
 	id("org.ethelred.kv2.java-conventions")
-
+	id("io.avaje.inject") version "12.7"
 	id("org.ethelred.kiwiproc") version "1.2"
 }
 
@@ -179,4 +179,19 @@ tasks.named('run') {
 	systemProperty "kv2.oauth.discord.redirect-uri", "http://localhost:8080/oauth/callback/discord"
 	environment(CGI_SERVER: "standalone")
 	environment dotenvVars
+}
+
+// Workaround: the avaje-inject 12.7 @MainClass check looks for avaje-plugins.csv in the project
+// root rather than build/, so it reports the Gradle plugin as missing. Remove once fixed upstream:
+// https://github.com/avaje/avaje-inject/issues/1097
+tasks.register('avajePluginsMarker') {
+	def marker = layout.projectDirectory.file('avaje-plugins.csv').asFile
+	outputs.file(marker)
+	doLast {
+		marker.createNewFile()
+	}
+}
+
+tasks.named('compileJava') {
+	dependsOn 'avajePluginsMarker'
 }
