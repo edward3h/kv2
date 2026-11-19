@@ -11,6 +11,11 @@
             ]
         },
         {
+            "matchDepNames": ["postcss-selector-parser"],
+            "description": "Pinned via a pnpm override for GHSA-rj75-hqrm-r3gf; @tailwindcss/typography needs 6.x",
+            "allowedVersions": "<7"
+        },
+        {
             "matchDepNames": ["pnpm"],
             "matchManagers": ["asdf"],
             "automerge": false
