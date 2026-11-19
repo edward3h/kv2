@@ -1,4 +1,4 @@
 allowBuilds:
   '@parcel/watcher': true
 overrides:
-  postcss-selector-parser: ^6.1.5
+  postcss-selector-parser: ^7.0.0
