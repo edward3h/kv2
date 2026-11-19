@@ -16,6 +16,12 @@
             "allowedVersions": "<7"
         },
         {
+            "matchDepNames": ["java"],
+            "description": "Adoptium lists a bogus 25.0.5+100000002.0.LTS build that mise cannot install; ignore build numbers of 6+ digits",
+            "matchManagers": ["asdf"],
+            "allowedVersions": "!/\\+\\d{6,}/"
+        },
+        {
             "matchDepNames": ["pnpm"],
             "matchManagers": ["asdf"],
             "automerge": false
