@@ -169,7 +169,8 @@ if (envFile.exists()) {
 }
 
 tasks.named('run') {
-	//dependsOn 'startDevMySQL'
+	dependsOn 'startDevMySQL'
+	// MySQL is stopped by the dev shutdown hook in Application, so no finalizedBy is needed
 	//finalizedBy 'stopDevMySQL'
 	systemProperty "avaje.profiles", "dev"
 	// Point OAuth to the embedded stub so dev login works without real Discord credentials
