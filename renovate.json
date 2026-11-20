@@ -17,9 +17,9 @@
         },
         {
             "matchDepNames": ["java"],
-            "description": "Adoptium lists a bogus 25.0.5+100000002.0.LTS build that mise cannot install; ignore build numbers of 6+ digits",
+            "description": "LTS builds only (CI uses Java 25), and skip Adoptium's bogus 25.0.5+100000002.0.LTS entry by capping build numbers at 5 digits",
             "matchManagers": ["asdf"],
-            "allowedVersions": "!/\\+\\d{6,}/"
+            "allowedVersions": "/^\\d+\\.\\d+\\.\\d+\\+\\d{1,5}\\.\\d+\\.LTS$/"
         },
         {
             "matchDepNames": ["pnpm"],
